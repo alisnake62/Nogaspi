@@ -1,0 +1,59 @@
+version: '3'
+
+services:
+  
+  backend_nogaspi:
+    depends_on:
+      - db_nogaspi
+    build: ${path}/nogaspi
+    container_name: backend_nogaspi
+    #restart: always
+    ports:
+      - 5555:5000
+    volumes:
+      - ${path}/nogaspi:/usr/src/app:ro
+    networks:
+      - python-db
+
+  # CONTAINER - MYSQL : https://hub.docker.com/_/mysql
+  db_nogaspi:
+    image: mariadb:latest
+    container_name: db_nogaspi
+    #restart: always
+    expose:
+      - 3306
+    volumes:
+      - data:/var/lib/mysql
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: ${sqlPassword}
+      MYSQL_DATABASE: nogaspi
+      MYSQL_USER: ${sqlUser}
+      MYSQL_PASSWORD: ${sqlPassword}
+    networks:
+      - python-db
+      - phpmyadmin-db
+
+  # CONTAINER - PHPMYADMIN : https://hub.docker.com/r/phpmyadmin/phpmyadmin
+  phpmyadmin_nogaspi:
+    depends_on:
+      - db_nogaspi
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin_nogaspi
+    #restart: always
+    environment:
+      PMA_HOST: db_nogaspi
+      MYSQL_ROOT_PASSWORD: ${sqlPassword}
+    ports:
+      - "8081:80"
+    networks:
+      - phpmyadmin-db
+
+volumes:
+  data:
+
+networks:
+  python-db:
+    driver: bridge
+  phpmyadmin-db:
+    driver: bridge
