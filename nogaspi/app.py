@@ -8,7 +8,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 
 from sqlalchemy import Column, Integer, Text, ForeignKey
-from sqlalchemy.sql.sqltypes import DATE, INTEGER, VARCHAR, String
+from sqlalchemy.sql.sqltypes import DATE, INTEGER, TEXT, VARCHAR, String
 from sqlalchemy.orm import relationship, sessionmaker
 import json
 Base = declarative_base()
@@ -58,6 +58,9 @@ class DBException(APIException):
 class TokenException(APIException):
     pass
 
+class EmptyException(APIException):
+    pass
+
 
 class User (Base):
 
@@ -80,6 +83,25 @@ class User (Base):
         return {'token': self.token, 'token_expiration': str(self.token_expiration + datetime.timedelta(minutes = 60)) + " GMT+1"}
 
 
+class Article (Base):
+
+    __tablename__ = 'article'
+    id = Column(INTEGER, primary_key=True)
+    opinion = Column(TEXT)
+    brand = Column(VARCHAR)
+    name = Column(VARCHAR)
+    quantity = Column(VARCHAR)
+    barcode = Column(VARCHAR)
+    image_url = Column(VARCHAR)
+
+    def __init__(self, name, quantity, opinion=None, brand=None, barcode=None, image_url=None):                    
+        self.opinion = opinion        
+        self.brand = brand
+        self.name = name
+        self.quantity = quantity
+        self.barcode = barcode
+        self.image_url = image_url
+
 app = Flask(__name__)
 
 @app.errorhandler(APIException)
@@ -89,23 +111,11 @@ def handle_invalid_usage(error):
     return response
 
 
-
-
-@app.route('/hello', methods=['GET'])
-def hello():
-    return jsonify("Hello World !"), 200
-
-
-
-
-
 @app.route('/register/login', methods=['POST'])
 def login():
 
     try:
-        print("test")
         password = os.environ['MYSQL_ROOT_PASSWORD']
-        print(password)
 
         engine = create_engine('mysql+mysqlconnector://root:{}@db_nogaspi/nogaspi'.format(password), echo=False)
         Base.metadata.create_all(engine)
@@ -149,7 +159,7 @@ def test():
 
 
 @app.route('/getUsers', methods=['GET'])
-def getUsers_endpoint():
+def getUsers():
 
 
     engine = create_engine('mysql+mysqlconnector://root:nogaspiPwd@db_nogaspi/nogaspi', echo=False)
@@ -161,6 +171,53 @@ def getUsers_endpoint():
     
     test = [u.mail + " : " + u.password for u in users]
     return jsonify(test)
+
+@app.route('/getArticle', methods=['GET'])
+def getArticle():
+
+    
+    try:
+        
+        password = os.environ['MYSQL_ROOT_PASSWORD']
+
+        engine = create_engine('mysql+mysqlconnector://root:{}@db_nogaspi/nogaspi'.format(password), echo=False)
+        Base.metadata.create_all(engine)
+
+        Session = sessionmaker(bind=engine)
+        session = Session()
+        
+    except Exception as e:
+        print(type(e), e)
+        raise DBException("problem to access at tha database", request)
+
+    ### verify token
+    token = request.json['token']
+    user = session.query( User ).filter(User.token == token).first()
+
+    if not user:
+        raise LoginException("Token incorrect", request)
+    elif user.token_expiration < datetime.datetime.now():
+        raise LoginException("Token expired", request)
+
+    # maj date token
+    barcode = token = request.json['barcode']
+
+    article = session.query( Article ).filter(Article.barcode == barcode).first()
+
+    if not article:
+        raise EmptyException("No article with this barcode", request)
+
+    data = {
+        'opinion': article.opinion,
+        'name': article.name,
+        'brand': article.brand,
+        'quantity': article.quantity,
+        'barcode': article.barcode,
+        'image_url': article.image_url
+    }
+    
+
+    return apiResponse(request, data)
 
 
 if __name__ == '__main__':
