@@ -103,7 +103,10 @@ def hello():
 def login():
 
     try:
+        print("test")
         password = os.environ['MYSQL_ROOT_PASSWORD']
+        print(password)
+
         engine = create_engine('mysql+mysqlconnector://root:{}@db_nogaspi/nogaspi'.format(password), echo=False)
         Base.metadata.create_all(engine)
 
