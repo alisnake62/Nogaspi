@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 import secrets
 import datetime
 from zoneinfo import ZoneInfo
+import os
 
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
@@ -102,8 +103,8 @@ def hello():
 def login():
 
     try:
-        
-        engine = create_engine('mysql+mysqlconnector://root:nogaspiPwd@db_nogaspi/nogaspi', echo=False)
+        password = os.environ['MYSQL_ROOT_PASSWORD']
+        engine = create_engine('mysql+mysqlconnector://root:{}@db_nogaspi/nogaspi'.format(password), echo=False)
         Base.metadata.create_all(engine)
 
         Session = sessionmaker(bind=engine)
