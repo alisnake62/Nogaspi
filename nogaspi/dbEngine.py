@@ -5,11 +5,15 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import  sessionmaker
 
 from apiConfig import DBException
+import traceback
 
 Base = declarative_base()
 
 class EngineSQLAlchemy:
 
+    def __init__(self, request):
+        self.request = request
+    
     def __enter__(self):
         try:
             password = os.environ['MYSQL_ROOT_PASSWORD']
@@ -20,11 +24,8 @@ class EngineSQLAlchemy:
             self.session = Session()
             return self.session
 
-        except Exception as e:
-            self.session.close()
-            self.engine.dispose()
-            print(type(e), e)
-            raise DBException("Problem to access at the Database")
+        except Exception:
+            raise DBException("Problem to access at the Database", traceback.format_exc(), self.request)
 
     def __exit__(self, type, value, traceback):
         self.session.close()

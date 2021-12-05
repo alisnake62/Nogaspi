@@ -8,7 +8,7 @@ def f(request):
     token = request.json['token']
     barcode = request.json['barcode']
 
-    with EngineSQLAlchemy() as session:
+    with EngineSQLAlchemy(request) as session:
 
         user = getUserFromToken(token, session, request)
         majTokenValidity(token, session, request)
@@ -16,7 +16,8 @@ def f(request):
         article = session.query( Article ).filter(Article.barcode == barcode).first()
 
         if not article:
-            raise EmptyException("No article with this barcode", request)
+            message = "No article with this barcode"
+            raise EmptyException(message, message, request)
 
         data = {
             'opinion': article.opinion,

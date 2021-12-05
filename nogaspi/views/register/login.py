@@ -2,26 +2,26 @@ from models.objectDB import User
 from dbEngine import EngineSQLAlchemy
 from apiConfig import RegisterException, TokenException
 
+import traceback
+
 def f(request):
 
     mail = request.json['mail']
     password = request.json['password']
 
-    with EngineSQLAlchemy() as session:
+    with EngineSQLAlchemy(request) as session:
 
         try:
             user = session.query( User ).filter(User.mail == mail).first()
             if (user.password != password): raise Exception()
-        except Exception as e:
-            print(type(e), e)
-            raise RegisterException("login / password incorrect", request)
+        except Exception:
+            raise RegisterException("login / password incorrect", traceback.format_exc(), request)
 
         try:
             tokenInfo = user.generateToken()
             session.commit()
             
-        except Exception as e:
-            print(type(e), e)
-            raise TokenException("problem to generate token", request)
+        except Exception:
+            raise TokenException("problem to generate token", traceback.format_exc(), request)
 
     return tokenInfo

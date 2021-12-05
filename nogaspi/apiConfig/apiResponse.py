@@ -1,3 +1,6 @@
+from .logging import logging
+from datetime import datetime
+
 def apiResponse(request, data = None, exception : bool = False, status_code = 200):
     
     if exception: summary = "Exception"
@@ -21,16 +24,20 @@ def apiResponse(request, data = None, exception : bool = False, status_code = 20
 class APIException(Exception):
     status_code = 400
 
-    def __init__(self, message, request, status_code=None):
+    def __init__(self, messageAPI, messageLog, request, status_code=None):
         Exception.__init__(self)
-        self.message = message
+        self.messageAPI = messageAPI
+        self.messageLog = messageLog
         self.request = request
         if status_code is not None:
             self.status_code = status_code
+        errorLine = request.remote_addr + " - - " + self.__class__.__name__ + " - " + messageLog
+        logging.error(errorLine)
+        print(str(datetime.now()) + " - ERROR - " + errorLine)
 
     def response(self):
         data = {
             'exception' : self.__class__.__name__,
-            'message' : self.message
+            'message' : self.messageAPI
         }
         return apiResponse(request = self.request, data=data, exception=True, status_code=self.status_code)

@@ -17,7 +17,7 @@ def checkInputAPI(Schema, request):
     try:
         Schema().load(request.json)
     except Exception as e:
-        raise InputAPIException(e.__str__(), request)
+        raise InputAPIException(str(e), str(e), request)
 
 
 

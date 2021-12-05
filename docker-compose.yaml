@@ -5,7 +5,7 @@ services:
   backend_nogaspi:
     depends_on:
       - db_nogaspi
-    build: ${path}/nogaspi
+    build: ${path}/Nogaspi/nogaspi
     container_name: backend_nogaspi
     #restart: always
     environment:
@@ -14,7 +14,7 @@ services:
     ports:
       - 5555:5000
     volumes:
-      - ${path}/nogaspi:/usr/src/app:ro
+      - ${path}:/usr/src/app
     networks:
       - python-db
 
