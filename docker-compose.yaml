@@ -9,6 +9,7 @@ services:
     container_name: backend_nogaspi
     #restart: always
     environment:
+      PMA_HOST: ${sqlHost}
       MYSQL_ROOT_PASSWORD: ${sqlPassword}
     ports:
       - 5555:5000
@@ -22,8 +23,8 @@ services:
     image: mariadb:latest
     container_name: db_nogaspi
     #restart: always
-    expose:
-      - 3306
+    ports:
+      - "33306:3306"
     volumes:
       - data:/var/lib/mysql
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
@@ -44,7 +45,7 @@ services:
     container_name: phpmyadmin_nogaspi
     #restart: always
     environment:
-      PMA_HOST: db_nogaspi
+      PMA_HOST: ${sqlHost}
       MYSQL_ROOT_PASSWORD: ${sqlPassword}
     ports:
       - "8081:80"

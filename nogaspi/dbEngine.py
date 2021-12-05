@@ -13,7 +13,8 @@ class EngineSQLAlchemy:
     def __enter__(self):
         try:
             password = os.environ['MYSQL_ROOT_PASSWORD']
-            self.engine = create_engine('mysql+mysqlconnector://root:{}@db_nogaspi/nogaspi'.format(password), echo=False)
+            host = os.environ['PMA_HOST']
+            self.engine = create_engine('mysql+mysqlconnector://root:{}@{}/nogaspi'.format(password, host), echo=False)
             Base.metadata.create_all(self.engine)
             Session = sessionmaker(bind=self.engine)
             self.session = Session()
