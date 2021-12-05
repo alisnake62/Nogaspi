@@ -14,6 +14,3 @@ def getUserFromToken(token, session, request):
         raise TokenException(message, message, request)
 
     return user
-
-def majTokenValidity(user, session, request):
-    pass

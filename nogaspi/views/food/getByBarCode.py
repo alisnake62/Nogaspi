@@ -1,7 +1,10 @@
-from models.objectDB import User, Article
+from models.objectDB import Article
 from dbEngine import EngineSQLAlchemy
 from apiConfig import EmptyException
-from facades.registerUtils import getUserFromToken, majTokenValidity
+from facades.registerUtils import getUserFromToken
+from facades.scanUtils import getArticleFromWeb
+
+
 
 def f(request):
 
@@ -11,14 +14,15 @@ def f(request):
     with EngineSQLAlchemy(request) as session:
 
         user = getUserFromToken(token, session, request)
-        majTokenValidity(token, session, request)
+        user.majTokenValidity()
+        
 
         article = session.query( Article ).filter(Article.barcode == barcode).first()
 
-        if not article:
-            message = "No article with this barcode"
-            raise EmptyException(message, message, request)
+        if not article: article = getArticleFromWeb(barcode, user, request)
 
+        article.majInfoLastScan(user)
+        
         data = {
             'opinion': article.opinion,
             'name': article.name,
@@ -28,4 +32,5 @@ def f(request):
             'image_url': article.image_url
         }
 
-        return data
+        session.commit()
+    return data

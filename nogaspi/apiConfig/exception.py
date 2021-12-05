@@ -14,3 +14,6 @@ class EmptyException(APIException):
 
 class InputAPIException(APIException):
     pass
+
+class OpenFoodException(APIException):
+    pass

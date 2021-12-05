@@ -16,8 +16,7 @@
                 "MYSQL_ROOT_PASSWORD": "nogaspiPwd"
             },
             "args": [
-                "run",
-                "--no-debugger"
+                "run"
             ],
             "jinja": true
         }
