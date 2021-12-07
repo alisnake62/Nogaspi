@@ -1,2 +1,2 @@
-from .register import LoginInputShema
+from .register import LoginInputShema, CheckTokenValidityInputShema
 from .food import GetArticleInputShema

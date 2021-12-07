@@ -9,7 +9,7 @@ from dbEngine import Base
 
 class User (Base):
 
-    TOKEN_VALIDITY = 15   #minutes
+    TOKEN_VALIDITY = 1440   #minutes
 
     __tablename__ = 'user'
     id = Column(INTEGER, primary_key=True)
@@ -28,7 +28,7 @@ class User (Base):
     def generateToken(self):
         self.token = secrets.token_hex()
         self.token_expiration = datetime.datetime.now() + datetime.timedelta(minutes = self.TOKEN_VALIDITY)
-        return {'token': self.token, 'token_expiration': str(self.token_expiration + datetime.timedelta(minutes = 60)) + " GMT+1"}
+        return {'token': self.token, 'token_expiration': self.token_expiration}
 
     def majTokenValidity(self):
         self.token_expiration = datetime.datetime.now() + datetime.timedelta(minutes = self.TOKEN_VALIDITY)

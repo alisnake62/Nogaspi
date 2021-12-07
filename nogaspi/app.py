@@ -1,9 +1,10 @@
 from flask import Flask, jsonify, request
 
-from models.schemas import LoginInputShema, GetArticleInputShema
+from models.schemas import LoginInputShema, GetArticleInputShema, CheckTokenValidityInputShema
 from apiConfig import APIException, InputAPIException, apiResponse
 
 from views.register.login import f as register_login
+from views.register.checkTokenValidity import f as register_checkTokenValidity
 from views.food.getByBarCode import f as food_getByBarCode
 app = Flask(__name__)
 
@@ -20,9 +21,6 @@ def checkInputAPI(Schema, request):
         raise InputAPIException(str(e), str(e), request)
 
 
-
-
-
 @app.route('/test', methods=['GET'])
 def test():
     data = {"toto":  ["tata", "titi"]}
@@ -33,6 +31,12 @@ def test():
 def login_endpoint():
     checkInputAPI(LoginInputShema, request)
     data = register_login(request)
+    return jsonify(apiResponse(request, data))
+
+@app.route('/register/checkTokenValidity', methods=['GET'])
+def checkTokenValidity_endpoint():
+    checkInputAPI(CheckTokenValidityInputShema, request)
+    data = register_checkTokenValidity(request)
     return jsonify(apiResponse(request, data))
 
 
