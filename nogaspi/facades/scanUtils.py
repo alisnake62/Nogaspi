@@ -5,7 +5,7 @@ from apiConfig import OpenFoodException
 
 import json
 
-def getArticleFromWeb(barcode, user, request):
+def getArticleFromWeb(barcode, user, request, session):
     
     url = "https://world.openfoodfacts.org/api/v0/product/{}.json".format(barcode)
 
@@ -18,9 +18,6 @@ def getArticleFromWeb(barcode, user, request):
 
     articleHTTP = articleHTTP['product']
 
-    # gerer la pultiplicité de l'allergen + check si ils sont pas déjà en base
-    allergen = Allergen(json.dumps(articleHTTP['allergens_hierarchy']))
-
     article = Article(
         articleHTTP['product_name'],
         articleHTTP['quantity'],
@@ -31,6 +28,19 @@ def getArticleFromWeb(barcode, user, request):
         nutrimentData = json.dumps(articleHTTP['nutriments']),
         nutriscoreData = json.dumps(articleHTTP['nutriscore_data']),
     )
-    article.allergen = allergen
+    article.allergens = majAllergenInDB(articleHTTP['allergens_hierarchy'], session)
 
-    return article, allergen
+    return article
+
+
+
+
+def majAllergenInDB(allergensHTTP, session):
+    allergens = []
+    for enAllergenString in allergensHTTP:
+        enAllergenString = enAllergenString.split(':')[-1].capitalize()
+        allergen = session.query( Allergen ).filter(Allergen.nameEN == enAllergenString).first()
+        if allergen is None:
+            allergen = Allergen(enAllergenString)
+        allergens.append(allergen)
+    return allergens

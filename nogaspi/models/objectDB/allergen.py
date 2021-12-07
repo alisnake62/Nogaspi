@@ -8,9 +8,9 @@ class Allergen (Base):
 
     __tablename__ = 'allergen'
     id = Column(INTEGER, primary_key=True)
-    nameEN = Column(TEXT)
-    nameFR = Column(TEXT)
-    articles = relationship("Article", back_populates="allergen")
+    nameEN = Column(VARCHAR)
+    nameFR = Column(VARCHAR)
+    articles = relationship("Article", secondary='article_allergen', back_populates="allergens")
 
     def __init__(self, nameEN, nameFR = None):                    
         self.nameEN = nameEN

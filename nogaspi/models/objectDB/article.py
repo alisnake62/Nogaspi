@@ -20,13 +20,13 @@ class Article (Base):
     ingredients = Column(TEXT)
     nutrimentData = Column(TEXT)
     nutriscoreData = Column(TEXT)
-    idAllergen = Column(INTEGER, ForeignKey('allergen.id'))
-    allergen = relationship("Allergen", back_populates="articles")
+    #idAllergen = Column(INTEGER, ForeignKey('allergen.id'))
+    allergens = relationship("Allergen", secondary='article_allergen', back_populates="articles")
     idLastScanUser = Column(INTEGER, ForeignKey('user.id'))
     lastUserScan = relationship("User", back_populates="articles")
     lastScanDate = Column(DATETIME)
 
-    def __init__(self, name, quantity, idLastScanUser, opinion=None, brand=None, barcode=None, image_url=None, ingredients=None, nutrimentData = None, nutriscoreData = None, idAllergen = None):                    
+    def __init__(self, name, quantity, idLastScanUser, opinion=None, brand=None, barcode=None, image_url=None, ingredients=None, nutrimentData = None, nutriscoreData = None):                    
         self.opinion = opinion        
         self.brand = brand
         self.name = name
@@ -37,7 +37,6 @@ class Article (Base):
         self.ingredients = ingredients
         self.nutrimentData = nutrimentData
         self.nutriscoreData = nutriscoreData
-        self.idAllergen = idAllergen
 
     def majInfoLastScan(self, user):
         self.lastScanDate = datetime.datetime.now()

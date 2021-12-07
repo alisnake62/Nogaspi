@@ -19,10 +19,11 @@ def f(request):
         
         article = session.query( Article ).filter(Article.barcode == barcode).first()
 
-        if not article: article = getArticleFromWeb(barcode, user, request)
+        if not article: article = getArticleFromWeb(barcode, user, request, session)
 
         article.majInfoLastScan(user)
         session.commit()
+
         data = {
             'opinion': article.opinion,
             'name': article.name,
@@ -33,8 +34,7 @@ def f(request):
             'ingredient' : article.ingredients,
             'nutrimentsData' : json.loads(article.nutrimentData),
             'nutriscoreData' : json.loads(article.nutriscoreData),
-            #'allergen' : json.loads(article.allergen.nameEN)
+            'allergen': [a.nameEN if a.nameFR is None else a.nameFR for a in article.allergens ]
         }
 
-        
     return data
