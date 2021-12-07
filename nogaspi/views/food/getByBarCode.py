@@ -29,7 +29,8 @@ def f(request):
             'brand': article.brand,
             'quantity': article.quantity,
             'barcode': article.barcode,
-            'image_url': article.image_url
+            'image_url': article.image_url,
+            'ingredient' : article.ingredient
         }
 
         session.commit()

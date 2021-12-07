@@ -20,7 +20,8 @@ def getArticleFromWeb(barcode, user, request):
         articleHTTP['quantity'],
         user.id, brand = articleHTTP['brands'],
         barcode=barcode,
-        image_url=articleHTTP['image_url']
+        image_url=articleHTTP['image_url'],
+        ingredient=articleHTTP['ingredients_text_fr']
     )
 
     return article
