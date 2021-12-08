@@ -13,10 +13,6 @@ def apiResponse(request, data = None, exception : bool = False, status_code = 20
         'summary': summary,
         'status_code': status_code
     }
-    #json = {
-    #    'metadata': metadata,
-    #    'data': data
-    #}
     data['metadata'] = metadata
 
     return data

@@ -5,7 +5,8 @@ from dbEngine import EngineSQLAlchemy
 
 def f(request):
 
-    token = request.json['token']
+    #token = request.json['token']
+    token = request.args.get('token')
 
     with EngineSQLAlchemy(request) as session:
 

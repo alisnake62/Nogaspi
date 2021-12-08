@@ -9,8 +9,10 @@ import json
 
 def f(request):
 
-    token = request.json['token']
-    barcode = request.json['barcode']
+    #token = request.json['token']
+    #barcode = request.json['barcode']
+    token = request.args.get('token')
+    barcode = request.args.get('barcode')
 
     with EngineSQLAlchemy(request) as session:
 

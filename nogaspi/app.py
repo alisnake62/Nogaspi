@@ -35,18 +35,21 @@ def login_endpoint():
 
 @app.route('/register/checkTokenValidity', methods=['GET'])
 def checkTokenValidity_endpoint():
-    checkInputAPI(CheckTokenValidityInputShema, request)
+    #checkInputAPI(CheckTokenValidityInputShema, request)
     data = register_checkTokenValidity(request)
     return jsonify(apiResponse(request, data))
 
 
 @app.route('/food/getArticle', methods=['GET'])
 def getArticle_endpoint():
-    checkInputAPI(GetArticleInputShema, request)
+    #checkInputAPI(GetArticleInputShema, request)
     data = food_getByBarCode(request)
     return jsonify(apiResponse(request, data))
     
 
+
+context = ('../cert.pem', '../key.pem')
 if __name__ == '__main__':
     app.run(debug=True, host = "0.0.0.0")
+    #app.run(debug=True, host = "0.0.0.0", ssl_context=context)
 
