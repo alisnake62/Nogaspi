@@ -14,9 +14,9 @@ def handle_invalid_usage(error):
     response.status_code = error.status_code
     return response
 
-def checkInputAPI(Schema, request):
+def checkInputAPI(Schema, args):
     try:
-        Schema().load(request.json)
+        Schema().load(args)
     except Exception as e:
         raise InputAPIException(str(e), str(e), request)
 
@@ -29,20 +29,20 @@ def test():
 
 @app.route('/register/login', methods=['POST'])
 def login_endpoint():
-    checkInputAPI(LoginInputShema, request)
+    checkInputAPI(LoginInputShema, request.json)
     data = register_login(request)
     return jsonify(apiResponse(request, data))
 
 @app.route('/register/checkTokenValidity', methods=['GET'])
 def checkTokenValidity_endpoint():
-    #checkInputAPI(CheckTokenValidityInputShema, request)
+    checkInputAPI(CheckTokenValidityInputShema, request.args)
     data = register_checkTokenValidity(request)
     return jsonify(apiResponse(request, data))
 
 
 @app.route('/food/getArticle', methods=['GET'])
 def getArticle_endpoint():
-    #checkInputAPI(GetArticleInputShema, request)
+    checkInputAPI(GetArticleInputShema, request.args)
     data = food_getByBarCode(request)
     return jsonify(apiResponse(request, data))
     
