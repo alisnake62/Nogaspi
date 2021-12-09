@@ -45,7 +45,9 @@ def getArticleFromWeb(barcode, user, request, session):
     except Exception:
         raise OpenFoodException("Problem to access at OpenFood web Service", traceback.format_exc(), request)
 
-    if articleHTTP['status'] == 0: raise OpenFoodException("This barcode is unknown in the WebService", traceback.format_exc(), request)
+    if articleHTTP['status'] == 0: 
+        message = "This barcode is unknown in the WebService"
+        raise OpenFoodException(message, message, request)
     
     articleHTTP = ArticleHTTP(articleHTTP['product'])
 

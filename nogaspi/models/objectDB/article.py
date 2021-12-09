@@ -54,6 +54,6 @@ class Article (Base):
             'ingredient' : self.ingredients,
             'nutrimentsData' : json.loads(self.nutrimentData),
             'nutriscoreData' : json.loads(self.nutriscoreData),
-            'allergens': [a.nameEN if a.nameFR is None else a.nameFR for a in self.allergens ]
+            'allergens': [a.toJson() for a in  self.allergens]
         }
         return toJson

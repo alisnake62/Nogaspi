@@ -15,3 +15,7 @@ class Allergen (Base):
     def __init__(self, nameEN, nameFR = None):                    
         self.nameEN = nameEN
         self.nameFR = nameFR
+
+    def toJson(self):
+        if self.nameFR is None: return self.nameEN
+        else : return self.nameFR
