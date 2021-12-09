@@ -1,5 +1,5 @@
 import datetime
-
+import json
 
 from sqlalchemy import Column, Integer, Text, ForeignKey
 from sqlalchemy.sql.sqltypes import DATE, DATETIME, INTEGER, TEXT, VARCHAR, String
@@ -20,11 +20,11 @@ class Article (Base):
     ingredients = Column(TEXT)
     nutrimentData = Column(TEXT)
     nutriscoreData = Column(TEXT)
-    #idAllergen = Column(INTEGER, ForeignKey('allergen.id'))
     allergens = relationship("Allergen", secondary='article_allergen', back_populates="articles")
     idLastScanUser = Column(INTEGER, ForeignKey('user.id'))
     lastUserScan = relationship("User", back_populates="articles")
     lastScanDate = Column(DATETIME)
+    donations = relationship("Donation", back_populates="article")
 
     def __init__(self, idLastScanUser, barcode, name = None, quantity = None, opinion=None, brand=None, image_url=None, ingredients=None, nutrimentData = None, nutriscoreData = None):                    
         self.opinion = opinion        
@@ -41,3 +41,19 @@ class Article (Base):
     def majInfoLastScan(self, user):
         self.lastScanDate = datetime.datetime.now()
         self.lastUserScan = user
+
+    def toJson(self):
+        toJson = {
+            'id': self.id,
+            'opinion': self.opinion,
+            'name': self.name,
+            'brand': self.brand,
+            'quantity': self.quantity,
+            'barcode': self.barcode,
+            'image_url': self.image_url,
+            'ingredient' : self.ingredients,
+            'nutrimentsData' : json.loads(self.nutrimentData),
+            'nutriscoreData' : json.loads(self.nutriscoreData),
+            'allergens': [a.nameEN if a.nameFR is None else a.nameFR for a in self.allergens ]
+        }
+        return toJson

@@ -17,4 +17,5 @@ def f(request):
         elif user.token_expiration < datetime.datetime.now():
             return {'validity': False, 'user' : user.mail, 'token_expiration': user.token_expiration}
         else:
+            user.majTokenValidity()
             return {'validity': True, 'user' : user.mail, 'token_expiration': user.token_expiration}

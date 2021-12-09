@@ -20,6 +20,7 @@ class User (Base):
     articles = relationship("Article", back_populates="lastUserScan")
     idrang = Column(INTEGER, ForeignKey('rang.id'))
     rang = relationship("Rang", back_populates="users")
+    donations = relationship("Donation", back_populates="user")
 
     def __init__(self, mail : String, password : String):                    
         self.mail = mail             

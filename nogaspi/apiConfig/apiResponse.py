@@ -2,7 +2,7 @@ from .logging import logging
 from datetime import datetime
 
 def apiResponse(request, data = None, exception : bool = False, status_code = 200):
-    
+    if data is None: data = {}
     if exception: summary = "Exception"
     else : summary = "Ok"
     

@@ -1,8 +1,8 @@
 from marshmallow import Schema, fields, INCLUDE, validate
 
-class LoginInputShema(Schema):
+class LoginInputSchema(Schema):
     mail = fields.Str(required=True)
     password = fields.Str(required=True)
 
-class CheckTokenValidityInputShema(Schema):
+class CheckTokenValidityInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))

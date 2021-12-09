@@ -1,12 +1,14 @@
 from flask import Flask, jsonify, request
-import json
 
-from models.schemas import LoginInputShema, GetArticleInputShema, CheckTokenValidityInputShema
+from models.schemas import LoginInputSchema, GetArticleInputSchema, CheckTokenValidityInputSchema, PostDonationWithBarCodeInputSchema, GetDonationsInputSchema
 from apiConfig import APIException, InputAPIException, apiResponse
 
 from views.register.login import f as register_login
 from views.register.checkTokenValidity import f as register_checkTokenValidity
 from views.food.getByBarCode import f as food_getByBarCode
+from views.food.postDonationWithBarCode import f as food_postDonationWithBarCode
+from views.food.getDonations import f as food_getDonations
+
 app = Flask(__name__)
 
 @app.errorhandler(APIException)
@@ -31,21 +33,33 @@ def test():
 
 @app.route('/register/login', methods=['POST'])
 def login_endpoint():
-    checkInputAPI(LoginInputShema, request.json)
+    checkInputAPI(LoginInputSchema, request.json)
     data = register_login(request)
     return jsonify(apiResponse(request, data))
 
 @app.route('/register/checkTokenValidity', methods=['GET'])
 def checkTokenValidity_endpoint():
-    checkInputAPI(CheckTokenValidityInputShema, request.args)
+    checkInputAPI(CheckTokenValidityInputSchema, request.args)
     data = register_checkTokenValidity(request)
     return jsonify(apiResponse(request, data))
 
 
 @app.route('/food/getArticle', methods=['GET'])
 def getArticle_endpoint():
-    checkInputAPI(GetArticleInputShema, request.args)
+    checkInputAPI(GetArticleInputSchema, request.args)
     data = food_getByBarCode(request)
+    return jsonify(apiResponse(request, data))
+
+@app.route('/food/postDonationWithBarCode', methods=['POST'])
+def postDonationWithBarCode_endpoint():
+    checkInputAPI(PostDonationWithBarCodeInputSchema, request.json)
+    data = food_postDonationWithBarCode(request)
+    return jsonify(apiResponse(request, data))
+
+@app.route('/food/getDonations', methods=['GET'])
+def getDonations_endpoint():
+    checkInputAPI(GetDonationsInputSchema, request.args)
+    data = food_getDonations(request)
     return jsonify(apiResponse(request, data))
     
 
