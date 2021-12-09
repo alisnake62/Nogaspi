@@ -5,30 +5,61 @@ from apiConfig import OpenFoodException
 
 import json
 
+class ArticleHTTP:
+    name = None
+    quantity = None
+    brand = None
+    image_url = None
+    ingredients = None
+    nutrimentData = {}
+    nutriscoreData = {}
+    allergens = []
+
+    def __init__(self, articleHTTP):
+        self.articleHTTP = articleHTTP
+        self.name = self.getProductInfo('product_name')
+        self.quantity = self.getProductInfo('quantity')
+        self.brand = self.getProductInfo('brands')
+        self.image_url = self.getProductInfo('image_url')
+        self.ingredients = self.getProductInfo('ingredients_text_fr')
+        if self.getProductInfo('nutriments') is not None:
+            self.nutrimentData = self.getProductInfo('nutriments')
+        self.nutrimentData = json.dumps(self.nutrimentData)
+        if self.getProductInfo('nutriscore_data') is not None:
+            self.nutriscoreData = self.getProductInfo('nutriscore_data')
+        self.nutriscoreData = json.dumps(self.nutriscoreData)
+        if self.getProductInfo('allergens_hierarchy') is not None:
+            self.allergens = self.getProductInfo('allergens_hierarchy')
+
+    def getProductInfo(self, info):
+        if info in self.articleHTTP: return self.articleHTTP[info]
+        else: return None
+
+
 def getArticleFromWeb(barcode, user, request, session):
     
     url = "https://world.openfoodfacts.org/api/v0/product/{}.json".format(barcode)
 
     try:
         articleHTTP = req.get(url).json()
+        if articleHTTP['status'] == 0: raise OpenFoodException("This barcode is unknown in the WebService", traceback.format_exc(), request)
     except Exception:
         raise OpenFoodException("Problem to access at OpenFood web Service", traceback.format_exc(), request)
-
-    if articleHTTP['status'] == 0: raise OpenFoodException("This barcode is unknown in the WebService", traceback.format_exc(), request)
-
-    articleHTTP = articleHTTP['product']
+    
+    articleHTTP = ArticleHTTP(articleHTTP['product'])
 
     article = Article(
-        articleHTTP['product_name'],
-        articleHTTP['quantity'],
-        user.id, brand = articleHTTP['brands'],
-        barcode=barcode,
-        image_url=articleHTTP['image_url'],
-        ingredients=articleHTTP['ingredients_text_fr'],
-        nutrimentData = json.dumps(articleHTTP['nutriments']),
-        nutriscoreData = json.dumps(articleHTTP['nutriscore_data']),
+        user.id,
+        name = articleHTTP.name,
+        quantity = articleHTTP.quantity,
+        barcode=barcode, 
+        brand = articleHTTP.brand,
+        image_url=articleHTTP.image_url,
+        ingredients=articleHTTP.ingredients,
+        nutrimentData = articleHTTP.nutrimentData,
+        nutriscoreData = articleHTTP.nutriscoreData
     )
-    article.allergens = majAllergenInDB(articleHTTP['allergens_hierarchy'], session)
+    article.allergens = majAllergenInDB(articleHTTP.allergens, session)
 
     return article
 

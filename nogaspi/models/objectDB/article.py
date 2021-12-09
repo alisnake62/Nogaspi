@@ -26,7 +26,7 @@ class Article (Base):
     lastUserScan = relationship("User", back_populates="articles")
     lastScanDate = Column(DATETIME)
 
-    def __init__(self, name, quantity, idLastScanUser, opinion=None, brand=None, barcode=None, image_url=None, ingredients=None, nutrimentData = None, nutriscoreData = None):                    
+    def __init__(self, idLastScanUser, barcode, name = None, quantity = None, opinion=None, brand=None, image_url=None, ingredients=None, nutrimentData = None, nutriscoreData = None):                    
         self.opinion = opinion        
         self.brand = brand
         self.name = name

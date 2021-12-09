@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+import json
 
 from models.schemas import LoginInputShema, GetArticleInputShema, CheckTokenValidityInputShema
 from apiConfig import APIException, InputAPIException, apiResponse
@@ -18,7 +19,8 @@ def checkInputAPI(Schema, args):
     try:
         Schema().load(args)
     except Exception as e:
-        raise InputAPIException(str(e), str(e), request)
+        message = ", ".join([str(k) + " : " + " ".join(v) for k,v in e.messages.items()])
+        raise InputAPIException(message, str(e), request)
 
 
 @app.route('/test', methods=['GET'])

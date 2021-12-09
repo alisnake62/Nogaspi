@@ -9,8 +9,6 @@ import json
 
 def f(request):
 
-    #token = request.json['token']
-    #barcode = request.json['barcode']
     token = request.args.get('token')
     barcode = request.args.get('barcode')
 
@@ -36,7 +34,7 @@ def f(request):
             'ingredient' : article.ingredients,
             'nutrimentsData' : json.loads(article.nutrimentData),
             'nutriscoreData' : json.loads(article.nutriscoreData),
-            'allergen': [a.nameEN if a.nameFR is None else a.nameFR for a in article.allergens ]
+            'allergens': [a.nameEN if a.nameFR is None else a.nameFR for a in article.allergens ]
         }
 
     return data
