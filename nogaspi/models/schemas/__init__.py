@@ -1,2 +1,2 @@
 from .register import LoginInputSchema, CheckTokenValidityInputSchema
-from .food import GetArticleInputSchema, PostDonationWithBarCodeInputSchema, GetDonationsInputSchema
+from .food import GetArticleInputSchema, PostDonationWithBarCodeInputSchema, GetDonationsInputSchema, GetAllergensInputSchema
