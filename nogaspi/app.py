@@ -64,8 +64,8 @@ def getDonations_endpoint():
     
 
 
-context = ('../cert.pem', '../key.pem')
+context = ('cert.pem', 'ket.pem')
 if __name__ == '__main__':
-    app.run(debug=True, host = "0.0.0.0")
-    #app.run(debug=True, host = "0.0.0.0", ssl_context=context)
+    #app.run(debug=True, host = "0.0.0.0")
+    app.run(debug=True, host = "0.0.0.0", ssl_context='adhoc')
 
