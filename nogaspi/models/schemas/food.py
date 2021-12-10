@@ -14,4 +14,7 @@ class PostDonationWithBarCodeInputSchema(Schema):
 
 class GetDonationsInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
+    latitude = fields.Float()
+    longitude = fields.Float()
+    geoPrecision = fields.Int()
 
