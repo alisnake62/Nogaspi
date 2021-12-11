@@ -17,9 +17,9 @@ class Donation (Base):
     longitude = Column(FLOAT)
     geoPrecision = Column(INTEGER)
 
-    def __init__(self, idArticle, idUser, expirationDate, latitude, longitude, geoPrecision):        
-        self.idArticle = idArticle
-        self.idUser = idUser
+    def __init__(self, article, user, expirationDate, latitude, longitude, geoPrecision):        
+        self.article = article
+        self.user = user
         self.expirationDate = expirationDate
         self.latitude = latitude
         self.longitude = longitude

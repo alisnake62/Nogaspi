@@ -44,7 +44,6 @@ def checkTokenValidity_endpoint():
     data = register_checkTokenValidity(request)
     return jsonify(apiResponse(request, data))
 
-
 @app.route('/food/getArticle', methods=['GET'])
 def getArticle_endpoint():
     checkInputAPI(GetArticleInputSchema, request.args)

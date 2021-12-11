@@ -24,8 +24,8 @@ def f(request):
         if not article: 
             article = getArticleFromWeb(barcode, user, request, session)
             article.majInfoLastScan(user)
-
-        donation = Donation(article.id, user.id, expirationDate, latitude, longitude, geoPrecision)
+        session.add(article)
+        donation = Donation(article, user, expirationDate, latitude, longitude, geoPrecision)
         session.add(donation)
         session.commit()
 

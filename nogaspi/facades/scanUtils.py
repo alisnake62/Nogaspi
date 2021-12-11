@@ -52,7 +52,7 @@ def getArticleFromWeb(barcode, user, request, session):
     articleHTTP = ArticleHTTP(articleHTTP['product'])
 
     article = Article(
-        user.id,
+        user,
         name = articleHTTP.name,
         quantity = articleHTTP.quantity,
         barcode=barcode, 
