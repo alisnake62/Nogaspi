@@ -1,5 +1,6 @@
 import requests as req
 import traceback
+import datetime
 from models.objectDB import Article, Allergen
 from apiConfig import OpenFoodException
 
@@ -53,6 +54,7 @@ def getArticleFromWeb(barcode, user, request, session):
 
     article = Article(
         user,
+        datetime.datetime.now(),
         name = articleHTTP.name,
         quantity = articleHTTP.quantity,
         barcode=barcode, 

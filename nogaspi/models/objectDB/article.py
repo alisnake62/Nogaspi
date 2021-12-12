@@ -26,7 +26,7 @@ class Article (Base):
     lastScanDate = Column(DATETIME)
     donations = relationship("Donation", back_populates="article")
 
-    def __init__(self, lastUserScan, barcode, name = None, quantity = None, opinion=None, brand=None, image_url=None, ingredients=None, nutrimentData = None, nutriscoreData = None):                    
+    def __init__(self, lastUserScan, lastScanDate, barcode, name = None, quantity = None, opinion=None, brand=None, image_url=None, ingredients=None, nutrimentData = None, nutriscoreData = None):                    
         self.opinion = opinion        
         self.brand = brand
         self.name = name
@@ -34,6 +34,7 @@ class Article (Base):
         self.barcode = barcode
         self.image_url = image_url
         self.lastUserScan = lastUserScan
+        self.lastScanDate = lastScanDate
         self.ingredients = ingredients
         self.nutrimentData = nutrimentData
         self.nutriscoreData = nutriscoreData
