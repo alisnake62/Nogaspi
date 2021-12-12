@@ -7,7 +7,7 @@ services:
       - db_nogaspi
     build: ${path}/Nogaspi/nogaspi
     container_name: backend_nogaspi
-    #restart: always
+    restart: always
     environment:
       PMA_HOST: ${sqlHost}
       MYSQL_ROOT_PASSWORD: ${sqlPassword}
@@ -22,7 +22,7 @@ services:
   db_nogaspi:
     image: mariadb:latest
     container_name: db_nogaspi
-    #restart: always
+    restart: always
     ports:
       - "33306:3306"
     volumes:
