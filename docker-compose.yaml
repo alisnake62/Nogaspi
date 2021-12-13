@@ -16,7 +16,7 @@ services:
     volumes:
       - ${path}:/usr/src/app
     networks:
-      - python-db
+      - python-db2
 
   # CONTAINER - MYSQL : https://hub.docker.com/_/mysql
   db_nogaspi2:
@@ -26,7 +26,7 @@ services:
     ports:
       - "33307:3306"
     volumes:
-      - data:/var/lib/mysql
+      - data2:/var/lib/mysql
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
     environment:
       MYSQL_ROOT_PASSWORD: ${sqlPassword}
@@ -34,8 +34,8 @@ services:
       MYSQL_USER: ${sqlUser}
       MYSQL_PASSWORD: ${sqlPassword}
     networks:
-      - python-db
-      - phpmyadmin-db
+      - python-db2
+      - phpmyadmin-db2
 
   # CONTAINER - PHPMYADMIN : https://hub.docker.com/r/phpmyadmin/phpmyadmin
   phpmyadmin_nogaspi2:
@@ -50,13 +50,13 @@ services:
     ports:
       - "8082:80"
     networks:
-      - phpmyadmin-db
+      - phpmyadmin-db2
 
 volumes:
-  data:
+  data2:
 
 networks:
-  python-db:
+  python-db2:
     driver: bridge
-  phpmyadmin-db:
+  phpmyadmin-db2:
     driver: bridge
