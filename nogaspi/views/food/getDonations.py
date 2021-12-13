@@ -1,4 +1,4 @@
-from models.objectDB import Article, Donation
+from models.objectDB import Product, Donation
 from dbEngine import EngineSQLAlchemy
 from apiConfig import EmptyException
 from facades.registerUtils import getUserFromToken

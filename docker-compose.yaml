@@ -2,29 +2,29 @@ version: '3'
 
 services:
   
-  backend_nogaspi:
+  backend_nogaspi2:
     depends_on:
-      - db_nogaspi
+      - db_nogaspi2
     build: ${path}/Nogaspi/nogaspi
-    container_name: backend_nogaspi
+    container_name: backend_nogaspi2
     restart: always
     environment:
       PMA_HOST: ${sqlHost}
       MYSQL_ROOT_PASSWORD: ${sqlPassword}
     ports:
-      - 5555:5000
+      - 5556:5000
     volumes:
       - ${path}:/usr/src/app
     networks:
       - python-db
 
   # CONTAINER - MYSQL : https://hub.docker.com/_/mysql
-  db_nogaspi:
+  db_nogaspi2:
     image: mariadb:latest
-    container_name: db_nogaspi
+    container_name: db_nogaspi2
     restart: always
     ports:
-      - "33306:3306"
+      - "33307:3306"
     volumes:
       - data:/var/lib/mysql
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
@@ -38,17 +38,17 @@ services:
       - phpmyadmin-db
 
   # CONTAINER - PHPMYADMIN : https://hub.docker.com/r/phpmyadmin/phpmyadmin
-  phpmyadmin_nogaspi:
+  phpmyadmin_nogaspi2:
     depends_on:
-      - db_nogaspi
+      - db_nogaspi2
     image: phpmyadmin/phpmyadmin:latest
-    container_name: phpmyadmin_nogaspi
+    container_name: phpmyadmin_nogaspi2
     #restart: always
     environment:
       PMA_HOST: ${sqlHost}
       MYSQL_ROOT_PASSWORD: ${sqlPassword}
     ports:
-      - "8081:80"
+      - "8082:80"
     networks:
       - phpmyadmin-db
 

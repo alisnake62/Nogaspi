@@ -1,8 +1,8 @@
-from models.objectDB import Article, Allergen
+from models.objectDB import Product, Allergen
 from dbEngine import EngineSQLAlchemy
 from apiConfig import EmptyException
 from facades.registerUtils import getUserFromToken
-from facades.scanUtils import getArticleFromWeb
+from facades.scanUtils import getProductFromWeb
 
 import json
 
@@ -17,13 +17,13 @@ def f(request):
         user = getUserFromToken(token, session, request)
         user.majTokenValidity()
         
-        article = session.query( Article ).filter(Article.barcode == barcode).first()
+        product = session.query( Product ).filter(Product.barcode == barcode).first()
 
-        if not article: article = getArticleFromWeb(barcode, user, request, session)
+        if not product: product = getProductFromWeb(barcode, user, request, session)
 
-        article.majInfoLastScan(user)
+        product.majInfoLastScan(user)
         session.commit()
 
-        data = article.toJson()
+        data = product.toJson()
 
     return data

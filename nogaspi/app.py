@@ -1,14 +1,16 @@
 from flask import Flask, jsonify, request
 
-from models.schemas import LoginInputSchema, GetArticleInputSchema, CheckTokenValidityInputSchema, PostDonationWithBarCodeInputSchema, GetDonationsInputSchema, GetAllergensInputSchema
+from models.schemas import LoginInputSchema, GetProductInputSchema, CheckTokenValidityInputSchema, PostDonationInputSchema, GetDonationsInputSchema, GetAllergensInputSchema, PostArticlesInFridgeInputSchema, GetArticlesInFridgeInputSchema
 from apiConfig import APIException, InputAPIException, apiResponse
 
 from views.register.login import f as register_login
 from views.register.checkTokenValidity import f as register_checkTokenValidity
 from views.food.getByBarCode import f as food_getByBarCode
-from views.food.postDonationWithBarCode import f as food_postDonationWithBarCode
+from views.food.postDonation import f as food_postDonation
 from views.food.getDonations import f as food_getDonations
 from views.food.getAllergens import f as food_getAllergens
+from views.food.postArticlesInFridge import f as food_postArticlesInFridge
+from views.food.getArticlesInFridge import f as food_getArticlesInFridge
 
 app = Flask(__name__)
 
@@ -22,8 +24,7 @@ def checkInputAPI(Schema, args):
     try:
         Schema().load(args)
     except Exception as e:
-        message = ", ".join([str(k) + " : " + " ".join(v) for k,v in e.messages.items()])
-        raise InputAPIException(message, str(e), request)
+        raise InputAPIException(str(e), str(e), request)
 
 
 @app.route('/test', methods=['GET'])
@@ -44,16 +45,16 @@ def checkTokenValidity_endpoint():
     data = register_checkTokenValidity(request)
     return jsonify(apiResponse(request, data))
 
-@app.route('/food/getArticle', methods=['GET'])
-def getArticle_endpoint():
-    checkInputAPI(GetArticleInputSchema, request.args)
+@app.route('/food/getProduct', methods=['GET'])
+def getProduct_endpoint():
+    checkInputAPI(GetProductInputSchema, request.args)
     data = food_getByBarCode(request)
     return jsonify(apiResponse(request, data))
 
-@app.route('/food/postDonationWithBarCode', methods=['POST'])
-def postDonationWithBarCode_endpoint():
-    checkInputAPI(PostDonationWithBarCodeInputSchema, request.json)
-    data = food_postDonationWithBarCode(request)
+@app.route('/food/postDonation', methods=['POST'])
+def postDonation_endpoint():
+    checkInputAPI(PostDonationInputSchema, request.json)
+    data = food_postDonation(request)
     return jsonify(apiResponse(request, data))
 
 @app.route('/food/getDonations', methods=['GET'])
@@ -66,6 +67,18 @@ def getDonations_endpoint():
 def getAllergens_endpoint():
     checkInputAPI(GetAllergensInputSchema, request.args)
     data = food_getAllergens(request)
+    return jsonify(apiResponse(request, data))
+
+@app.route('/food/postArticlesInFridge', methods=['POST'])
+def postArticlesInFridge_endpoint():
+    checkInputAPI(PostArticlesInFridgeInputSchema, request.json)
+    data = food_postArticlesInFridge(request)
+    return jsonify(apiResponse(request, data))
+
+@app.route('/food/getArticlesInFridge', methods=['GET'])
+def getArticlesInFridge_endpoint():
+    checkInputAPI(GetArticlesInFridgeInputSchema, request.args)
+    data = food_getArticlesInFridge(request)
     return jsonify(apiResponse(request, data))
 
 if __name__ == '__main__':

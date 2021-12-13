@@ -1,7 +1,8 @@
 from .user import User
-from .article import Article
+from .product import Product
 from .rang import Rang
 from .allergen import Allergen
-from .articleAllergen import ArticleAllergen
+from .productAllergen import ProductAllergen
 from .donation import Donation
-
+from .article import Article
+from .fridge import Fridge

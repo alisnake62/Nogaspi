@@ -17,10 +17,11 @@ class User (Base):
     password = Column(VARCHAR)
     token = Column(VARCHAR)
     token_expiration = Column(DATETIME)
-    articles = relationship("Article", back_populates="lastUserScan")
+    products = relationship("Product", back_populates="lastUserScan")
     idrang = Column(INTEGER, ForeignKey('rang.id'))
     rang = relationship("Rang", back_populates="users")
     donations = relationship("Donation", back_populates="user")
+    fridges = relationship("Fridge", back_populates="user")
 
     def __init__(self, mail : String, password : String):                    
         self.mail = mail             

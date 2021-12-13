@@ -1,3 +1,4 @@
+from datetime import datetime
 from sqlalchemy import Column, Integer, Text, ForeignKey
 from sqlalchemy.sql.sqltypes import DATE, DATETIME, FLOAT, INTEGER, TEXT, VARCHAR, String
 from sqlalchemy.orm import relationship
@@ -8,30 +9,32 @@ class Donation (Base):
 
     __tablename__ = 'donation'
     id = Column(INTEGER, primary_key=True)
-    idArticle = Column(INTEGER, ForeignKey('article.id'))
-    article = relationship("Article", back_populates="donations")
     idUser = Column(INTEGER, ForeignKey('user.id'))
     user = relationship("User", back_populates="donations")
-    expirationDate = Column(DATETIME)
     latitude = Column(FLOAT)
     longitude = Column(FLOAT)
     geoPrecision = Column(INTEGER)
+    startingDate = Column(DATE)
+    endingDate = Column(DATE)
+    articles = relationship("Article", back_populates="donation")
 
-    def __init__(self, article, user, expirationDate, latitude, longitude, geoPrecision):        
-        self.article = article
+
+    def __init__(self, user, latitude, longitude, geoPrecision, endingDate):        
         self.user = user
-        self.expirationDate = expirationDate
         self.latitude = latitude
         self.longitude = longitude
         self.geoPrecision = geoPrecision
+        self.startingDate = datetime.now()
+        self.endingDate = endingDate
 
     def toJson(self):
         toJson = {
             'id': self.id,
-            'article': self.article.toJson(),
-            'expirationDate': self.expirationDate,
             'latitude': self.latitude,
             'longitude': self.longitude,
-            'geoPrecision': self.geoPrecision
+            'geoPrecision': self.geoPrecision,
+            'startingDate': self.startingDate,
+            'endingDate': self.endingDate,
+            'articles': [a.toJson() for a in  self.articles]
         }
         return toJson

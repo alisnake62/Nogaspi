@@ -4,9 +4,9 @@ from sqlalchemy.orm import relationship
 
 from dbEngine import Base
 
-class ArticleAllergen(Base):
-    __tablename__ = "article_allergen"
+class ProductAllergen(Base):
+    __tablename__ = "product_allergen"
 
     id = Column(Integer, primary_key=True)
-    idArticle = Column(Integer, ForeignKey('article.id'))
+    idProduct = Column(Integer, ForeignKey('product.id'))
     idAllergen = Column(Integer, ForeignKey('allergen.id'))
