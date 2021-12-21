@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 
-from models.schemas import LoginInputSchema, GetProductInputSchema, CheckTokenValidityInputSchema, PostDonationInputSchema, GetDonationsInputSchema, GetAllergensInputSchema, PostArticlesInFridgeInputSchema, GetArticlesInFridgeInputSchema
+from models.schemas import LoginInputSchema, GetProductInputSchema, CheckTokenValidityInputSchema, PostDonationInputSchema, GetDonationsInputSchema, GetAllergensInputSchema, PostArticlesInFridgeInputSchema, GetArticlesInFridgeInputSchema, PostTakeDonationInputSchema
 from apiConfig import APIException, InputAPIException, apiResponse
 
 from views.register.login import f as register_login
@@ -11,6 +11,7 @@ from views.food.getDonations import f as food_getDonations
 from views.food.getAllergens import f as food_getAllergens
 from views.food.postArticlesInFridge import f as food_postArticlesInFridge
 from views.food.getArticlesInFridge import f as food_getArticlesInFridge
+from views.food.postTakeDonation import f as food_postTakeDonation
 
 app = Flask(__name__)
 
@@ -79,6 +80,12 @@ def postArticlesInFridge_endpoint():
 def getArticlesInFridge_endpoint():
     checkInputAPI(GetArticlesInFridgeInputSchema, request.args)
     data = food_getArticlesInFridge(request)
+    return jsonify(apiResponse(request, data))
+
+@app.route('/food/postTakeDonation', methods=['POST'])
+def postTakeDonation_endpoint():
+    checkInputAPI(PostTakeDonationInputSchema, request.json)
+    data = food_postTakeDonation(request)
     return jsonify(apiResponse(request, data))
 
 if __name__ == '__main__':

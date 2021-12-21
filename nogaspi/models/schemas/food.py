@@ -35,3 +35,7 @@ class PostArticlesInFridgeInputSchema(Schema):
 
 class GetArticlesInFridgeInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
+
+class PostTakeDonationInputSchema(Schema):
+    token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
+    idDonation = fields.Int()
