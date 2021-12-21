@@ -15,3 +15,10 @@ def getCoordMinMaxAroundDistance(coordStart, distance):
     lonMax = d.destination(point=start, bearing=90).longitude
 
     return latMin, latMax, lonMin, lonMax
+
+def makeDonation(userOwner, userTaker, donation):
+    donation.archive = True
+    for article in donation.articles:
+        article.fridge = None
+    userTaker.points += 5
+    userOwner.points += 20

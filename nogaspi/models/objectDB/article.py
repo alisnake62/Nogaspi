@@ -2,7 +2,7 @@ import datetime
 import json
 
 from sqlalchemy import Column, Integer, Text, ForeignKey
-from sqlalchemy.sql.sqltypes import DATE, DATETIME, INTEGER, TEXT, VARCHAR, String
+from sqlalchemy.sql.sqltypes import BOOLEAN, DATE, DATETIME, INTEGER, TEXT, VARCHAR, String
 from sqlalchemy.orm import relationship
 
 from dbEngine import Base

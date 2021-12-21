@@ -4,7 +4,8 @@ from models.schemas import (
     LoginInputSchema,
     GetProductInputSchema,
     CheckTokenValidityInputSchema,
-    PostDonationInputSchema,
+    PostDonationFromScanInputSchema,
+    PostDonationFromFridgeInputSchema,
     GetDonationsInputSchema,
     GetAllergensInputSchema,
     PostArticlesInFridgeInputSchema,
@@ -17,7 +18,8 @@ from apiConfig import APIException, InputAPIException, apiResponse
 from views.register.login import f as register_login
 from views.register.checkTokenValidity import f as register_checkTokenValidity
 from views.food.getByBarCode import f as food_getByBarCode
-from views.food.postDonation import f as food_postDonation
+from views.food.postDonationFromScan import f as food_postDonationFromScan
+from views.food.postDonationFromFridge import f as food_postDonationFromFridge
 from views.food.getDonations import f as food_getDonations
 from views.food.getAllergens import f as food_getAllergens
 from views.food.postArticlesInFridge import f as food_postArticlesInFridge
@@ -64,10 +66,16 @@ def getProduct_endpoint():
     data = food_getByBarCode(request)
     return jsonify(apiResponse(request, data))
 
-@app.route('/food/postDonation', methods=['POST'])
-def postDonation_endpoint():
-    checkInputAPI(PostDonationInputSchema, request.json)
-    data = food_postDonation(request)
+@app.route('/food/postDonationFromScan', methods=['POST'])
+def postDonationFromScan_endpoint():
+    checkInputAPI(PostDonationFromScanInputSchema, request.json)
+    data = food_postDonationFromScan(request)
+    return jsonify(apiResponse(request, data))
+
+@app.route('/food/postDonationFromFridge', methods=['POST'])
+def postDonationFromFridge_endpoint():
+    checkInputAPI(PostDonationFromFridgeInputSchema, request.json)
+    data = food_postDonationFromFridge(request)
     return jsonify(apiResponse(request, data))
 
 @app.route('/food/getDonations', methods=['GET'])
