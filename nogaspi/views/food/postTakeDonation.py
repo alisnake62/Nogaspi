@@ -1,6 +1,6 @@
 from models.objectDB import Donation
 from dbEngine import EngineSQLAlchemy
-from apiConfig import EmptyException
+from apiConfig import EmptyException, DonationException
 from facades.registerUtils import getUserFromToken
 from facades.donationUtils import checkDonationCode
 
@@ -22,12 +22,15 @@ def f(request):
 
         checkDonationCode(donation, donationCode, request)
 
-        userDonation = donation.user
+        userOwnerDonation = donation.user
+        if user == userOwnerDonation:
+            message = "You can't take your own donation"
+            raise DonationException(message, message, request)
 
         session.delete(donation)
         user.points += 5
-        userDonation.points += 20
-        
+        userOwnerDonation.points += 20
+
         session.commit()
 
         data = {'isTaked':True}
