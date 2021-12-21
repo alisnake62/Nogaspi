@@ -1,4 +1,6 @@
-from datetime import datetime
+import secrets
+import datetime
+
 from sqlalchemy import Column, Integer, Text, ForeignKey
 from sqlalchemy.sql.sqltypes import DATE, DATETIME, FLOAT, INTEGER, TEXT, VARCHAR, String
 from sqlalchemy.orm import relationship
@@ -6,6 +8,8 @@ from sqlalchemy.orm import relationship
 from dbEngine import Base
 
 class Donation (Base):
+
+    CODE_VALIDITY = 5   #minutes
 
     __tablename__ = 'donation'
     id = Column(INTEGER, primary_key=True)
@@ -17,7 +21,8 @@ class Donation (Base):
     startingDate = Column(DATE)
     endingDate = Column(DATE)
     articles = relationship("Article", back_populates="donation")
-
+    code = Column(VARCHAR)
+    code_expiration = Column(DATETIME)
 
     def __init__(self, user, latitude, longitude, geoPrecision, endingDate):        
         self.user = user
@@ -26,6 +31,11 @@ class Donation (Base):
         self.geoPrecision = geoPrecision
         self.startingDate = datetime.now()
         self.endingDate = endingDate
+
+    def generateCode(self):
+        self.code = secrets.token_hex()
+        self.code_expiration = datetime.datetime.now() + datetime.timedelta(minutes = self.CODE_VALIDITY)
+        return {'code': self.code, 'code_expiration': self.code_expiration}
 
     def toJson(self):
         toJson = {

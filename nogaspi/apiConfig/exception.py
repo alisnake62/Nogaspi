@@ -17,3 +17,6 @@ class InputAPIException(APIException):
 
 class OpenFoodException(APIException):
     pass
+
+class DonationException(APIException):
+    pass

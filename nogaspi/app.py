@@ -1,6 +1,17 @@
 from flask import Flask, jsonify, request
 
-from models.schemas import LoginInputSchema, GetProductInputSchema, CheckTokenValidityInputSchema, PostDonationInputSchema, GetDonationsInputSchema, GetAllergensInputSchema, PostArticlesInFridgeInputSchema, GetArticlesInFridgeInputSchema, PostTakeDonationInputSchema
+from models.schemas import (
+    LoginInputSchema,
+    GetProductInputSchema,
+    CheckTokenValidityInputSchema,
+    PostDonationInputSchema,
+    GetDonationsInputSchema,
+    GetAllergensInputSchema,
+    PostArticlesInFridgeInputSchema,
+    GetArticlesInFridgeInputSchema,
+    PostTakeDonationInputSchema,
+    GetDonationCodeInputSchema
+)
 from apiConfig import APIException, InputAPIException, apiResponse
 
 from views.register.login import f as register_login
@@ -12,6 +23,7 @@ from views.food.getAllergens import f as food_getAllergens
 from views.food.postArticlesInFridge import f as food_postArticlesInFridge
 from views.food.getArticlesInFridge import f as food_getArticlesInFridge
 from views.food.postTakeDonation import f as food_postTakeDonation
+from views.food.getDonationCode import f as food_getDonationCode
 
 app = Flask(__name__)
 
@@ -86,6 +98,12 @@ def getArticlesInFridge_endpoint():
 def postTakeDonation_endpoint():
     checkInputAPI(PostTakeDonationInputSchema, request.json)
     data = food_postTakeDonation(request)
+    return jsonify(apiResponse(request, data))
+
+@app.route('/food/getDonationCode', methods=['GET'])
+def getDonationCode_endpoint():
+    checkInputAPI(GetDonationCodeInputSchema, request.args)
+    data = food_getDonationCode(request)
     return jsonify(apiResponse(request, data))
 
 if __name__ == '__main__':
