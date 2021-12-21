@@ -35,6 +35,7 @@ class Donation (Base):
             'geoPrecision': self.geoPrecision,
             'startingDate': self.startingDate,
             'endingDate': self.endingDate,
-            'articles': [a.toJson() for a in  self.articles]
+            'articles': [a.toJson() for a in  self.articles],
+            'user': self.user.toJson()
         }
         return toJson
