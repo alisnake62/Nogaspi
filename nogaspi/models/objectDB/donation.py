@@ -29,7 +29,7 @@ class Donation (Base):
         self.latitude = latitude
         self.longitude = longitude
         self.geoPrecision = geoPrecision
-        self.startingDate = datetime.now()
+        self.startingDate = datetime.datetime.now()
         self.endingDate = endingDate
 
     def generateCode(self):
