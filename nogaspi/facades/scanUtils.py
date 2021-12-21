@@ -68,9 +68,6 @@ def getProductFromWeb(barcode, user, request, session):
 
     return product
 
-
-
-
 def majAllergenInDB(allergensHTTP, session):
     allergens = []
     for enAllergenString in allergensHTTP:

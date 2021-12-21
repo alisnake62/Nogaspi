@@ -29,5 +29,5 @@ def f(request):
         else:
             donations = session.query( Donation )
 
-        data = {'donations': [d.toJson() for d in donations]}
+        data = {'donations': [d.toJson() for d in donations if d.isValide()]}
     return data

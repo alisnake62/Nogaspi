@@ -2,7 +2,6 @@ from models.objectDB import Donation
 from dbEngine import EngineSQLAlchemy
 from apiConfig import EmptyException, DonationException
 from facades.registerUtils import getUserFromToken
-from facades.donationUtils import checkDonationCode
 
 def f(request):
 
@@ -19,15 +18,16 @@ def f(request):
         if not donation:
             message = "This donation is not present in Database"
             raise EmptyException(message, message, request)
-
-        checkDonationCode(donation, donationCode, request)
+        
+        donation.checkValidityRaiseException(request)
+        donation.compareCodeRaiseException(donationCode, request)
 
         userOwnerDonation = donation.user
         if user == userOwnerDonation:
             message = "You can't take your own donation"
             raise DonationException(message, message, request)
 
-        session.delete(donation)
+        donation.archive = True
         user.points += 5
         userOwnerDonation.points += 20
 
