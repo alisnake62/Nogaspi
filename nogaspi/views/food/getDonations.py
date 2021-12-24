@@ -1,33 +1,30 @@
-from models.objectDB import Product, Donation
+from models.objectDB import Donation
 from dbEngine import EngineSQLAlchemy
-from apiConfig import EmptyException
 from facades.registerUtils import getUserFromToken
-from facades.donationUtils import getCoordMinMaxAroundDistance
-
+from facades.donationUtils import isAround
 
 def f(request):
 
     token = request.args.get('token')
     latitude = request.args.get('latitude')
     longitude = request.args.get('longitude')
-    geoPrecision = request.args.get('geoPrecision')
+    distanceMax = request.args.get('distanceMax')
 
     filter = False
-    if None not in (latitude, longitude, geoPrecision):
+    if None not in (latitude, longitude, distanceMax):
         filter = True
-        latitude, longitude, geoPrecision = (float(a) for a in (latitude, longitude, geoPrecision))
-        coordStart = (latitude, longitude)
+        latitude, longitude, distanceMax = (float(a) for a in (latitude, longitude, distanceMax))
+        coordUser = (latitude, longitude)
 
     with EngineSQLAlchemy(request) as session:
 
         user = getUserFromToken(token, session, request)
         user.majTokenValidity()
         
+        donations = session.query( Donation )
+
         if filter:
-            latMin, latMax, lonMin, lonMax = getCoordMinMaxAroundDistance(coordStart, geoPrecision)
-            donations = session.query( Donation ).filter(Donation.latitude.between(latMin, latMax), Donation.longitude.between(lonMin, lonMax))
-        else:
-            donations = session.query( Donation )
+            donations = [d for d in donations if isAround(coordUser, (d.latitude, d.longitude), distanceMax)]
 
         data = {'donations': [d.toJson() for d in donations if d.isValide()]}
     return data

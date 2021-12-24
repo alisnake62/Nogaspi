@@ -1,6 +1,5 @@
 from models.objectDB import Product, Article, Fridge
 from dbEngine import EngineSQLAlchemy
-from apiConfig import EmptyException
 from facades.registerUtils import getUserFromToken
 from facades.scanUtils import getProductFromWeb
 

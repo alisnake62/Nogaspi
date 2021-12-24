@@ -1,8 +1,7 @@
-from models.objectDB import Product, Donation
+from models.objectDB import Donation
 from dbEngine import EngineSQLAlchemy
 from apiConfig import EmptyException, RegisterException
 from facades.registerUtils import getUserFromToken
-from facades.donationUtils import getCoordMinMaxAroundDistance
 
 
 def f(request):

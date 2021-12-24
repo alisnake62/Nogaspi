@@ -1,20 +1,23 @@
-import datetime
-import geopy
-import geopy.distance
-from apiConfig import DonationException
-from geopy.units import meters
+import math
 
-def getCoordMinMaxAroundDistance(coordStart, distance):
+def isAround(coord1, coord2, distance):
+    lat1, lon1 = coord1
+    lat2, lon2 = coord2
+    if distanceBetween(lat1, lon1, lat2, lon2) * 1000 > distance:
+        return False
+    return True
 
-    start = geopy.Point(coordStart)
-    d = geopy.distance.distance(meters = distance)
-
-    latMin = d.destination(point=start, bearing=180).latitude
-    latMax = d.destination(point=start, bearing=0).latitude
-    lonMin = d.destination(point=start, bearing=270).longitude
-    lonMax = d.destination(point=start, bearing=90).longitude
-
-    return latMin, latMax, lonMin, lonMax
+def distanceBetween(lat1, lon1, lat2, lon2):
+    if lat1 == lat2 and lon1 == lon2:
+        return 0
+    else:
+        theta = lon1 - lon2
+        dist = math.sin(math.radians(lat1)) * math.sin(math.radians(lat2)) + math.cos(math.radians(lat1)) * math.cos(math.radians(lat2)) * math.cos(math.radians(theta));
+        dist = math.acos(dist)
+        dist = math.degrees(dist)
+        dist = dist * 60 * 1.1515
+        dist *= 1.609344
+        return dist
 
 def makeDonation(userOwner, userTaker, donation):
     donation.archive = True

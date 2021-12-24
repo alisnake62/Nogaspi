@@ -3,7 +3,6 @@ from models.objectDB import Fridge
 from dbEngine import EngineSQLAlchemy
 from apiConfig import EmptyException
 from facades.registerUtils import getUserFromToken
-from facades.donationUtils import getCoordMinMaxAroundDistance
 
 
 def f(request):
