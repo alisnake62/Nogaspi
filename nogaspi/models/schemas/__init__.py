@@ -10,5 +10,6 @@ from .food import (
     TakeDonationInputSchema,
     GetDonationCodeInputSchema,
     GetFavoriteDonationsInputSchema,
-    ToggleDonationInMyFavoriteInputSchema
+    ToggleDonationInMyFavoriteInputSchema,
+    GetMyDonationCodeInputSchema
 )

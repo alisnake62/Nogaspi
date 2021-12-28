@@ -13,7 +13,8 @@ from models.schemas import (
     TakeDonationInputSchema,
     GetDonationCodeInputSchema,
     GetFavoriteDonationsInputSchema,
-    ToggleDonationInMyFavoriteInputSchema
+    ToggleDonationInMyFavoriteInputSchema,
+    GetMyDonationCodeInputSchema
 )
 from apiConfig import APIException, InputAPIException, apiResponse
 
@@ -30,6 +31,7 @@ from views.food.takeDonation import f as food_takeDonation
 from views.food.getDonationCode import f as food_getDonationCode
 from views.food.getFavoriteDonations import f as food_getFavoriteDonations
 from views.food.toggleDonationInMyFavorite import f as food_toggleDonationInMyFavorite
+from views.food.getMyDonations import f as food_getMyDonations
 
 app = Flask(__name__)
 
@@ -128,6 +130,12 @@ def getFavoriteDonations_endpoint():
 def toggleDonationInMyFavorite_endpoint():
     checkInputAPI(ToggleDonationInMyFavoriteInputSchema, request.json)
     data = food_toggleDonationInMyFavorite(request)
+    return jsonify(apiResponse(request, data))
+
+@app.route('/food/getMyDonations', methods=['GET'])
+def getMyDonations_endpoint():
+    checkInputAPI(GetMyDonationCodeInputSchema, request.args)
+    data = food_getMyDonations(request)
     return jsonify(apiResponse(request, data))
     
 

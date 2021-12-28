@@ -46,6 +46,14 @@ class Donation (Base):
         if self.archive or self.endingDate < datetime.datetime.now():
             return False
         return True
+
+    def isArchived(self):
+        return self.archive
+
+    def isExpired(self):
+        if self.endingDate < datetime.datetime.now():
+            return True
+        return False
     
     def checkValidityRaiseException(self, request):
         if self.archive:
@@ -84,7 +92,8 @@ class Donation (Base):
             'endingDate': self.endingDate,
             'articles': [a.toJson() for a in  self.articles],
             'allergens': allergens,
-            'user': self.user.toJson(),
+            'owner': self.user.toJson(),
+            'isMine': True if self.user == user else False,
             'isMyFavorite': self.isFavorite(user)
         }
         return toJson
