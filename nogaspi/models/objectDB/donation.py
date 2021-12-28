@@ -62,6 +62,12 @@ class Donation (Base):
             raise DonationException(message, message, request)
 
     def toJson(self):
+
+        allergens = []
+        for article in self.articles:
+            allergens += [allergen.toJson() for allergen in article.product.allergens]
+        allergens = list(set(allergens))
+
         toJson = {
             'id': self.id,
             'latitude': self.latitude,
@@ -70,6 +76,7 @@ class Donation (Base):
             'startingDate': self.startingDate,
             'endingDate': self.endingDate,
             'articles': [a.toJson() for a in  self.articles],
+            'allergens': allergens,
             'user': self.user.toJson()
         }
         return toJson
