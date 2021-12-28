@@ -26,5 +26,5 @@ def f(request):
         if filter:
             donations = [d for d in donations if isAround(coordUser, (d.latitude, d.longitude), distanceMax)]
 
-        data = {'donations': [d.toJson() for d in donations if d.isValide()]}
+        data = {'donations': [d.toJson(user) for d in donations if d.isValide()]}
     return data

@@ -10,8 +10,10 @@ from models.schemas import (
     GetAllergensInputSchema,
     PostArticlesInFridgeInputSchema,
     GetArticlesInFridgeInputSchema,
-    PostTakeDonationInputSchema,
-    GetDonationCodeInputSchema
+    TakeDonationInputSchema,
+    GetDonationCodeInputSchema,
+    GetFavoriteDonationsInputSchema,
+    ToggleDonationInMyFavoriteInputSchema
 )
 from apiConfig import APIException, InputAPIException, apiResponse
 
@@ -24,8 +26,10 @@ from views.food.getDonations import f as food_getDonations
 from views.food.getAllergens import f as food_getAllergens
 from views.food.postArticlesInFridge import f as food_postArticlesInFridge
 from views.food.getArticlesInFridge import f as food_getArticlesInFridge
-from views.food.postTakeDonation import f as food_postTakeDonation
+from views.food.takeDonation import f as food_takeDonation
 from views.food.getDonationCode import f as food_getDonationCode
+from views.food.getFavoriteDonations import f as food_getFavoriteDonations
+from views.food.toggleDonationInMyFavorite import f as food_toggleDonationInMyFavorite
 
 app = Flask(__name__)
 
@@ -102,10 +106,10 @@ def getArticlesInFridge_endpoint():
     data = food_getArticlesInFridge(request)
     return jsonify(apiResponse(request, data))
 
-@app.route('/food/postTakeDonation', methods=['POST'])
-def postTakeDonation_endpoint():
-    checkInputAPI(PostTakeDonationInputSchema, request.json)
-    data = food_postTakeDonation(request)
+@app.route('/food/takeDonation', methods=['POST'])
+def takeDonation_endpoint():
+    checkInputAPI(TakeDonationInputSchema, request.json)
+    data = food_takeDonation(request)
     return jsonify(apiResponse(request, data))
 
 @app.route('/food/getDonationCode', methods=['GET'])
@@ -113,6 +117,19 @@ def getDonationCode_endpoint():
     checkInputAPI(GetDonationCodeInputSchema, request.args)
     data = food_getDonationCode(request)
     return jsonify(apiResponse(request, data))
+
+@app.route('/food/getFavoriteDonations', methods=['GET'])
+def getFavoriteDonations_endpoint():
+    checkInputAPI(GetFavoriteDonationsInputSchema, request.args)
+    data = food_getFavoriteDonations(request)
+    return jsonify(apiResponse(request, data))
+
+@app.route('/food/toggleDonationInMyFavorite', methods=['POST'])
+def toggleDonationInMyFavorite_endpoint():
+    checkInputAPI(ToggleDonationInMyFavoriteInputSchema, request.json)
+    data = food_toggleDonationInMyFavorite(request)
+    return jsonify(apiResponse(request, data))
+    
 
 if __name__ == '__main__':
     app.run(debug=True, host = "0.0.0.0")

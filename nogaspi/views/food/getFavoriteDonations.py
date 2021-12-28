@@ -1,7 +1,6 @@
-from models.objectDB import Allergen, Product
+from models.objectDB import Donation
 from dbEngine import EngineSQLAlchemy
 from facades.registerUtils import getUserFromToken
-
 
 def f(request):
 
@@ -12,8 +11,5 @@ def f(request):
         user = getUserFromToken(token, session, request)
         user.majTokenValidity()
 
-        allergens = session.query( Allergen )
-
-        data = {'allergens': [a.toJson() for a in allergens]}
-
+        data = {'favoriteDonations': [d.toJson(user) for d in user.favoriteDonations if d.isValide()]}
     return data

@@ -24,6 +24,8 @@ class User (Base):
     rang = relationship("Rang", back_populates="users")
     donations = relationship("Donation", back_populates="user")
     fridges = relationship("Fridge", back_populates="user")
+    favoriteDonations = relationship("Donation", secondary='favorite_donation', back_populates="favoriteUsers")
+
 
     def __init__(self, mail : String, password : String, pseudo):                    
         self.mail = mail             

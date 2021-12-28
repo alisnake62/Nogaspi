@@ -25,6 +25,8 @@ class Donation (Base):
     code = Column(VARCHAR)
     code_expiration = Column(DATETIME)
     archive = Column(BOOLEAN)
+    favoriteUsers = relationship("User", secondary='favorite_donation', back_populates="favoriteDonations")
+
 
     def __init__(self, user, latitude, longitude, geoPrecision, endingDate, archive = False):        
         self.user = user
@@ -61,7 +63,12 @@ class Donation (Base):
             message = "Donation Code Expired"
             raise DonationException(message, message, request)
 
-    def toJson(self):
+    def isFavorite(self, user):
+        if user in self.favoriteUsers:
+            return True
+        return False
+
+    def toJson(self, user):
 
         allergens = []
         for article in self.articles:
@@ -77,6 +84,7 @@ class Donation (Base):
             'endingDate': self.endingDate,
             'articles': [a.toJson() for a in  self.articles],
             'allergens': allergens,
-            'user': self.user.toJson()
+            'user': self.user.toJson(),
+            'isMyFavorite': self.isFavorite(user)
         }
         return toJson
