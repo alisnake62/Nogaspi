@@ -20,5 +20,5 @@ def f(request):
         if not withExpired:
             donations = [d for d in donations if not d.isExpired()]
 
-        data = {'Donations': [d.toJson(user) for d in donations]}
+        data = {'donations': [d.toJson(user) for d in donations]}
     return data
