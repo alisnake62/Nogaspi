@@ -20,3 +20,6 @@ class OpenFoodException(APIException):
 
 class DonationException(APIException):
     pass
+
+class CoordException(APIException):
+    pass

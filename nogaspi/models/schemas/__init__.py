@@ -11,5 +11,9 @@ from .food import (
     GetDonationCodeInputSchema,
     GetFavoriteDonationsInputSchema,
     ToggleDonationInMyFavoriteInputSchema,
-    GetMyDonationCodeInputSchema
+    GetMyDonationCodeInputSchema,
+)
+from .user import (
+    PostRegularPathInputSchema,
+    GetRegularPathInputSchema
 )

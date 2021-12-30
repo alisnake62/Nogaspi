@@ -14,7 +14,9 @@ from models.schemas import (
     GetDonationCodeInputSchema,
     GetFavoriteDonationsInputSchema,
     ToggleDonationInMyFavoriteInputSchema,
-    GetMyDonationCodeInputSchema
+    GetMyDonationCodeInputSchema,
+    PostRegularPathInputSchema,
+    GetRegularPathInputSchema
 )
 from apiConfig import APIException, InputAPIException, apiResponse
 
@@ -32,6 +34,8 @@ from views.food.getDonationCode import f as food_getDonationCode
 from views.food.getFavoriteDonations import f as food_getFavoriteDonations
 from views.food.toggleDonationInMyFavorite import f as food_toggleDonationInMyFavorite
 from views.food.getMyDonations import f as food_getMyDonations
+from views.user.postRegularPath import f as user_postRegularPath
+from views.user.getRegularPath import f as user_getRegularPath
 
 app = Flask(__name__)
 
@@ -138,6 +142,17 @@ def getMyDonations_endpoint():
     data = food_getMyDonations(request)
     return jsonify(apiResponse(request, data))
     
+@app.route('/user/postRegularPath', methods=['POST'])
+def postRegularPath_endpoint():
+    checkInputAPI(PostRegularPathInputSchema, request.json)
+    data = user_postRegularPath(request)
+    return jsonify(apiResponse(request, data))
+
+@app.route('/user/getRegularPath', methods=['GET'])
+def getRegularPath_endpoint():
+    checkInputAPI(GetRegularPathInputSchema, request.args)
+    data = user_getRegularPath(request)
+    return jsonify(apiResponse(request, data))
 
 if __name__ == '__main__':
     app.run(debug=True, host = "0.0.0.0")

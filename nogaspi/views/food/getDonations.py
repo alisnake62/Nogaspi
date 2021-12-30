@@ -1,7 +1,7 @@
 from models.objectDB import Donation
 from dbEngine import EngineSQLAlchemy
 from facades.registerUtils import getUserFromToken
-from facades.donationUtils import isAround
+from facades.coordUtils import isAround, checkCoordRaiseException
 
 def f(request):
 
@@ -15,6 +15,8 @@ def f(request):
         filter = True
         latitude, longitude, distanceMax = (float(a) for a in (latitude, longitude, distanceMax))
         coordUser = (latitude, longitude)
+
+        checkCoordRaiseException(coordUser, request)
 
     with EngineSQLAlchemy(request) as session:
 
