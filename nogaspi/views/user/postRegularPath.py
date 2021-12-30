@@ -1,4 +1,3 @@
-from Nogaspi.nogaspi.facades.coordUtils import checkCoordRaiseException
 from dbEngine import EngineSQLAlchemy
 from facades.registerUtils import getUserFromToken
 from facades.coordUtils import checkCoordRaiseException
