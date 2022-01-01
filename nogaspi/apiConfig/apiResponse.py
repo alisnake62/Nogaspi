@@ -1,5 +1,7 @@
+from logging import error
 from .logging import logging
 from datetime import datetime
+import json
 
 def apiResponse(request, data = None, exception : bool = False, status_code = 200):
     if data is None: data = {}
@@ -29,8 +31,10 @@ class APIException(Exception):
         if status_code is not None:
             self.status_code = status_code
         errorLine = request.remote_addr + " - - " + self.__class__.__name__ + " - " + messageLog
-        logging.error(errorLine)
         print(str(datetime.now()) + " - ERROR - " + errorLine)
+        if request.method == 'POST':
+            errorLine += "Input : \n" + json.dumps(request.json, indent=2)
+        logging.error(errorLine)
 
     def response(self):
         data = {
