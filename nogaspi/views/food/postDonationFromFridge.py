@@ -10,9 +10,9 @@ def f(request):
 
     token = request.json['token']
     articles = request.json['articles']
-    latitude = request.json['latitude']
-    longitude = request.json['longitude']
-    geoPrecision = request.json['geoPrecision']
+    latitude = float(request.json['latitude'])
+    longitude = float(request.json['longitude'])
+    geoPrecision = float(request.json['geoPrecision'])
     endingDate = request.json['endingDate']
 
     checkCoordRaiseException((latitude, longitude), request)
