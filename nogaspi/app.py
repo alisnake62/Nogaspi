@@ -155,6 +155,6 @@ def getRegularPath_endpoint():
     return jsonify(apiResponse(request, data))
 
 if __name__ == '__main__':
-    app.run(debug=True, host = "0.0.0.0")
-    #app.run(debug=True, host = "0.0.0.0", ssl_context='adhoc')
+    #app.run(debug=True, host = "0.0.0.0")
+    app.run(debug=True, host = "0.0.0.0", ssl_context='adhoc')
 
