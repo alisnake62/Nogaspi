@@ -18,6 +18,7 @@ from models.schemas import (
     PostRegularPathInputSchema,
     GetRegularPathInputSchema
 )
+
 from apiConfig import APIException, InputAPIException, apiResponse
 
 from views.register.login import f as register_login
