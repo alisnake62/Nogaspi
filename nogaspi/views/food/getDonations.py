@@ -6,13 +6,16 @@ from facades.coordUtils import isAround, checkCoordRaiseException
 def f(request):
 
     token = request.args.get('token')
-    latitude = float(request.args.get('latitude'))
-    longitude = float(request.args.get('longitude'))
-    distanceMax = float(request.args.get('distanceMax'))
+    latitude = request.args.get('latitude')
+    longitude = request.args.get('longitude')
+    distanceMax = request.args.get('distanceMax')
 
     filter = False
     if None not in (latitude, longitude, distanceMax):
         filter = True
+        latitude = float(latitude)
+        longitude = float(longitude)
+        distanceMax = float(distanceMax)
         coordUser = (latitude, longitude)
 
         checkCoordRaiseException(coordUser, request)
