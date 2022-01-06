@@ -8,6 +8,7 @@ from .exception import (
     InputAPIException,
     OpenFoodException,
     DonationException,
-    CoordException
+    CoordException,
+    UserException
 )
 from .logging import logging

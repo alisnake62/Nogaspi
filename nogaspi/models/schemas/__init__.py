@@ -4,7 +4,7 @@ from .food import (
     PostDonationFromScanInputSchema,
     PostDonationFromFridgeInputSchema,
     GetDonationsInputSchema,
-    GetDonationsByRegularPathinputSchema,
+    GetDonationsByRegularPathInputSchema,
     GetAllergensInputSchema,
     PostArticlesInFridgeInputSchema,
     GetArticlesInFridgeInputSchema,

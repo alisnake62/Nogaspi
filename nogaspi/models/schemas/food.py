@@ -33,7 +33,7 @@ class GetDonationsInputSchema(Schema):
     longitude = fields.Float(validate=validate.Range(min=-180.0, max=180.0))
     distanceMax = fields.Int()
 
-class GetDonationsByRegularPathinputSchema(Schema):
+class GetDonationsByRegularPathInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
     distanceMax = fields.Int(require = True)
 

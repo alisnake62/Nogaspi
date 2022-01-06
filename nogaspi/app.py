@@ -7,7 +7,7 @@ from models.schemas import (
     PostDonationFromScanInputSchema,
     PostDonationFromFridgeInputSchema,
     GetDonationsInputSchema,
-    GetDonationsByRegularPathinputSchema,
+    GetDonationsByRegularPathInputSchema,
     GetAllergensInputSchema,
     PostArticlesInFridgeInputSchema,
     GetArticlesInFridgeInputSchema,
@@ -28,6 +28,7 @@ from views.food.getByBarCode import f as food_getByBarCode
 from views.food.postDonationFromScan import f as food_postDonationFromScan
 from views.food.postDonationFromFridge import f as food_postDonationFromFridge
 from views.food.getDonations import f as food_getDonations
+from views.food.getDonationsByRegularPath import f as food_getDonationsByRegularPath
 from views.food.getAllergens import f as food_getAllergens
 from views.food.postArticlesInFridge import f as food_postArticlesInFridge
 from views.food.getArticlesInFridge import f as food_getArticlesInFridge
@@ -95,6 +96,13 @@ def getDonations_endpoint():
     checkInputAPI(GetDonationsInputSchema, request.args)
     data = food_getDonations(request)
     return jsonify(apiResponse(request, data))
+
+@app.route('/food/getDonationsByRegularPath', methods=['GET'])
+def getDonationsByRegularPath_endpoint():
+    checkInputAPI(GetDonationsByRegularPathInputSchema, request.args)
+    data = food_getDonationsByRegularPath(request)
+    return jsonify(apiResponse(request, data))
+    
     
 @app.route('/food/getAllergens', methods=['GET'])
 def getAllergens_endpoint():

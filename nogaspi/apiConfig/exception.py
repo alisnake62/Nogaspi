@@ -23,3 +23,6 @@ class DonationException(APIException):
 
 class CoordException(APIException):
     pass
+
+class UserException(APIException):
+    pass
