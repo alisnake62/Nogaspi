@@ -3,6 +3,7 @@ from .food import (
     GetProductInputSchema,
     PostDonationFromScanInputSchema,
     PostDonationFromFridgeInputSchema,
+    DeleteMyDonationsInputSchema,
     GetDonationsInputSchema,
     GetDonationsByRegularPathInputSchema,
     GetAllergensInputSchema,

@@ -27,6 +27,10 @@ class PostDonationFromFridgeInputSchema(Schema):
     geoPrecision = fields.Int(require = True)
     endingDate = fields.Date(required = True)
 
+class DeleteMyDonationsInputSchema(Schema):
+    token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
+    idDonations = fields.List(fields.Int(require = True), validate = validate.Length(1,100), require = True)
+
 class GetDonationsInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
     latitude = fields.Float(validate=validate.Range(min=-90.0, max=90.0))

@@ -6,6 +6,7 @@ from models.schemas import (
     CheckTokenValidityInputSchema,
     PostDonationFromScanInputSchema,
     PostDonationFromFridgeInputSchema,
+    DeleteMyDonationsInputSchema,
     GetDonationsInputSchema,
     GetDonationsByRegularPathInputSchema,
     GetAllergensInputSchema,
@@ -27,6 +28,7 @@ from views.register.checkTokenValidity import f as register_checkTokenValidity
 from views.food.getByBarCode import f as food_getByBarCode
 from views.food.postDonationFromScan import f as food_postDonationFromScan
 from views.food.postDonationFromFridge import f as food_postDonationFromFridge
+from views.food.deleteMyDonations import f as food_deleteMyDonations
 from views.food.getDonations import f as food_getDonations
 from views.food.getDonationsByRegularPath import f as food_getDonationsByRegularPath
 from views.food.getAllergens import f as food_getAllergens
@@ -89,6 +91,12 @@ def postDonationFromScan_endpoint():
 def postDonationFromFridge_endpoint():
     checkInputAPI(PostDonationFromFridgeInputSchema, request.json)
     data = food_postDonationFromFridge(request)
+    return jsonify(apiResponse(request, data))
+
+@app.route('/food/deleteMyDonations', methods=['POST'])
+def deleteMyDonations_endpoint():
+    checkInputAPI(DeleteMyDonationsInputSchema, request.json)
+    data = food_deleteMyDonations(request)
     return jsonify(apiResponse(request, data))
 
 @app.route('/food/getDonations', methods=['GET'])
