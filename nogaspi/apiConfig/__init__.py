@@ -9,6 +9,7 @@ from .exception import (
     OpenFoodException,
     DonationException,
     CoordException,
-    UserException
+    UserException,
+    FridgeException
 )
 from .logging import logging

@@ -29,7 +29,7 @@ class PostDonationFromFridgeInputSchema(Schema):
 
 class DeleteMyDonationsInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
-    idDonations = fields.List(fields.Int(require = True), validate = validate.Length(1,100), require = True)
+    idDonations = fields.List(fields.Int(require = True), validate = validate.Length(1,1000), require = True)
 
 class GetDonationsInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
@@ -50,7 +50,11 @@ class PostArticlesInFridgeInputSchema(Schema):
         {
             'barcode': fields.Str(required=True, validate = validate.Length(max=20, error='Your barcode has not a good format')),
             'expirationDate': fields.Date(required = True)
-        })), validate = validate.Length(1,100), require = True)
+        })), validate = validate.Length(1,1000), require = True)
+
+class DeleteArticlesInFridgeInputSchema(Schema):
+    token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
+    idArticles = fields.List(fields.Int(require = True), validate = validate.Length(1,1000), require = True)
 
 class GetArticlesInFridgeInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))

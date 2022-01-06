@@ -8,6 +8,7 @@ from .food import (
     GetDonationsByRegularPathInputSchema,
     GetAllergensInputSchema,
     PostArticlesInFridgeInputSchema,
+    DeleteArticlesInFridgeInputSchema,
     GetArticlesInFridgeInputSchema,
     TakeDonationInputSchema,
     GetDonationCodeInputSchema,

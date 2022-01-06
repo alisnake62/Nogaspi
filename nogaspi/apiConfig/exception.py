@@ -26,3 +26,6 @@ class CoordException(APIException):
 
 class UserException(APIException):
     pass
+
+class FridgeException(APIException):
+    pass
