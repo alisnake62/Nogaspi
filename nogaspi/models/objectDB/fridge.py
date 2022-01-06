@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, timedelta
 from sqlalchemy import Column, Integer, Text, ForeignKey
 from sqlalchemy.sql.sqltypes import DATE, DATETIME, FLOAT, INTEGER, TEXT, VARCHAR, String
 from sqlalchemy.orm import relationship
@@ -18,7 +18,7 @@ class Fridge (Base):
         self.user = user
 
     def toJson(self):
-        toJson = {
-            'articles': [a.toJson() for a in  self.articles]
+        toJson = {            
+            'articles': [a.toJson() for a in self.articles if (a.expirationDate + timedelta(days=15)) >= date.today()]
         }
         return toJson
