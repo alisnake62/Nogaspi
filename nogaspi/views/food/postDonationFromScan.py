@@ -3,7 +3,6 @@ from dbEngine import EngineSQLAlchemy
 from apiConfig import EmptyException
 from facades.registerUtils import getUserFromToken
 from facades.scanUtils import getProductFromWeb
-from facades.coordUtils import checkCoordRaiseException
 
 
 def f(request):
@@ -14,8 +13,6 @@ def f(request):
     longitude = float(request.json['longitude'])
     geoPrecision = float(request.json['geoPrecision'])
     endingDate = request.json['endingDate']
-
-    checkCoordRaiseException((latitude, longitude), request)
 
     with EngineSQLAlchemy(request) as session:
 

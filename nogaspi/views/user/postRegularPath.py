@@ -1,6 +1,5 @@
 from dbEngine import EngineSQLAlchemy
 from facades.registerUtils import getUserFromToken
-from facades.coordUtils import checkCoordRaiseException
 from apiConfig import CoordException
 
 def f(request):
@@ -16,8 +15,6 @@ def f(request):
         user = getUserFromToken(token, session, request)
         user.majTokenValidity()
 
-        checkCoordRaiseException((latitude1, longitude1), request)
-        checkCoordRaiseException((latitude2, longitude2), request)
         if (latitude1, longitude1) ==(latitude2, longitude2):
             message = "The coords must be different"
             raise CoordException(message, message, request)

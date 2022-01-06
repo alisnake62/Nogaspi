@@ -19,12 +19,3 @@ def distanceBetween(lat1, lon1, lat2, lon2):
         dist = dist * 60 * 1.1515
         dist *= 1.609344
         return dist
-
-def checkCoordRaiseException(coord, request):
-    lat, lon = coord
-    if lat < -90 or lat > 90:
-        message = f"Latitude {lat} is not valid"
-        raise CoordException(message, message, request)
-    if lon < -180 or lat > 180:
-        message = f"Longitude {lon} is not valid"
-        raise CoordException(message, message, request)
