@@ -35,11 +35,6 @@ class GetDonationsInputSchema(Schema):
 
 class GetDonationsByPathinputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
-    pathPoints = fields.List(fields.Nested(Schema.from_dict(
-        {
-            'latitude': fields.Float(validate=validate.Range(min=-90.0, max=90.0), require = True),
-            'longitude': fields.Float(validate=validate.Range(min=-180.0, max=180.0), require = True)
-        })), validate = validate.Length(1,5000), require = True)
     distanceMax = fields.Int(require = True)
 
 class GetAllergensInputSchema(Schema):

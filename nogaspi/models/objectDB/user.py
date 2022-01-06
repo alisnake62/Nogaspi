@@ -2,7 +2,7 @@ import secrets
 import datetime
 
 from sqlalchemy import Column, Integer, Text, ForeignKey, FLOAT
-from sqlalchemy.sql.sqltypes import DATE, DATETIME, INTEGER, TEXT, VARCHAR, String
+from sqlalchemy.sql.sqltypes import DATE, DATETIME, INTEGER, JSON, TEXT, VARCHAR, String
 from sqlalchemy.orm import relationship
 
 from dbEngine import Base
@@ -22,10 +22,11 @@ class User (Base):
     points = Column(INTEGER)
     idrang = Column(INTEGER, ForeignKey('rang.id'))
     rang = relationship("Rang", back_populates="users")
-    regularPathLatitude1 = Column(FLOAT)
-    regularPathLongitude1 = Column(FLOAT)
-    regularPathLatitude2 = Column(FLOAT)
-    regularPathLongitude2 = Column(FLOAT)
+    regularPathLatitudeStart = Column(FLOAT)
+    regularPathLongitudeStart = Column(FLOAT)
+    regularPathLatitudeEnd = Column(FLOAT)
+    regularPathLongitudeEnd = Column(FLOAT)
+    regularPathPoints = Column(JSON)
     donations = relationship("Donation", back_populates="user")
     fridges = relationship("Fridge", back_populates="user")
     favoriteDonations = relationship("Donation", secondary='favorite_donation', back_populates="favoriteUsers")

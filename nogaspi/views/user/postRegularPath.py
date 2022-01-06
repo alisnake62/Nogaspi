@@ -1,28 +1,31 @@
 from dbEngine import EngineSQLAlchemy
 from facades.registerUtils import getUserFromToken
 from apiConfig import CoordException
+import json
 
 def f(request):
 
     token = request.json['token']
-    latitude1 = float(request.json['latitude1'])
-    longitude1 = float(request.json['longitude1'])
-    latitude2 = float(request.json['latitude2'])
-    longitude2 = float(request.json['longitude2'])
+    latitudeStart = float(request.json['latitudeStart'])
+    longitudeStart = float(request.json['longitudeStart'])
+    latitudeEnd = float(request.json['latitudeEnd'])
+    longitudeEnd = float(request.json['longitudeEnd'])
+    pathPoints = request.json['pathPoints']
 
     with EngineSQLAlchemy(request) as session:
 
         user = getUserFromToken(token, session, request)
         user.majTokenValidity()
 
-        if (latitude1, longitude1) ==(latitude2, longitude2):
+        if (latitudeStart, longitudeStart) == (latitudeEnd, longitudeEnd):
             message = "The coords must be different"
             raise CoordException(message, message, request)
 
-        user.regularPathLatitude1 = latitude1
-        user.regularPathLongitude1 = longitude1
-        user.regularPathLatitude2 = latitude2
-        user.regularPathLongitude2 = longitude2
+        user.regularPathLatitudeStart = latitudeStart
+        user.regularPathLongitudeStart = longitudeStart
+        user.regularPathLatitudeEnd = latitudeEnd
+        user.regularPathLongitudeEnd = longitudeEnd
+        user.regularPathPoints = json.dumps(pathPoints)
 
         session.commit()
 

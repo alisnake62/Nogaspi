@@ -7,6 +7,7 @@ from models.schemas import (
     PostDonationFromScanInputSchema,
     PostDonationFromFridgeInputSchema,
     GetDonationsInputSchema,
+    GetDonationsByRegularPathinputSchema,
     GetAllergensInputSchema,
     PostArticlesInFridgeInputSchema,
     GetArticlesInFridgeInputSchema,

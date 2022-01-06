@@ -11,10 +11,10 @@ def f(request):
         user.majTokenValidity()
        
         regularPath = {
-            'latitude1': user.regularPathLatitude1,
-            'longitude1': user.regularPathLongitude1,
-            'latitude2': user.regularPathLatitude2,
-            'longitude2': user.regularPathLongitude2
+            'latitudeStart': user.regularPathLatitudeStart,
+            'longitudeStart': user.regularPathLongitudeStart,
+            'latitudeEnd': user.regularPathLatitudeEnd,
+            'longitudeEnd': user.regularPathLongitudeEnd
         }
 
         data = {'regularPath': regularPath}
