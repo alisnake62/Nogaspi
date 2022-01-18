@@ -1,4 +1,4 @@
-from .register import LoginInputSchema, CheckTokenValidityInputSchema
+from .register import LoginInputSchema, LogoutInputSchema, CheckTokenValidityInputSchema
 from .food import (
     GetProductInputSchema,
     PostDonationFromScanInputSchema,

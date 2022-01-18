@@ -45,6 +45,11 @@ class User (Base):
     def majTokenValidity(self):
         self.token_expiration = datetime.datetime.now() + datetime.timedelta(minutes = self.TOKEN_VALIDITY)
 
+    def killToken(self):
+        self.token = None
+        self.token_expiration = None
+
+    
     def toJson(self):
         toJson = {
             'mail': self.mail,

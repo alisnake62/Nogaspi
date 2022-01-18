@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 
 from models.schemas import (
     LoginInputSchema,
+    LogoutInputSchema,
     GetProductInputSchema,
     CheckTokenValidityInputSchema,
     PostDonationFromScanInputSchema,
@@ -25,6 +26,7 @@ from models.schemas import (
 from apiConfig import APIException, InputAPIException, apiResponse
 
 from views.register.login import f as register_login
+from views.register.logout import f as register_logout
 from views.register.checkTokenValidity import f as register_checkTokenValidity
 from views.food.getByBarCode import f as food_getByBarCode
 from views.food.postDonationFromScan import f as food_postDonationFromScan
@@ -69,6 +71,12 @@ def test():
 def login_endpoint():
     checkInputAPI(LoginInputSchema, request.json)
     data = register_login(request)
+    return jsonify(apiResponse(request, data))
+
+@app.route('/register/logout', methods=['POST'])
+def logout_endpoint():
+    checkInputAPI(LogoutInputSchema, request.json)
+    data = register_logout(request)
     return jsonify(apiResponse(request, data))
 
 @app.route('/register/checkTokenValidity', methods=['GET'])
