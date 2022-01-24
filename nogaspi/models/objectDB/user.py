@@ -4,6 +4,7 @@ import datetime
 from sqlalchemy import Column, Integer, Text, ForeignKey, FLOAT
 from sqlalchemy.sql.sqltypes import DATE, DATETIME, INTEGER, JSON, TEXT, VARCHAR, String
 from sqlalchemy.orm import relationship
+from facades import fireBaseUtils
 
 from dbEngine import Base
 
@@ -49,7 +50,10 @@ class User (Base):
         self.token = None
         self.token_expiration = None
 
-    
+    def sendFireBaseNotification(self, title, body):
+        if self.fireBaseToken:
+            fireBaseUtils.sendNotification(self.fireBaseToken, title, body)
+
     def toJson(self):
         toJson = {
             'mail': self.mail,

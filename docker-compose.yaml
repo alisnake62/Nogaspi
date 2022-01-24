@@ -11,6 +11,7 @@ services:
     environment:
       PMA_HOST: ${sqlHost}
       MYSQL_ROOT_PASSWORD: ${sqlPassword}
+      FIREBASE_SERVICE_ACCOUNT: ${fireBaseServiceAccount}
     ports:
       - 5556:5000
     volumes:

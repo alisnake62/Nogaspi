@@ -1,5 +1,4 @@
 import logging
-import os
 
 logging.basicConfig(level=logging.ERROR,
     filename="app.log",
