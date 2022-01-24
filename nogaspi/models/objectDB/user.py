@@ -30,7 +30,7 @@ class User (Base):
     donations = relationship("Donation", back_populates="user")
     fridges = relationship("Fridge", back_populates="user")
     favoriteDonations = relationship("Donation", secondary='favorite_donation', back_populates="favoriteUsers")
-
+    fireBaseToken = Column(VARCHAR)
 
     def __init__(self, mail : String, password : String, pseudo):                    
         self.mail = mail             

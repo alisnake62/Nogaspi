@@ -18,5 +18,6 @@ from .food import (
 )
 from .user import (
     PostRegularPathInputSchema,
-    GetRegularPathInputSchema
+    GetRegularPathInputSchema,
+    PostFireBaseTokenInputSchema
 )

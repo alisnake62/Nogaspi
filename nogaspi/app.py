@@ -20,7 +20,8 @@ from models.schemas import (
     ToggleDonationInMyFavoriteInputSchema,
     GetMyDonationCodeInputSchema,
     PostRegularPathInputSchema,
-    GetRegularPathInputSchema
+    GetRegularPathInputSchema,
+    PostFireBaseTokenInputSchema
 )
 
 from apiConfig import APIException, InputAPIException, apiResponse
@@ -45,6 +46,7 @@ from views.food.toggleDonationInMyFavorite import f as food_toggleDonationInMyFa
 from views.food.getMyDonations import f as food_getMyDonations
 from views.user.postRegularPath import f as user_postRegularPath
 from views.user.getRegularPath import f as user_getRegularPath
+from views.user.postFireBaseToken import f as user_postFireBaseToken
 
 app = Flask(__name__)
 
@@ -188,7 +190,12 @@ def getRegularPath_endpoint():
     data = user_getRegularPath(request)
     return jsonify(apiResponse(request, data))
 
+@app.route('/user/postFireBaseToken', methods=['POST'])
+def postFireBaseToken_endpoint():
+    checkInputAPI(PostFireBaseTokenInputSchema, request.json)
+    data = user_postFireBaseToken(request)
+    return jsonify(apiResponse(request, data))
+
 if __name__ == '__main__':
-    #app.run(debug=True, host = "0.0.0.0")
     app.run(debug=True, host = "0.0.0.0", ssl_context='adhoc')
 
