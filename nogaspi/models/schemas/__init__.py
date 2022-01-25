@@ -21,3 +21,5 @@ from .user import (
     GetRegularPathInputSchema,
     PostFireBaseTokenInputSchema
 )
+
+from .tools import GetProfilePictureInputSchema

@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_file
 
 from models.schemas import (
     LoginInputSchema,
@@ -21,7 +21,8 @@ from models.schemas import (
     GetMyDonationCodeInputSchema,
     PostRegularPathInputSchema,
     GetRegularPathInputSchema,
-    PostFireBaseTokenInputSchema
+    PostFireBaseTokenInputSchema,
+    GetProfilePictureInputSchema
 )
 
 from apiConfig import APIException, InputAPIException, apiResponse
@@ -47,6 +48,7 @@ from views.food.getMyDonations import f as food_getMyDonations
 from views.user.postRegularPath import f as user_postRegularPath
 from views.user.getRegularPath import f as user_getRegularPath
 from views.user.postFireBaseToken import f as user_postFireBaseToken
+from views.tools.getProfilePicture import f as tools_getProfilePicture
 
 app = Flask(__name__)
 
@@ -68,6 +70,11 @@ def test():
     data = {"toto":  ["tata", "titi"]}
     return jsonify(apiResponse(request, data))
 
+@app.route('/tools/getProfilePicture', methods=['GET'])
+def getProfilePicture_endpoint():
+    checkInputAPI(GetProfilePictureInputSchema, request.args)
+    filename = tools_getProfilePicture(request)["picturePath"]
+    return send_file(filename, mimetype='image/jpg')
 
 @app.route('/register/login', methods=['POST'])
 def login_endpoint():

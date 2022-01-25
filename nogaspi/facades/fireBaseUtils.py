@@ -10,7 +10,7 @@ def sendNotification(fireBaseToken, title, body):
 
     try:
         message = messaging.Message(
-            notification=messaging.Notification(title, body),
+            notification=messaging.Notification(title, body, image="https://localhost:5000/tools/getprofilePicture?token=63df50a9bdbc5ffe047fad0c26f8908cbf0fc5c9786c9144d319206ec25bfd1b"),
             token=fireBaseToken,
         )
         messaging.send(message)

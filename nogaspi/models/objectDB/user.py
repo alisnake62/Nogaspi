@@ -17,6 +17,7 @@ class User (Base):
     mail = Column(VARCHAR)
     password = Column(VARCHAR)
     pseudo = Column(VARCHAR)
+    profilePicture = Column(VARCHAR)
     token = Column(VARCHAR)
     token_expiration = Column(DATETIME)
     products = relationship("Product", back_populates="lastUserScan")
@@ -33,10 +34,11 @@ class User (Base):
     favoriteDonations = relationship("Donation", secondary='favorite_donation', back_populates="favoriteUsers")
     fireBaseToken = Column(VARCHAR)
 
-    def __init__(self, mail : String, password : String, pseudo):                    
+    def __init__(self, mail, password, pseudo, profilePicture):                    
         self.mail = mail             
         self.password = password
         self.pseudo = pseudo
+        self.profilePicture = profilePicture
 
     def generateToken(self):
         self.token = secrets.token_hex()
@@ -53,6 +55,9 @@ class User (Base):
     def sendFireBaseNotification(self, title, body):
         if self.fireBaseToken:
             fireBaseUtils.sendNotification(self.fireBaseToken, title, body)
+
+    def getProfilePicturePath(self):
+        return f"images/users/{self.profilePicture}"
 
     def toJson(self):
         toJson = {
