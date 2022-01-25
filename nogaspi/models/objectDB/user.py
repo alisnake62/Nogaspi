@@ -61,6 +61,7 @@ class User (Base):
 
     def toJson(self):
         toJson = {
+            'id': self.id,
             'mail': self.mail,
             'pseudo': self.pseudo,
             'points': self.points,
