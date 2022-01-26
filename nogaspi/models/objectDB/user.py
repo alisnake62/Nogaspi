@@ -51,6 +51,7 @@ class User (Base):
     def killToken(self):
         self.token = None
         self.token_expiration = None
+        self.fireBaseToken = None
 
     def sendFireBaseNotification(self, title, body):
         if self.fireBaseToken:
