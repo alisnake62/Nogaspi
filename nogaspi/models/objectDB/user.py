@@ -53,9 +53,9 @@ class User (Base):
         self.token_expiration = None
         self.fireBaseToken = None
 
-    def sendFireBaseNotification(self, title, body):
+    def sendFireBaseNotification(self, idUserTo, title, body):
         if self.fireBaseToken:
-            fireBaseUtils.sendNotification(self.id, self.fireBaseToken, title, body)
+            fireBaseUtils.sendNotification(idUserTo, self.fireBaseToken, title, body)
 
     def getProfilePicturePath(self):
         return f"images/users/{self.profilePicture}"
