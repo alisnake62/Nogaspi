@@ -10,6 +10,7 @@ from .exception import (
     DonationException,
     CoordException,
     UserException,
-    FridgeException
+    FridgeException,
+    ConversationException
 )
 from .logging import logging

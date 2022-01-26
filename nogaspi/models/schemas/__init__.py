@@ -23,3 +23,9 @@ from .user import (
 )
 
 from .tools import GetProfilePictureInputSchema
+
+from .messaging import (
+    InitiateConversationInputSchema,
+    PostMessageInputSchema,
+    AcknowledgeMessagesOnConversationInputSchema
+)

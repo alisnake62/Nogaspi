@@ -33,6 +33,8 @@ class User (Base):
     fridges = relationship("Fridge", back_populates="user")
     favoriteDonations = relationship("Donation", secondary='favorite_donation', back_populates="favoriteUsers")
     fireBaseToken = Column(VARCHAR)
+    conversationsDonator = relationship("Conversation", foreign_keys="Conversation.idUserDonator", back_populates="userDonator")
+    conversationsTaker = relationship("Conversation", foreign_keys="Conversation.idUserTaker", back_populates="userTaker")
 
     def __init__(self, mail, password, pseudo, profilePicture):                    
         self.mail = mail             

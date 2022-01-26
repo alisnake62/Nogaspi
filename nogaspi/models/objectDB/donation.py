@@ -26,7 +26,7 @@ class Donation (Base):
     code_expiration = Column(DATETIME)
     archive = Column(BOOLEAN)
     favoriteUsers = relationship("User", secondary='favorite_donation', back_populates="favoriteDonations")
-
+    conversations = relationship("Conversation", back_populates="donation")
 
     def __init__(self, user, latitude, longitude, geoPrecision, endingDate, archive = False):        
         self.user = user

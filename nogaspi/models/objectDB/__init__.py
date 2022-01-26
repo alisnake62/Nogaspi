@@ -7,3 +7,5 @@ from .favoriteDonation import FavoriteDonation
 from .donation import Donation
 from .article import Article
 from .fridge import Fridge
+from .conversation import Conversation
+from .message import Message

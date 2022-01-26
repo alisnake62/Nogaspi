@@ -22,7 +22,10 @@ from models.schemas import (
     PostRegularPathInputSchema,
     GetRegularPathInputSchema,
     PostFireBaseTokenInputSchema,
-    GetProfilePictureInputSchema
+    GetProfilePictureInputSchema,
+    InitiateConversationInputSchema,
+    PostMessageInputSchema,
+    AcknowledgeMessagesOnConversationInputSchema
 )
 
 from apiConfig import APIException, InputAPIException, apiResponse
@@ -49,6 +52,9 @@ from views.user.postRegularPath import f as user_postRegularPath
 from views.user.getRegularPath import f as user_getRegularPath
 from views.user.postFireBaseToken import f as user_postFireBaseToken
 from views.tools.getProfilePicture import f as tools_getProfilePicture
+from views.messaging.initiateConversation import f as messaging_initiateConversation
+from views.messaging.acknowledgeMessagesOnConversation import f as messaging_acknowledgeMessagesOnConversation
+from views.messaging.postMessage import f as messaging_postMessage
 
 app = Flask(__name__)
 
@@ -201,6 +207,24 @@ def getRegularPath_endpoint():
 def postFireBaseToken_endpoint():
     checkInputAPI(PostFireBaseTokenInputSchema, request.json)
     data = user_postFireBaseToken(request)
+    return jsonify(apiResponse(request, data))
+
+@app.route('/messaging/initiateConversation', methods=['POST'])
+def initiateConversation_endpoint():
+    checkInputAPI(InitiateConversationInputSchema, request.json)
+    data = messaging_initiateConversation(request)
+    return jsonify(apiResponse(request, data))
+
+@app.route('/messaging/acknowledgeMessagesOnConversation', methods=['POST'])
+def acknowledgeMessagesOnConversation_endpoint():
+    checkInputAPI(AcknowledgeMessagesOnConversationInputSchema, request.json)
+    data = messaging_acknowledgeMessagesOnConversation(request)
+    return jsonify(apiResponse(request, data))
+
+@app.route('/messaging/postMessage', methods=['POST'])
+def postMessage_endpoint():
+    checkInputAPI(PostMessageInputSchema, request.json)
+    data = messaging_postMessage(request)
     return jsonify(apiResponse(request, data))
 
 if __name__ == '__main__':
