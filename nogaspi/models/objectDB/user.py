@@ -54,7 +54,7 @@ class User (Base):
 
     def sendFireBaseNotification(self, title, body):
         if self.fireBaseToken:
-            fireBaseUtils.sendNotification(self.fireBaseToken, title, body)
+            fireBaseUtils.sendNotification(self.id, self.fireBaseToken, title, body)
 
     def getProfilePicturePath(self):
         return f"images/users/{self.profilePicture}"
