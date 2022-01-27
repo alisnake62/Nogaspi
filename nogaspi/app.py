@@ -27,7 +27,8 @@ from models.schemas import (
     PostMessageInputSchema,
     AcknowledgeMessagesOnConversationInputSchema,
     GetMyConversationsInputSchema,
-    GetConversationInputSchema
+    GetConversationInputSchema,
+    GetConversationsByDonationInputSchema
 )
 
 from apiConfig import APIException, InputAPIException, apiResponse
@@ -59,6 +60,7 @@ from views.messaging.acknowledgeMessagesOnConversation import f as messaging_ack
 from views.messaging.postMessage import f as messaging_postMessage
 from views.messaging.getMyConversations import f as messaging_getMyConversations
 from views.messaging.getConversation import f as messaging_getConversation
+from views.messaging.getConversationsByDonation import f as messaging_getConversationsByDonation
 
 app = Flask(__name__)
 
@@ -241,6 +243,12 @@ def getMyConversations_endpoint():
 def getConversation_endpoint():
     checkInputAPI(GetConversationInputSchema, request.args)
     data = messaging_getConversation(request)
+    return jsonify(apiResponse(request, data))
+
+@app.route('/messaging/getConversationsByDonation', methods=['GET'])
+def getConversationsByDonation_endpoint():
+    checkInputAPI(GetConversationsByDonationInputSchema, request.args)
+    data = messaging_getConversationsByDonation(request)
     return jsonify(apiResponse(request, data))
 
 if __name__ == '__main__':

@@ -29,5 +29,6 @@ from .messaging import (
     PostMessageInputSchema,
     AcknowledgeMessagesOnConversationInputSchema,
     GetMyConversationsInputSchema,
-    GetConversationInputSchema
+    GetConversationInputSchema,
+    GetConversationsByDonationInputSchema
 )

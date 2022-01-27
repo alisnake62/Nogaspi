@@ -22,3 +22,7 @@ class GetMyConversationsInputSchema(Schema):
 class GetConversationInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
     idConversation = fields.Int(require = True)
+
+class GetConversationsByDonationInputSchema(Schema):
+    token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
+    idDonation = fields.Int(require = True)

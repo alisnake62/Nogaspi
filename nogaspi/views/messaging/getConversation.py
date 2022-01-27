@@ -1,4 +1,4 @@
-from models.objectDB import Conversation, Message
+from models.objectDB import Conversation
 from dbEngine import EngineSQLAlchemy
 from apiConfig import EmptyException
 from facades.registerUtils import getUserFromToken
