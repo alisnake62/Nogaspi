@@ -5,8 +5,8 @@ from facades.registerUtils import getUserFromToken
 def f(request):
 
     token = request.args.get('token')
-    withArchived = True if request.args.get('withArchived') == "1" else False
-    withExpired = True if request.args.get('withExpired') == "1" else False
+    withArchived = request.args.get('withArchived') == "1"
+    withExpired = request.args.get('withExpired') == "1"
 
     with EngineSQLAlchemy(request) as session:
 

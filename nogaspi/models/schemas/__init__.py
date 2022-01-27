@@ -14,7 +14,7 @@ from .food import (
     GetDonationCodeInputSchema,
     GetFavoriteDonationsInputSchema,
     ToggleDonationInMyFavoriteInputSchema,
-    GetMyDonationCodeInputSchema,
+    GetMyDonationsInputSchema,
 )
 from .user import (
     PostRegularPathInputSchema,
@@ -27,5 +27,7 @@ from .tools import GetProfilePictureInputSchema
 from .messaging import (
     InitiateConversationInputSchema,
     PostMessageInputSchema,
-    AcknowledgeMessagesOnConversationInputSchema
+    AcknowledgeMessagesOnConversationInputSchema,
+    GetMyConversationsInputSchema,
+    GetConversationInputSchema
 )

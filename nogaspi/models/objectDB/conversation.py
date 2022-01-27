@@ -22,9 +22,34 @@ class Conversation (Base):
         self.userDonator = userDonator
         self.userTaker = userTaker
 
-    def checkLegitimacyRaiseException(self, userRequester, request):
-        self.donation.checkValidityRaiseException(request)
+    def checkLegitimacyRaiseException(self, userRequester, checkDonationValidity, request):
+        if checkDonationValidity: self.donation.checkValidityRaiseException(request)
 
         if not userRequester in (self.userDonator, self.userTaker):
             message = "You can't interact with this conversation, it's not yours"
             raise ConversationException(message, message, request)
+
+    def toJson(self, userRequester):
+        test = self.messages
+        self.messages.sort(key=lambda r: r.dateTime)
+
+        toJson = {
+            'id': self.id,
+            'idDonation': self.idDonation,
+            'isMyDonation': userRequester == self.userDonator,
+            'dateBeginning': self.messages[0].dateTime,
+            'lastMessage': self.messages[-1].toJson(userRequester),
+            'userDonator': self.userDonator.toJson(),
+            'userTaker': self.userTaker.toJson(),
+            'messages': [message.toJson(userRequester) for message in self.messages],
+            'donationIsExpired': self.donation.isExpired(),
+            'donationIsArchived': self.donation.isArchived(),
+            'donationIsValide': self.donation.isValide()
+        }
+        return toJson
+
+    def toJsonlight(self, userRequester):
+
+        toJson = self.toJson(userRequester)
+        del toJson['messages']
+        return toJson

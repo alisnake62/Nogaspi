@@ -5,9 +5,8 @@ from facades.registerUtils import getUserFromToken
 
 def f(request):
 
-    token = request.json['token']
-    idConversation = request.json['idConversation']
-    body = request.json['body']
+    token = request.args.get('token')
+    idConversation = request.args.get('idConversation')
 
     with EngineSQLAlchemy(request) as session:
 
@@ -19,15 +18,6 @@ def f(request):
             message = "This conversation is not present in Database"
             raise EmptyException(message, message, request)
         
-        conversation.checkLegitimacyRaiseException(user, True, request)
-
-        toDonator = False if user == conversation.donation.user else True
-        
-        message = Message(conversation, toDonator, body)
-        session.add(message)
-
-        session.commit()
-
-        data = {'posted':True}
+        data = {'conversation': conversation.toJson(user)}
 
     return data

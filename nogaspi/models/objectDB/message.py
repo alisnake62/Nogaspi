@@ -22,3 +22,19 @@ class Message (Base):
         self.readed = False
         self.dateTime = datetime.datetime.now()
         self.body = body
+
+    def toJson(self, userRequester):
+        
+        userFrom = self.conversation.userTaker if self.toDonator else self.conversation.userDonator
+        userTo = self.conversation.userDonator if self.toDonator else self.conversation.userTaker
+
+        toJson = {
+            'id': self.id,
+            'readed': self.readed,
+            'dateTime': self.dateTime,
+            'body': self.body,
+            'userFrom': userFrom.toJson(),
+            'userTo': userTo.toJson(),
+            'isAMessageFromMe': userRequester == userFrom
+        }
+        return toJson

@@ -18,7 +18,7 @@ def f(request):
             message = "This conversation is not present in Database"
             raise EmptyException(message, message, request)
         
-        conversation.checkLegitimacyRaiseException(user, request)
+        conversation.checkLegitimacyRaiseException(user, True, request)
 
         for message in conversation.messages:
             if message.toDonator:

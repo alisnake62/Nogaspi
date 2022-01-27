@@ -18,14 +18,16 @@ from models.schemas import (
     GetDonationCodeInputSchema,
     GetFavoriteDonationsInputSchema,
     ToggleDonationInMyFavoriteInputSchema,
-    GetMyDonationCodeInputSchema,
+    GetMyDonationsInputSchema,
     PostRegularPathInputSchema,
     GetRegularPathInputSchema,
     PostFireBaseTokenInputSchema,
     GetProfilePictureInputSchema,
     InitiateConversationInputSchema,
     PostMessageInputSchema,
-    AcknowledgeMessagesOnConversationInputSchema
+    AcknowledgeMessagesOnConversationInputSchema,
+    GetMyConversationsInputSchema,
+    GetConversationInputSchema
 )
 
 from apiConfig import APIException, InputAPIException, apiResponse
@@ -55,6 +57,8 @@ from views.tools.getProfilePicture import f as tools_getProfilePicture
 from views.messaging.initiateConversation import f as messaging_initiateConversation
 from views.messaging.acknowledgeMessagesOnConversation import f as messaging_acknowledgeMessagesOnConversation
 from views.messaging.postMessage import f as messaging_postMessage
+from views.messaging.getMyConversations import f as messaging_getMyConversations
+from views.messaging.getConversation import f as messaging_getConversation
 
 app = Flask(__name__)
 
@@ -187,7 +191,7 @@ def toggleDonationInMyFavorite_endpoint():
 
 @app.route('/food/getMyDonations', methods=['GET'])
 def getMyDonations_endpoint():
-    checkInputAPI(GetMyDonationCodeInputSchema, request.args)
+    checkInputAPI(GetMyDonationsInputSchema, request.args)
     data = food_getMyDonations(request)
     return jsonify(apiResponse(request, data))
     
@@ -225,6 +229,18 @@ def acknowledgeMessagesOnConversation_endpoint():
 def postMessage_endpoint():
     checkInputAPI(PostMessageInputSchema, request.json)
     data = messaging_postMessage(request)
+    return jsonify(apiResponse(request, data))
+    
+@app.route('/messaging/getMyConversations', methods=['GET'])
+def getMyConversations_endpoint():
+    checkInputAPI(GetMyConversationsInputSchema, request.args)
+    data = messaging_getMyConversations(request)
+    return jsonify(apiResponse(request, data))
+
+@app.route('/messaging/getConversation', methods=['GET'])
+def getConversation_endpoint():
+    checkInputAPI(GetConversationInputSchema, request.args)
+    data = messaging_getConversation(request)
     return jsonify(apiResponse(request, data))
 
 if __name__ == '__main__':

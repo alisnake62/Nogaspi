@@ -96,7 +96,9 @@ class Donation (Base):
             'articles': [a.toJson() for a in  self.articles],
             'allergens': allergens,
             'owner': self.user.toJson(),
-            'isMine': True if self.user == user else False,
+            'isMine': self.user == user,
+            'conversationsInfo': [c.toJsonlight(user) for c in self.conversations] if self.user == user else None,
             'isMyFavorite': self.isFavorite(user)
         }
+
         return toJson
