@@ -1,16 +1,19 @@
 from dbEngine import EngineSQLAlchemy
 from facades.registerUtils import getUserFromToken
-from apiConfig import CoordException
+from apiConfig import CoordException, getArgs
 import json
 
 def f(request):
 
-    token = request.json['token']
-    latitudeStart = float(request.json['latitudeStart'])
-    longitudeStart = float(request.json['longitudeStart'])
-    latitudeEnd = float(request.json['latitudeEnd'])
-    longitudeEnd = float(request.json['longitudeEnd'])
-    pathPoints = request.json['pathPoints']
+    token, latitudeStart, longitudeStart, latitudeEnd, longitudeEnd, pathPoints = getArgs(request, [
+        'token',
+        'latitudeStart',
+        'longitudeStart',
+        'latitudeEnd',
+        'longitudeEnd',
+        'pathPoints'
+    ])
+    latitudeStart, longitudeStart, latitudeEnd, longitudeEnd = (float(f) for f in (latitudeStart, longitudeStart, latitudeEnd, longitudeEnd))
 
     with EngineSQLAlchemy(request) as session:
 

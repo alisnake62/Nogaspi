@@ -1,11 +1,11 @@
 import datetime
-
+from apiConfig import getArgs
 from models.objectDB import User
 from dbEngine import EngineSQLAlchemy
 
 def f(request):
 
-    token = request.args.get('token')
+    token = getArgs(request, ['token'])
 
     with EngineSQLAlchemy(request) as session:
 

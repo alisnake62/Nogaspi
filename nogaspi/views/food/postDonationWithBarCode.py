@@ -1,6 +1,6 @@
 from models.objectDB import Article, Donation
 from dbEngine import EngineSQLAlchemy
-from apiConfig import EmptyException
+from apiConfig import getArgs
 from facades.registerUtils import getUserFromToken
 from facades.scanUtils import getArticleFromWeb
 

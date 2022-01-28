@@ -1,10 +1,10 @@
-from models.objectDB import Donation
 from dbEngine import EngineSQLAlchemy
 from facades.registerUtils import getUserFromToken
+from apiConfig import getArgs
 
 def f(request):
 
-    token = request.args.get('token')
+    token, = getArgs(request, ['token'])
 
     with EngineSQLAlchemy(request) as session:
 

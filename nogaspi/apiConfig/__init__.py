@@ -14,3 +14,5 @@ from .exception import (
     ConversationException
 )
 from .logging import logging
+
+from .input import (checkInputAPI, getArgs)

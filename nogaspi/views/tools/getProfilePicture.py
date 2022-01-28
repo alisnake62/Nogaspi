@@ -1,12 +1,12 @@
 from dbEngine import EngineSQLAlchemy
 from facades.registerUtils import getUserFromToken
 from models.objectDB import User
-import json
+from apiConfig import getArgs
 import os
 
 def f(request):
 
-    idUser = int(request.args.get('idUser'))
+    idUser = getArgs(request, ['idUser'])
 
     with EngineSQLAlchemy(request) as session:
 

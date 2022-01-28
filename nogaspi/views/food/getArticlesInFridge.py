@@ -1,13 +1,13 @@
 
 from models.objectDB import Fridge
 from dbEngine import EngineSQLAlchemy
-from apiConfig import EmptyException
+from apiConfig import getArgs
 from facades.registerUtils import getUserFromToken
 
 
 def f(request):
 
-    token = request.args.get('token')
+    token = getArgs(request, ['token'])
 
     with EngineSQLAlchemy(request) as session:
 

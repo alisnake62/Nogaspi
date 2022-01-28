@@ -1,13 +1,12 @@
 from models.objectDB import User
 from dbEngine import EngineSQLAlchemy
-from apiConfig import RegisterException, TokenException
+from apiConfig import RegisterException, TokenException, getArgs
 
 import traceback
 
 def f(request):
 
-    mail = request.json['mail']
-    password = request.json['password']
+    mail, password = getArgs(request, ['mail', 'password'])
 
     with EngineSQLAlchemy(request) as session:
 

@@ -2,13 +2,12 @@ from models.objectDB import Donation
 from dbEngine import EngineSQLAlchemy
 from facades.registerUtils import getUserFromToken
 from facades.coordUtils import isAroundPath
-from apiConfig import UserException
+from apiConfig import UserException, getArgs
 import json
 
 def f(request):
 
-    token = request.args.get('token')
-    distanceMax = distanceMax = float(request.args.get('distanceMax'))
+    token, distanceMax, = getArgs(request, ['token', 'distanceMax'])
 
     with EngineSQLAlchemy(request) as session:
 

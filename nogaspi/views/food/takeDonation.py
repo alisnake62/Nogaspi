@@ -1,6 +1,6 @@
 from models.objectDB import Donation
 from dbEngine import EngineSQLAlchemy
-from apiConfig import EmptyException, DonationException
+from apiConfig import EmptyException, DonationException, getArgs
 from facades.registerUtils import getUserFromToken
 from facades.donationUtils import makeDonation
 

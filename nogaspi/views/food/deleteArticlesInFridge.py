@@ -1,14 +1,13 @@
 from models.objectDB import Article, Fridge
 from dbEngine import EngineSQLAlchemy
-from apiConfig import EmptyException, DonationException, FridgeException
+from apiConfig import EmptyException, DonationException, FridgeException, getArgs
 from facades.registerUtils import getUserFromToken
 from facades.scanUtils import getProductFromWeb
 
 
 def f(request):
 
-    token = request.json['token']
-    idArticles = request.json['idArticles']
+    token, idArticles = getArgs(request, ['token', 'idArticles'])
 
     with EngineSQLAlchemy(request) as session:
 

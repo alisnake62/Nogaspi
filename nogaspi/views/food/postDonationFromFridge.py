@@ -1,18 +1,21 @@
-from models.objectDB import Product, Donation, Article, Fridge
+from models.objectDB import Donation, Article, Fridge
 from dbEngine import EngineSQLAlchemy
-from apiConfig import EmptyException, DonationException
+from apiConfig import EmptyException, DonationException, getArgs
 from facades.registerUtils import getUserFromToken
 from facades.scanUtils import getProductFromWeb
 
 
 def f(request):
 
-    token = request.json['token']
-    articles = request.json['articles']
-    latitude = float(request.json['latitude'])
-    longitude = float(request.json['longitude'])
-    geoPrecision = float(request.json['geoPrecision'])
-    endingDate = request.json['endingDate']
+    token, articles, latitude, longitude, geoPrecision, endingDate = getArgs(request, [
+        'token',
+        'articles',
+        'latitude',
+        'longitude',
+        'geoPrecision',
+        'endingDate'
+    ])
+    latitude, longitude, geoPrecision = (float(f) for f in (latitude, longitude, geoPrecision))
 
     with EngineSQLAlchemy(request) as session:
 

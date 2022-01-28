@@ -1,12 +1,11 @@
 from models.objectDB import Conversation
 from dbEngine import EngineSQLAlchemy
-from apiConfig import EmptyException, ConversationException
+from apiConfig import EmptyException, getArgs
 from facades.registerUtils import getUserFromToken
 
 def f(request):
 
-    token = request.json['token']
-    idConversation = request.json['idConversation']
+    token, idConversation = getArgs(request, ['token', 'idConversation'])
 
     with EngineSQLAlchemy(request) as session:
 

@@ -2,12 +2,12 @@ from models.objectDB import Product, Article, Fridge
 from dbEngine import EngineSQLAlchemy
 from facades.registerUtils import getUserFromToken
 from facades.scanUtils import getProductFromWeb
+from apiConfig import getArgs
 
 
 def f(request):
-
-    token = request.json['token']
-    articles = request.json['articles']
+    
+    token, articles = getArgs(request, ['token', 'articles'])
 
     with EngineSQLAlchemy(request) as session:
 

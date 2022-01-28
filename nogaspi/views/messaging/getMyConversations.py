@@ -1,13 +1,12 @@
 from models.objectDB import Donation, Conversation
 from dbEngine import EngineSQLAlchemy
 from facades.registerUtils import getUserFromToken
+from apiConfig import getArgs
 from sqlalchemy import or_
 
 def f(request):
 
-    token = request.args.get('token')
-    withArchivedDonations = request.args.get('withArchivedDonations') == "1"
-    withExpiredDonations = request.args.get('withExpiredDonations') == "1"
+    token, withArchivedDonations, withExpiredDonations = getArgs(request, ['token', 'withArchivedDonations', 'withExpiredDonations'])
 
     with EngineSQLAlchemy(request) as session:
 
@@ -16,9 +15,9 @@ def f(request):
 
         conversations = session.query( Conversation ).filter(or_(user == Conversation.userTaker, user == Conversation.userDonator)).all()
 
-        if not withArchivedDonations:
+        if withArchivedDonations == '0':
             conversations = [c for c in conversations if not c.donation.isArchived()]
-        if not withExpiredDonations:
+        if withExpiredDonations == '0':
             conversations = [c for c in conversations if not c.donation.isExpired()]
 
         data = {'conversations': [c.toJson(user) for c in conversations]}

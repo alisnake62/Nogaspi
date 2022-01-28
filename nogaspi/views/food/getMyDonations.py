@@ -1,12 +1,10 @@
-from models.objectDB import Donation
 from dbEngine import EngineSQLAlchemy
 from facades.registerUtils import getUserFromToken
+from apiConfig import getArgs
 
 def f(request):
 
-    token = request.args.get('token')
-    withArchived = request.args.get('withArchived') == "1"
-    withExpired = request.args.get('withExpired') == "1"
+    token, withArchived, withExpired = getArgs(request, ['token', 'withArchived', 'withExpired'])
 
     with EngineSQLAlchemy(request) as session:
 
@@ -15,9 +13,9 @@ def f(request):
 
         donations = user.donations
 
-        if not withArchived:
+        if withArchived == "0":
             donations = [d for d in donations if not d.isArchived()]
-        if not withExpired:
+        if withExpired == "0":
             donations = [d for d in donations if not d.isExpired()]
 
         data = {'donations': [d.toJson(user) for d in donations]}

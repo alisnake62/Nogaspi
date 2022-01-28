@@ -1,13 +1,12 @@
 from models.objectDB import Donation
 from dbEngine import EngineSQLAlchemy
-from apiConfig import EmptyException, DonationException
+from apiConfig import EmptyException, DonationException, getArgs
 from facades.registerUtils import getUserFromToken
 
 def f(request):
 
-    token = request.args.get('token')
-    idDonation = request.args.get('idDonation')
-
+    token, idDonation = getArgs(request, ['token', 'idDonation'])
+    
     with EngineSQLAlchemy(request) as session:
 
         user = getUserFromToken(token, session, request)

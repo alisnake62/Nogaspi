@@ -1,9 +1,10 @@
 from dbEngine import EngineSQLAlchemy
 from facades.registerUtils import getUserFromToken
+from apiConfig import getArgs
 
 def f(request):
 
-    token = request.json['token']
+    token = getArgs(request, ['token'])
 
     with EngineSQLAlchemy(request) as session:
 

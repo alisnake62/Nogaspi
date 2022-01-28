@@ -1,12 +1,11 @@
 from dbEngine import EngineSQLAlchemy
 from facades.registerUtils import getUserFromToken
 from models.objectDB import User
-import json
+from apiConfig import getArgs
 
 def f(request):
 
-    token = request.json['token']
-    fireBaseToken = request.json['fireBaseToken']
+    token, fireBaseToken = getArgs(request, ['token', 'fireBaseToken'])
 
     with EngineSQLAlchemy(request) as session:
 

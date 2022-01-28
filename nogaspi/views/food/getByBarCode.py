@@ -1,6 +1,6 @@
 from models.objectDB import Product, Allergen
 from dbEngine import EngineSQLAlchemy
-from apiConfig import EmptyException
+from apiConfig import getArgs
 from facades.registerUtils import getUserFromToken
 from facades.scanUtils import getProductFromWeb
 
@@ -9,8 +9,7 @@ import json
 
 def f(request):
 
-    token = request.args.get('token')
-    barcode = request.args.get('barcode')
+    token, barcode = getArgs(request, ['token', 'barcode'])
 
     with EngineSQLAlchemy(request) as session:
 
