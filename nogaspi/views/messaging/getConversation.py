@@ -1,7 +1,7 @@
 from models.objectDB import Conversation
 from dbEngine import EngineSQLAlchemy
-from apiConfig import EmptyException, getArgs
-from facades.registerUtils import getUserFromToken
+from facades.apiConfig import EmptyException, getArgs
+from facades.utils.registerUtils import getUserFromToken
 
 def f(request):
 

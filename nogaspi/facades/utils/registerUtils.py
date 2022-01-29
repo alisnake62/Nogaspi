@@ -1,7 +1,7 @@
 import datetime
 
 from models.objectDB import User
-from apiConfig import TokenException
+from facades.apiConfig import TokenException
 
 def getUserFromToken(token, session, request):
     user = session.query( User ).filter(User.token == token).first()

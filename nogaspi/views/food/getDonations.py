@@ -1,8 +1,8 @@
 from models.objectDB import Donation
 from dbEngine import EngineSQLAlchemy
-from facades.registerUtils import getUserFromToken
-from facades.coordUtils import isAround
-from apiConfig import getArgs
+from facades.utils.registerUtils import getUserFromToken
+from facades.utils.coordUtils import isAround
+from facades.apiConfig import getArgs
 
 def f(request):
 

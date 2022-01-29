@@ -1,8 +1,8 @@
 from models.objectDB import Article, Donation
 from dbEngine import EngineSQLAlchemy
-from apiConfig import getArgs
-from facades.registerUtils import getUserFromToken
-from facades.scanUtils import getArticleFromWeb
+from facades.apiConfig import getArgs
+from facades.utils.registerUtils import getUserFromToken
+from facades.utils.scanUtils import getArticleFromWeb
 
 
 def f(request):

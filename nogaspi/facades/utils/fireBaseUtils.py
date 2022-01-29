@@ -1,6 +1,6 @@
 import os
 import traceback
-from apiConfig import logging
+from facades.apiConfig import logging
 import firebase_admin
 from firebase_admin import messaging, credentials, initialize_app
 

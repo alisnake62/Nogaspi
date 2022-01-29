@@ -1,6 +1,6 @@
 from dbEngine import EngineSQLAlchemy
-from facades.registerUtils import getUserFromToken
-from apiConfig import CoordException, getArgs
+from facades.utils.registerUtils import getUserFromToken
+from facades.apiConfig import CoordException, getArgs
 import json
 
 def f(request):

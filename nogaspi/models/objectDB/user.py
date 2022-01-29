@@ -4,7 +4,7 @@ import datetime
 from sqlalchemy import Column, Integer, Text, ForeignKey, FLOAT
 from sqlalchemy.sql.sqltypes import DATE, DATETIME, INTEGER, JSON, TEXT, VARCHAR, String
 from sqlalchemy.orm import relationship
-from facades import fireBaseUtils
+from facades.utils import fireBaseUtils
 
 from dbEngine import Base
 

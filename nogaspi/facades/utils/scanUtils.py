@@ -2,7 +2,7 @@ import requests as req
 import traceback
 import datetime
 from models.objectDB import Product, Allergen
-from apiConfig import OpenFoodException
+from facades.apiConfig import OpenFoodException
 
 import json
 

@@ -1,7 +1,7 @@
 import secrets
 import datetime
 
-from apiConfig import DonationException
+from facades.apiConfig import DonationException
 from sqlalchemy import Column, Integer, Text, ForeignKey
 from sqlalchemy.sql.sqltypes import BOOLEAN, DATE, DATETIME, FLOAT, INTEGER, TEXT, VARCHAR, String
 from sqlalchemy.orm import relationship

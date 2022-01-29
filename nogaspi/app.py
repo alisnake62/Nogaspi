@@ -1,6 +1,6 @@
 from flask import Flask, jsonify
 from route import route
-from apiConfig import APIException
+from facades.apiConfig import APIException
 
 app = Flask(__name__)
 

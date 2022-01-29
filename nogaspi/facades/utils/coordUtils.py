@@ -1,5 +1,5 @@
 import math
-from apiConfig import CoordException
+from facades.apiConfig import CoordException
 
 def isAround(coord1, coord2, distance):
     lat1, lon1 = coord1

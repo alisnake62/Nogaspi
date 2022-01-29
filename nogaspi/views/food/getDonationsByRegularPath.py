@@ -1,8 +1,8 @@
 from models.objectDB import Donation
 from dbEngine import EngineSQLAlchemy
-from facades.registerUtils import getUserFromToken
-from facades.coordUtils import isAroundPath
-from apiConfig import UserException, getArgs
+from facades.utils.registerUtils import getUserFromToken
+from facades.utils.coordUtils import isAroundPath
+from facades.apiConfig import UserException, getArgs
 import json
 
 def f(request):

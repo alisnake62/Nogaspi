@@ -1,7 +1,7 @@
 from models.objectDB import Donation, Conversation, Message
 from dbEngine import EngineSQLAlchemy
-from apiConfig import EmptyException, DonationException, getArgs
-from facades.registerUtils import getUserFromToken
+from facades.apiConfig import EmptyException, DonationException, getArgs
+from facades.utils.registerUtils import getUserFromToken
 
 def f(request):
 

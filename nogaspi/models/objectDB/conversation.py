@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, Text, ForeignKey
 from sqlalchemy.sql.sqltypes import BOOLEAN, DATE, DATETIME, FLOAT, INTEGER, TEXT, VARCHAR, String
 from sqlalchemy.orm import relationship
-from apiConfig import ConversationException
+from facades.apiConfig import ConversationException
 
 from dbEngine import Base
 

@@ -1,7 +1,7 @@
 from dbEngine import EngineSQLAlchemy
-from facades.registerUtils import getUserFromToken
+from facades.utils.registerUtils import getUserFromToken
 from models.objectDB import User
-from apiConfig import getArgs
+from facades.apiConfig import getArgs
 import os
 
 def f(request):

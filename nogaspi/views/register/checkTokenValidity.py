@@ -1,5 +1,5 @@
 import datetime
-from apiConfig import getArgs
+from facades.apiConfig import getArgs
 from models.objectDB import User
 from dbEngine import EngineSQLAlchemy
 

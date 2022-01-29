@@ -1,8 +1,8 @@
 from models.objectDB import Product, Article, Fridge
 from dbEngine import EngineSQLAlchemy
-from facades.registerUtils import getUserFromToken
-from facades.scanUtils import getProductFromWeb
-from apiConfig import getArgs
+from facades.utils.registerUtils import getUserFromToken
+from facades.utils.scanUtils import getProductFromWeb
+from facades.apiConfig import getArgs
 
 
 def f(request):

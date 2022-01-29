@@ -1,14 +1,12 @@
 from models.objectDB import Donation
 from dbEngine import EngineSQLAlchemy
-from apiConfig import EmptyException, DonationException, getArgs
-from facades.registerUtils import getUserFromToken
-from facades.donationUtils import makeDonation
+from facades.apiConfig import EmptyException, DonationException, getArgs
+from facades.utils.registerUtils import getUserFromToken
+from facades.utils.donationUtils import makeDonation
 
 def f(request):
 
-    token = request.json['token']
-    idDonation = request.json['idDonation']
-    donationCode = request.json['donationCode']
+    token, idDonation, donationCode = getArgs(request, ['token', 'idDonation', 'donationCode'])
 
     with EngineSQLAlchemy(request) as session:
 

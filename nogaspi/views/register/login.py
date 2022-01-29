@@ -1,6 +1,6 @@
 from models.objectDB import User
 from dbEngine import EngineSQLAlchemy
-from apiConfig import RegisterException, TokenException, getArgs
+from facades.apiConfig import RegisterException, TokenException, getArgs
 
 import traceback
 
