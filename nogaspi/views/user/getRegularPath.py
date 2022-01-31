@@ -3,7 +3,7 @@ from facades.utils.registerUtils import getUserFromToken
 from facades.apiConfig import getArgs
 import json
 
-def f(request):
+def getRegularPath(request):
 
     token = getArgs(request, ['token'])
 

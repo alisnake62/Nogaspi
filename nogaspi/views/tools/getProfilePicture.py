@@ -4,7 +4,7 @@ from models.objectDB import User
 from facades.apiConfig import getArgs
 import os
 
-def f(request):
+def getProfilePicture(request):
 
     idUser = getArgs(request, ['idUser'])
 

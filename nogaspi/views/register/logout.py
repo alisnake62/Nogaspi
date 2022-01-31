@@ -2,7 +2,7 @@ from dbEngine import EngineSQLAlchemy
 from facades.utils.registerUtils import getUserFromToken
 from facades.apiConfig import getArgs
 
-def f(request):
+def logout(request):
 
     token = getArgs(request, ['token'])
 

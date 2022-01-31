@@ -3,7 +3,7 @@ from dbEngine import EngineSQLAlchemy
 from facades.apiConfig import EmptyException, DonationException, getArgs
 from facades.utils.registerUtils import getUserFromToken
 
-def f(request):
+def initiateConversation(request):
 
     token, idDonation, firstMessage = getArgs(request, ['token', 'idDonation', 'firstMessage'])
 

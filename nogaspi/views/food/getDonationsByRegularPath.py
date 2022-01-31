@@ -5,7 +5,7 @@ from facades.utils.coordUtils import isAroundPath
 from facades.apiConfig import UserException, getArgs
 import json
 
-def f(request):
+def getDonationsByRegularPath(request):
 
     token, distanceMax, = getArgs(request, ['token', 'distanceMax'])
     distanceMax = float(distanceMax)

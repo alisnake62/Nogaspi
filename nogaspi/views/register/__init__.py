@@ -1,3 +1,3 @@
-from .login import f as register_login
-from .logout import f as register_logout
-from .checkTokenValidity import f as register_checkTokenValidity
+from .login import login as register_login
+from .logout import logout as register_logout
+from .checkTokenValidity import checkTokenValidity as register_checkTokenValidity

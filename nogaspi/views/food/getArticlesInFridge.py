@@ -5,7 +5,7 @@ from facades.apiConfig import getArgs
 from facades.utils.registerUtils import getUserFromToken
 
 
-def f(request):
+def getArticlesInFridge(request):
 
     token = getArgs(request, ['token'])
 

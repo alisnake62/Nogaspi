@@ -3,7 +3,7 @@ from facades.apiConfig import getArgs
 from models.objectDB import User
 from dbEngine import EngineSQLAlchemy
 
-def f(request):
+def checkTokenValidity(request):
 
     token = getArgs(request, ['token'])
 

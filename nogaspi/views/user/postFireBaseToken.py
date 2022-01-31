@@ -3,7 +3,7 @@ from facades.utils.registerUtils import getUserFromToken
 from models.objectDB import User
 from facades.apiConfig import getArgs
 
-def f(request):
+def postFireBaseToken(request):
 
     token, fireBaseToken = getArgs(request, ['token', 'fireBaseToken'])
 

@@ -5,7 +5,7 @@ from facades.utils.registerUtils import getUserFromToken
 from facades.utils.scanUtils import getProductFromWeb
 
 
-def f(request):
+def deleteArticlesInFridge(request):
 
     token, idArticles = getArgs(request, ['token', 'idArticles'])
 

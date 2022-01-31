@@ -4,7 +4,7 @@ from facades.utils.registerUtils import getUserFromToken
 from facades.utils.coordUtils import isAround
 from facades.apiConfig import getArgs
 
-def f(request):
+def getDonations(request):
 
     token, latitude, longitude, distanceMax = getArgs(request, ['token', 'latitude', 'longitude', 'distanceMax'])
 

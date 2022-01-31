@@ -5,7 +5,7 @@ from facades.utils.registerUtils import getUserFromToken
 from facades.utils.scanUtils import getArticleFromWeb
 
 
-def f(request):
+def postDonationWithBarCode(request):
 
     token = request.json['token']
     barcode = request.json['barcode']

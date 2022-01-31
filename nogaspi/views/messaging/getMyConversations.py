@@ -4,7 +4,7 @@ from facades.utils.registerUtils import getUserFromToken
 from facades.apiConfig import getArgs
 from sqlalchemy import or_
 
-def f(request):
+def getMyConversations(request):
 
     token, withArchivedDonations, withExpiredDonations = getArgs(request, ['token', 'withArchivedDonations', 'withExpiredDonations'])
 

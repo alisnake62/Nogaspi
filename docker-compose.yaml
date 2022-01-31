@@ -9,7 +9,7 @@ services:
     container_name: backend_nogaspi
     restart: always
     environment:
-      PMA_HOST: ${sqlHost}
+      PMA_HOST: db_nogaspi
       MYSQL_ROOT_PASSWORD: ${sqlPassword}
       FIREBASE_SERVICE_ACCOUNT: ${fireBaseServiceAccount}
     ports:
@@ -19,7 +19,6 @@ services:
     networks:
       - python-db
 
-  # CONTAINER - MYSQL : https://hub.docker.com/_/mysql
   db_nogaspi:
     image: mariadb:latest
     container_name: db_nogaspi
@@ -38,20 +37,49 @@ services:
       - python-db
       - phpmyadmin-db
 
-  # CONTAINER - PHPMYADMIN : https://hub.docker.com/r/phpmyadmin/phpmyadmin
   phpmyadmin_nogaspi:
     depends_on:
       - db_nogaspi
     image: phpmyadmin/phpmyadmin:latest
     container_name: phpmyadmin_nogaspi
-    #restart: always
+    restart: always
     environment:
-      PMA_HOST: ${sqlHost}
+      PMA_HOST: db_nogaspi
       MYSQL_ROOT_PASSWORD: ${sqlPassword}
     ports:
       - "8082:80"
     networks:
       - phpmyadmin-db
+  
+  backend_nogaspi_test:
+    depends_on:
+      - db_nogaspi_test
+    build: ${path}/Nogaspi/test
+    container_name: backend_nogaspi_test
+    environment:
+      PMA_HOST: db_nogaspi_test
+      MYSQL_ROOT_PASSWORD: ${sqlPassword}
+      FIREBASE_SERVICE_ACCOUNT: ${fireBaseServiceAccount}
+    ports:
+      - 6556:5000
+    volumes:
+      - ${path}:/usr/src/app
+    networks:
+      - python-db_test
+
+  db_nogaspi_test:
+    image: mariadb:latest
+    container_name: db_nogaspi_test
+    ports:
+      - "34307:3306"
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: ${sqlPassword}
+      MYSQL_DATABASE: nogaspi
+      MYSQL_USER: ${sqlUser}
+      MYSQL_PASSWORD: ${sqlPassword}
+    networks:
+      - python-db_test
 
 volumes:
   data:
@@ -60,4 +88,6 @@ networks:
   python-db:
     driver: bridge
   phpmyadmin-db:
+    driver: bridge
+  python-db_test:
     driver: bridge

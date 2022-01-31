@@ -5,7 +5,7 @@ from facades.utils.scanUtils import getProductFromWeb
 from facades.apiConfig import getArgs
 
 
-def f(request):
+def postArticlesInFridge(request):
     
     token, articles = getArgs(request, ['token', 'articles'])
 

@@ -4,7 +4,7 @@ from facades.apiConfig import RegisterException, TokenException, getArgs
 
 import traceback
 
-def f(request):
+def login(request):
 
     mail, password = getArgs(request, ['mail', 'password'])
 

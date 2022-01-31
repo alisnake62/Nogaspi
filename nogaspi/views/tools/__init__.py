@@ -1,1 +1,1 @@
-from .getProfilePicture import f as tools_getProfilePicture
+from .getProfilePicture import getProfilePicture as tools_getProfilePicture

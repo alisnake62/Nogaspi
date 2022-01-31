@@ -7,7 +7,7 @@ from facades.utils.scanUtils import getProductFromWeb
 import json
 
 
-def f(request):
+def getByBarCode(request):
 
     token, barcode = getArgs(request, ['token', 'barcode'])
 

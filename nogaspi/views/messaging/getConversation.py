@@ -3,7 +3,7 @@ from dbEngine import EngineSQLAlchemy
 from facades.apiConfig import EmptyException, getArgs
 from facades.utils.registerUtils import getUserFromToken
 
-def f(request):
+def getConversation(request):
 
     token, idConversation = getArgs(request, ['token', 'idConversation'])
 

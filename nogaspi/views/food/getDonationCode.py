@@ -4,7 +4,7 @@ from facades.apiConfig import EmptyException, RegisterException, getArgs
 from facades.utils.registerUtils import getUserFromToken
 
 
-def f(request):
+def getDonationCode(request):
     
     token, idDonation = getArgs(request, ['token', 'idDonation'])
 

@@ -3,7 +3,7 @@ from facades.utils.registerUtils import getUserFromToken
 from facades.apiConfig import CoordException, getArgs
 import json
 
-def f(request):
+def postRegularPath(request):
 
     token, latitudeStart, longitudeStart, latitudeEnd, longitudeEnd, pathPoints = getArgs(request, [
         'token',
