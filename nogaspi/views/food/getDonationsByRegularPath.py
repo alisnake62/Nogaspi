@@ -8,6 +8,7 @@ import json
 def f(request):
 
     token, distanceMax, = getArgs(request, ['token', 'distanceMax'])
+    distanceMax = float(distanceMax)
 
     with EngineSQLAlchemy(request) as session:
 
