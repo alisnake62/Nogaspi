@@ -2,7 +2,7 @@ from flask import jsonify, request, send_file
 
 from models.schemas import *
 from views import *
-from facades.apiConfig import apiResponse, checkInputAPI
+from facades.apiConfig import piResponse, checkInputAPI
 
 def route(app):
     @app.route('/test', methods=['GET'])
