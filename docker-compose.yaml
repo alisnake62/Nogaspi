@@ -84,6 +84,18 @@ services:
       MYSQL_PASSWORD: ${sqlPassword}
     networks:
       - python-db_test
+      - phpmyadmin-db_test
+
+  phpmyadmin_nogaspi_test:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin_nogaspi_test
+    environment:
+      PMA_HOST: db_nogaspi_test
+      MYSQL_ROOT_PASSWORD: ${sqlPassword}
+    ports:
+      - "9082:80"
+    networks:
+      - phpmyadmin-db_test
 
   build_nogaspi:
     build:
@@ -104,4 +116,6 @@ networks:
   phpmyadmin-db:
     driver: bridge
   python-db_test:
+    driver: bridge
+  phpmyadmin-db_test:
     driver: bridge
