@@ -5,6 +5,7 @@ services:
   backend_nogaspi:
     depends_on:
       - db_nogaspi
+      - phpmyadmin_nogaspi
     build: ${path}/Nogaspi/nogaspi
     container_name: backend_nogaspi
     restart: always
@@ -51,10 +52,10 @@ services:
     networks:
       - phpmyadmin-db
   
-  backend_nogaspi_test:
+  pytest_nogaspi:
     depends_on:
       - db_nogaspi_test
-    build: ${path}/Nogaspi_test/test
+    build: ${path}/${testDirectory}/test
     container_name: backend_nogaspi_test
     environment:
       PMA_HOST: db_nogaspi_test
