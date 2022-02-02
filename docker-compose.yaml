@@ -54,7 +54,7 @@ services:
   backend_nogaspi_test:
     depends_on:
       - db_nogaspi_test
-    build: ${path}/Nogaspi/test
+    build: ${path}/Nogaspi_test/test
     container_name: backend_nogaspi_test
     environment:
       PMA_HOST: db_nogaspi_test
