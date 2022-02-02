@@ -84,10 +84,11 @@ services:
       - python-db_test
 
   build_nogaspi:
-    build: ${path}/${buildDirectory}/nogaspi
+    build:
+      context: ${path}/${buildDirectory}/nogaspi
+      args:
+        - WD=${buildDirectory}
     container_name: build_nogaspi
-    environment:
-      workdir: ${buildDirectory}
     volumes:
       - ${path}:/usr/src/app
 
