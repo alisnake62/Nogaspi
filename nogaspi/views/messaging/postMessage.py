@@ -7,7 +7,7 @@ def postMessage(request):
 
     token, idConversation, body = getArgs(request, ['token', 'idConversation', 'body'])
 
-    with EngineSQLAlchemy(request) as session:
+    with EngineSQLAlchemy() as session:
 
         user = getUserFromToken(token, session, request)
         user.majTokenValidity()

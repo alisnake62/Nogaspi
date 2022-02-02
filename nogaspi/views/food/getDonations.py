@@ -16,7 +16,7 @@ def getDonations(request):
         distanceMax = float(distanceMax)
         coordUser = (latitude, longitude)
 
-    with EngineSQLAlchemy(request) as session:
+    with EngineSQLAlchemy() as session:
 
         user = getUserFromToken(token, session, request)
         user.majTokenValidity()

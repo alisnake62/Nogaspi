@@ -9,5 +9,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install pytest
 
 #COPY . .
-WORKDIR "/usr/src/app/${WD}/test"
+WORKDIR "/usr/src/app/${WD}"
+
+ENV PYTHONPATH "${PYTHONPATH}:./nogaspi"
 CMD ["pytest"]

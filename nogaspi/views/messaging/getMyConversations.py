@@ -8,7 +8,7 @@ def getMyConversations(request):
 
     token, withArchivedDonations, withExpiredDonations = getArgs(request, ['token', 'withArchivedDonations', 'withExpiredDonations'])
 
-    with EngineSQLAlchemy(request) as session:
+    with EngineSQLAlchemy() as session:
 
         user = getUserFromToken(token, session, request)
         user.majTokenValidity()

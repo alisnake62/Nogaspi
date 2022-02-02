@@ -11,7 +11,7 @@ def getByBarCode(request):
 
     token, barcode = getArgs(request, ['token', 'barcode'])
 
-    with EngineSQLAlchemy(request) as session:
+    with EngineSQLAlchemy() as session:
 
         user = getUserFromToken(token, session, request)
         user.majTokenValidity()

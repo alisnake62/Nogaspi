@@ -8,7 +8,7 @@ def takeDonation(request):
 
     token, idDonation, donationCode = getArgs(request, ['token', 'idDonation', 'donationCode'])
 
-    with EngineSQLAlchemy(request) as session:
+    with EngineSQLAlchemy() as session:
 
         user = getUserFromToken(token, session, request)
         user.majTokenValidity()

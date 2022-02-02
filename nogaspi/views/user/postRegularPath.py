@@ -15,7 +15,7 @@ def postRegularPath(request):
     ])
     latitudeStart, longitudeStart, latitudeEnd, longitudeEnd = (float(f) for f in (latitudeStart, longitudeStart, latitudeEnd, longitudeEnd))
 
-    with EngineSQLAlchemy(request) as session:
+    with EngineSQLAlchemy() as session:
 
         user = getUserFromToken(token, session, request)
         user.majTokenValidity()

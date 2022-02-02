@@ -10,7 +10,7 @@ def getDonationsByRegularPath(request):
     token, distanceMax, = getArgs(request, ['token', 'distanceMax'])
     distanceMax = float(distanceMax)
 
-    with EngineSQLAlchemy(request) as session:
+    with EngineSQLAlchemy() as session:
 
         user = getUserFromToken(token, session, request)
         user.majTokenValidity()

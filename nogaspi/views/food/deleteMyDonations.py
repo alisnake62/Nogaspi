@@ -8,7 +8,7 @@ def deleteMyDonations(request):
 
     token, idDonations = getArgs(request, ['token', 'idDonations'])
 
-    with EngineSQLAlchemy(request) as session:
+    with EngineSQLAlchemy() as session:
 
         user = getUserFromToken(token, session, request)
         user.majTokenValidity()

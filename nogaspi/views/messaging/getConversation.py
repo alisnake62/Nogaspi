@@ -7,7 +7,7 @@ def getConversation(request):
 
     token, idConversation = getArgs(request, ['token', 'idConversation'])
 
-    with EngineSQLAlchemy(request) as session:
+    with EngineSQLAlchemy() as session:
 
         user = getUserFromToken(token, session, request)
         user.majTokenValidity()

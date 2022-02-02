@@ -10,22 +10,16 @@ import traceback
 Base = declarative_base()
 
 class EngineSQLAlchemy:
-
-    def __init__(self, request):
-        self.request = request
     
     def __enter__(self):
-        try:
-            password = os.environ['MYSQL_ROOT_PASSWORD']
-            host = os.environ['PMA_HOST']
-            self.engine = create_engine('mysql+mysqlconnector://root:{}@{}/nogaspi'.format(password, host), echo=False)
-            Base.metadata.create_all(self.engine)
-            Session = sessionmaker(bind=self.engine)
-            self.session = Session()
-            return self.session
 
-        except Exception:
-            raise DBException("Problem to access at the Database", traceback.format_exc(), self.request)
+        password = os.environ['MYSQL_ROOT_PASSWORD']
+        host = os.environ['PMA_HOST']
+        self.engine = create_engine('mysql+mysqlconnector://root:{}@{}/nogaspi'.format(password, host), echo=False)
+        Base.metadata.create_all(self.engine)
+        Session = sessionmaker(bind=self.engine)
+        self.session = Session()
+        return self.session
 
     def __exit__(self, type, value, traceback):
         self.session.close()

@@ -8,7 +8,7 @@ def login(request):
 
     mail, password = getArgs(request, ['mail', 'password'])
 
-    with EngineSQLAlchemy(request) as session:
+    with EngineSQLAlchemy() as session:
 
         try:
             user = session.query( User ).filter(User.mail == mail).first()

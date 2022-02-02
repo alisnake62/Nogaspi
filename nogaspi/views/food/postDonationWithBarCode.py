@@ -14,7 +14,7 @@ def postDonationWithBarCode(request):
     longitude = request.json['longitude']
     geoPrecision = request.json['geoPrecision']
 
-    with EngineSQLAlchemy(request) as session:
+    with EngineSQLAlchemy() as session:
 
         user = getUserFromToken(token, session, request)
         user.majTokenValidity()

@@ -17,7 +17,7 @@ def postDonationFromFridge(request):
     ])
     latitude, longitude, geoPrecision = (float(f) for f in (latitude, longitude, geoPrecision))
 
-    with EngineSQLAlchemy(request) as session:
+    with EngineSQLAlchemy() as session:
 
         user = getUserFromToken(token, session, request)
         user.majTokenValidity()

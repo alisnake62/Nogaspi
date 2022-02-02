@@ -7,7 +7,7 @@ def initiateConversation(request):
 
     token, idDonation, firstMessage = getArgs(request, ['token', 'idDonation', 'firstMessage'])
 
-    with EngineSQLAlchemy(request) as session:
+    with EngineSQLAlchemy() as session:
 
         user = getUserFromToken(token, session, request)
         user.majTokenValidity()

@@ -8,7 +8,7 @@ def getProfilePicture(request):
 
     idUser = getArgs(request, ['idUser'])
 
-    with EngineSQLAlchemy(request) as session:
+    with EngineSQLAlchemy() as session:
 
         user = session.query(User).filter(User.id == idUser).first()
         

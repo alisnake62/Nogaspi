@@ -7,7 +7,7 @@ def getAllergens(request):
 
     token = getArgs(request, ['token'])
 
-    with EngineSQLAlchemy(request) as session:
+    with EngineSQLAlchemy() as session:
 
         user = getUserFromToken(token, session, request)
         user.majTokenValidity()

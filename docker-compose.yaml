@@ -28,8 +28,6 @@ services:
     image: mariadb:latest
     container_name: db_nogaspi
     restart: always
-    ports:
-      - "33307:3306"
     volumes:
       - data:/var/lib/mysql
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
@@ -63,13 +61,11 @@ services:
       context: ${path}/${testDirectory}/test
       args:
         - WD=${testDirectory}
-    container_name: backend_nogaspi_test
+    container_name: pytest_nogaspi
     environment:
       PMA_HOST: db_nogaspi_test
       MYSQL_ROOT_PASSWORD: ${sqlPassword}
       FIREBASE_SERVICE_ACCOUNT: ${fireBaseServiceAccount}
-    ports:
-      - 6556:5000
     volumes:
       - ${path}:/usr/src/app
     networks:
@@ -78,8 +74,8 @@ services:
   db_nogaspi_test:
     image: mariadb:latest
     container_name: db_nogaspi_test
-    ports:
-      - "34307:3306"
+    volumes:
+      - data_test:/var/lib/mysql
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
     environment:
       MYSQL_ROOT_PASSWORD: ${sqlPassword}
@@ -100,6 +96,7 @@ services:
 
 volumes:
   data:
+  data_test:
 
 networks:
   python-db:

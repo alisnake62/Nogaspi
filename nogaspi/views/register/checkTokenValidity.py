@@ -6,8 +6,11 @@ from dbEngine import EngineSQLAlchemy
 def checkTokenValidity(request):
 
     token = getArgs(request, ['token'])
+    checkTokenValidityTest(token, request)
 
-    with EngineSQLAlchemy(request) as session:
+def checkTokenValidityTest(token):
+
+    with EngineSQLAlchemy() as session:
 
         user = session.query( User ).filter(User.token == token).first()
 
