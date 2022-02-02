@@ -12,4 +12,5 @@ RUN pip install pytest
 WORKDIR "/usr/src/app/${WD}"
 
 ENV PYTHONPATH "${PYTHONPATH}:./nogaspi"
+
 CMD ["pytest"]
