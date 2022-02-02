@@ -7,4 +7,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install pytest
 
 #COPY . .
-CMD ["Nogaspi/test/pytest"]
+WORKDIR /usr/src/app/Nogaspi/test
+CMD ["pytest"]
