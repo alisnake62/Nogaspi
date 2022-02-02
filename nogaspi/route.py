@@ -7,7 +7,7 @@ from facades.apiConfig import apiResponse, checkInputAPI
 def route(app):
     @app.route('/test', methods=['GET'])
     def test():
-        data = {"toto":  ["tata", "titi"]}
+        data = {"toto":  ["tata", "tito"]}
         return jsonify(apiResponse(request, data))
 
     @app.route('/tools/getProfilePicture', methods=['GET'])
