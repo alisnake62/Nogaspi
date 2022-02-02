@@ -6,7 +6,10 @@ services:
     depends_on:
       - db_nogaspi
       - phpmyadmin_nogaspi
-    build: ${path}/Nogaspi/nogaspi
+    build:
+      context: ${path}/Nogaspi/nogaspi
+      args:
+        - WD=Nogaspi
     container_name: backend_nogaspi
     restart: always
     environment:
