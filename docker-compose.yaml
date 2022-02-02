@@ -10,6 +10,7 @@ services:
     container_name: backend_nogaspi
     restart: always
     environment:
+      workdir: Nogaspi
       PMA_HOST: db_nogaspi
       MYSQL_ROOT_PASSWORD: ${sqlPassword}
       FIREBASE_SERVICE_ACCOUNT: ${fireBaseServiceAccount}
@@ -81,6 +82,14 @@ services:
       MYSQL_PASSWORD: ${sqlPassword}
     networks:
       - python-db_test
+
+  build_nogaspi:
+    build: ${path}/${buildDirectory}/nogaspi
+    container_name: build_nogaspi
+    environment:
+      workdir: ${buildDirectory}
+    volumes:
+      - ${path}:/usr/src/app
 
 volumes:
   data:
