@@ -59,7 +59,10 @@ services:
   pytest_nogaspi:
     depends_on:
       - db_nogaspi_test
-    build: ${path}/${testDirectory}/test
+    build:
+      context: ${path}/${testDirectory}/test
+      args:
+        - WD=${testDirectory}
     container_name: backend_nogaspi_test
     environment:
       PMA_HOST: db_nogaspi_test
