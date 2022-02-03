@@ -13,7 +13,7 @@ def test_register_login():
     "mail":"toto@toto.fr",
     "password":"toto"
     }
-    fnrtr = login(inputRequest, FakeRequest())
+    fnrtr = login(FakeRequest(inputRequest))
     
     sqlDeleteAllData()
     
@@ -29,7 +29,7 @@ def test_register_login_with_bad_password():
     "password":"tata"
     }
     with pytest.raises(Exception):
-        login(inputRequest, FakeRequest())
+        login(FakeRequest(inputRequest))
     
     sqlDeleteAllData()
 
@@ -42,7 +42,6 @@ def test_register_login_with_bad_user():
     "password":"toto"
     }
     with pytest.raises(Exception):
-        login(inputRequest, FakeRequest())
+        login(FakeRequest(inputRequest))
     
     sqlDeleteAllData()
-    

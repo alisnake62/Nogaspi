@@ -19,7 +19,7 @@ def route(app):
     @app.route('/register/login', methods=['POST'])
     def login_endpoint():
         checkInputAPI(LoginInputSchema, request)
-        data = register_login(getArgs(request), request)
+        data = register_login(request)
         return jsonify(apiResponse(request, data))
 
     @app.route('/register/logout', methods=['POST'])
@@ -31,7 +31,7 @@ def route(app):
     @app.route('/register/checkTokenValidity', methods=['GET'])
     def checkTokenValidity_endpoint():
         checkInputAPI(CheckTokenValidityInputSchema, request)
-        data = register_checkTokenValidity(getArgs(request), request)
+        data = register_checkTokenValidity(request)
         return jsonify(apiResponse(request, data))
 
     @app.route('/food/getProduct', methods=['GET'])
