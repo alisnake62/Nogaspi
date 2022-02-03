@@ -1,14 +1,10 @@
 import datetime
-from facades.apiConfig import getArgs
 from models.objectDB import User
 from dbEngine import EngineSQLAlchemy
 
-def checkTokenValidity(request):
+def checkTokenValidity(args, request):
 
-    token = getArgs(request, ['token'])
-    checkTokenValidityTest(token, request)
-
-def checkTokenValidityTest(token, request):
+    token = args['token']
 
     with EngineSQLAlchemy() as session:
 

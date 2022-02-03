@@ -8,8 +8,9 @@ def checkInputAPI(Schema, request):
     except Exception as e:
         raise InputAPIException(str(e), str(e), request)
 
-def getArgs(request, args):
+def getArgs(request):
     if request.method == "GET":
+        return {k:v for k,v in request.args.items() }
         return (request.args.get(arg) for arg in args) if len(args) > 1 else request.args.get(args[0])
     else:
-        return (request.json[arg] for arg in args) if len(args) > 1 else request.json[args[0]]
+        return request.json

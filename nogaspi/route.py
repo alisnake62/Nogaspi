@@ -1,5 +1,5 @@
 from flask import jsonify, request, send_file
-
+from facades.apiConfig import getArgs
 from models.schemas import *
 from views import *
 from facades.apiConfig import apiResponse, checkInputAPI
@@ -19,7 +19,7 @@ def route(app):
     @app.route('/register/login', methods=['POST'])
     def login_endpoint():
         checkInputAPI(LoginInputSchema, request)
-        data = register_login(request)
+        data = register_login(getArgs(request), request)
         return jsonify(apiResponse(request, data))
 
     @app.route('/register/logout', methods=['POST'])
@@ -31,7 +31,7 @@ def route(app):
     @app.route('/register/checkTokenValidity', methods=['GET'])
     def checkTokenValidity_endpoint():
         checkInputAPI(CheckTokenValidityInputSchema, request)
-        data = register_checkTokenValidity(request)
+        data = register_checkTokenValidity(getArgs(request), request)
         return jsonify(apiResponse(request, data))
 
     @app.route('/food/getProduct', methods=['GET'])

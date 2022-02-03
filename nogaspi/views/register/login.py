@@ -1,12 +1,13 @@
 from models.objectDB import User
 from dbEngine import EngineSQLAlchemy
-from facades.apiConfig import RegisterException, TokenException, getArgs
+from facades.apiConfig import RegisterException, TokenException
 
 import traceback
 
-def login(request):
+def login(args, request):
 
-    mail, password = getArgs(request, ['mail', 'password'])
+    mail = args['mail']
+    password = args['password']
 
     with EngineSQLAlchemy() as session:
 
