@@ -36,6 +36,8 @@ services:
       MYSQL_DATABASE: nogaspi
       MYSQL_USER: ${sqlUser}
       MYSQL_PASSWORD: ${sqlPassword}
+    ports:
+      - "33307:3306"
     networks:
       - python-db
       - phpmyadmin-db

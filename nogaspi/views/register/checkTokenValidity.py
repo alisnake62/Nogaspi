@@ -8,7 +8,7 @@ def checkTokenValidity(request):
     token = getArgs(request, ['token'])
     checkTokenValidityTest(token, request)
 
-def checkTokenValidityTest(token):
+def checkTokenValidityTest(token, request):
 
     with EngineSQLAlchemy() as session:
 
