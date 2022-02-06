@@ -19,14 +19,10 @@ def test_food_takeDonations():
         "INSERT INTO `article` (`id`, `idProduct`, `idDonation`, `expirationDate`, `idFridge`) VALUES ('3', '1', '2', NOW() + INTERVAL 1 DAY, NULL);"
     ]
     sqlQuerysWithCommit(querys)
-    
-    import time
-    time.sleep(180)
 
     funcRtr = takeDonations(FakeRequest({"token":"token_tata", "donationCode": "ABCDEF"}))
     assert funcRtr["isTaked"]
     assert sqlSelect(table="donation", conditions="WHERE id = 1")[0]['archive'] == 1
     assert sqlSelect(table="donation", conditions="WHERE id = 2")[0]['archive'] == 1
-    assert sqlSelect(table="user", conditions="WHERE id = 1") == "toto"
-    assert sqlSelect(table="user", conditions="WHERE id = 1")[0]['points'] == 12
-    assert sqlSelect(table="user", conditions="WHERE id = 2")[0]['points'] == 3
+    assert sqlSelect(table="user", conditions="WHERE user.id = 1")[0]['points'] == 12
+    assert sqlSelect(table="user", conditions="WHERE user.id = 2")[0]['points'] == 3
