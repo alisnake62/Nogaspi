@@ -59,14 +59,13 @@ class DeleteArticlesInFridgeInputSchema(Schema):
 class GetArticlesInFridgeInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
 
-class TakeDonationInputSchema(Schema):
+class takeDonationsInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
-    idDonation = fields.Int(require = True)
     donationCode = fields.Str(required=True, validate = validate.Length(equal=64, error='Donation Code must have 64 characters'))
     
-class GetDonationCodeInputSchema(Schema):
+class getDonationsCodeInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
-    idDonation = fields.Int(require = True)
+    idDonations = fields.Str(require = True)
 
 class GetFavoriteDonationsInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))

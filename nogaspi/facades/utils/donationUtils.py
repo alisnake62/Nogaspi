@@ -1,6 +1,7 @@
 def makeDonation(userOwner, userTaker, donation):
     donation.archive = True
+    articleCount = len(donation.articles)
     for article in donation.articles:
         article.fridge = None
-    userTaker.points += 5
-    userOwner.points += 20
+    userTaker.points += articleCount
+    userOwner.points += articleCount * 4

@@ -2,7 +2,6 @@ from models.objectDB import Article, Fridge
 from dbEngine import EngineSQLAlchemy
 from facades.apiConfig import EmptyException, DonationException, FridgeException, getArgs
 from facades.utils.registerUtils import getUserFromToken
-from facades.utils.scanUtils import getProductFromWeb
 
 
 def deleteArticlesInFridge(request):

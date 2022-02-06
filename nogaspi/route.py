@@ -95,16 +95,16 @@ def route(app):
         data = food_getArticlesInFridge(request)
         return jsonify(apiResponse(request, data))
 
-    @app.route('/food/takeDonation', methods=['POST'])
-    def takeDonation_endpoint():
-        checkInputAPI(TakeDonationInputSchema, request)
-        data = food_takeDonation(request)
+    @app.route('/food/takeDonations', methods=['POST'])
+    def takeDonations_endpoint():
+        checkInputAPI(takeDonationsInputSchema, request)
+        data = food_takeDonations(request)
         return jsonify(apiResponse(request, data))
 
-    @app.route('/food/getDonationCode', methods=['GET'])
-    def getDonationCode_endpoint():
-        checkInputAPI(GetDonationCodeInputSchema, request)
-        data = food_getDonationCode(request)
+    @app.route('/food/getDonationsCode', methods=['GET'])
+    def getDonationsCode_endpoint():
+        checkInputAPI(getDonationsCodeInputSchema, request)
+        data = food_getDonationsCode(request)
         return jsonify(apiResponse(request, data))
 
     @app.route('/food/getFavoriteDonations', methods=['GET'])

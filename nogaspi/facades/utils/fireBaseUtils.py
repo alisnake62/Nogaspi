@@ -4,7 +4,7 @@ from facades.apiConfig import logging
 import firebase_admin
 from firebase_admin import messaging, credentials, initialize_app
 
-def sendNotification(idUserTo, fireBaseToken, title, body, ):
+def sendNotification(idUserTo, fireBaseToken, title, body):
 
     initAppOnFireBase()
 

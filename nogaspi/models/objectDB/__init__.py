@@ -5,6 +5,7 @@ from .allergen import Allergen
 from .productAllergen import ProductAllergen
 from .favoriteDonation import FavoriteDonation
 from .donation import Donation
+from .donationCode import DonationCode
 from .article import Article
 from .fridge import Fridge
 from .conversation import Conversation

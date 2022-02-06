@@ -30,6 +30,7 @@ def sqlDeleteAllData():
         'article',
         'conversation',
         'donation',
+        'donationCode',
         'favorite_donation',
         'fridge',
         'message',

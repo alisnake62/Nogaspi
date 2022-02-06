@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db_nogaspi
--- Généré le : mer. 02 fév. 2022 à 19:18
--- Version du serveur : 10.6.4-MariaDB-1:10.6.4+maria~focal
+-- Généré le : dim. 06 fév. 2022 à 15:27
+-- Version du serveur : 10.6.5-MariaDB-1:10.6.5+maria~focal
 -- Version de PHP : 7.4.20
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `nogaspi`
 --
-CREATE DATABASE IF NOT EXISTS `nogaspi` DEFAULT CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci;
-USE `nogaspi`;
 
 -- --------------------------------------------------------
 
@@ -29,7 +27,6 @@ USE `nogaspi`;
 -- Structure de la table `allergen`
 --
 
-DROP TABLE IF EXISTS `allergen`;
 CREATE TABLE `allergen` (
   `id` int(11) NOT NULL,
   `nameEN` varchar(50) COLLATE utf8mb3_unicode_ci NOT NULL,
@@ -42,7 +39,6 @@ CREATE TABLE `allergen` (
 -- Structure de la table `article`
 --
 
-DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article` (
   `id` int(11) NOT NULL,
   `idProduct` int(11) NOT NULL,
@@ -57,7 +53,6 @@ CREATE TABLE `article` (
 -- Structure de la table `conversation`
 --
 
-DROP TABLE IF EXISTS `conversation`;
 CREATE TABLE `conversation` (
   `id` int(11) NOT NULL,
   `idDonation` int(11) NOT NULL,
@@ -71,7 +66,6 @@ CREATE TABLE `conversation` (
 -- Structure de la table `donation`
 --
 
-DROP TABLE IF EXISTS `donation`;
 CREATE TABLE `donation` (
   `id` int(11) NOT NULL,
   `idUser` int(11) NOT NULL,
@@ -80,9 +74,20 @@ CREATE TABLE `donation` (
   `geoPrecision` int(20) NOT NULL,
   `startingDate` datetime NOT NULL,
   `endingDate` datetime NOT NULL,
-  `code` varchar(100) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
-  `code_expiration` datetime DEFAULT NULL,
+  `idDonationCode` int(11) DEFAULT NULL,
   `archive` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `donationCode`
+--
+
+CREATE TABLE `donationCode` (
+  `id` int(11) NOT NULL,
+  `code` varchar(100) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `expirationDate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
@@ -91,7 +96,6 @@ CREATE TABLE `donation` (
 -- Structure de la table `favorite_donation`
 --
 
-DROP TABLE IF EXISTS `favorite_donation`;
 CREATE TABLE `favorite_donation` (
   `id` int(11) NOT NULL,
   `idUser` int(11) NOT NULL,
@@ -104,12 +108,9 @@ CREATE TABLE `favorite_donation` (
 -- Structure de la table `fridge`
 --
 
-DROP TABLE IF EXISTS `fridge`;
 CREATE TABLE `fridge` (
   `id` int(11) NOT NULL,
-  `idUser` int(11) NOT NULL,
-  `brand` varchar(50) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
-  `brand2` varchar(50) COLLATE utf8mb3_unicode_ci NOT NULL
+  `idUser` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
@@ -118,7 +119,6 @@ CREATE TABLE `fridge` (
 -- Structure de la table `message`
 --
 
-DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
   `id` int(11) NOT NULL,
   `idConversation` int(11) NOT NULL,
@@ -134,7 +134,6 @@ CREATE TABLE `message` (
 -- Structure de la table `product`
 --
 
-DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
   `id` int(11) NOT NULL,
   `opinion` text COLLATE utf8mb3_unicode_ci DEFAULT NULL,
@@ -156,7 +155,6 @@ CREATE TABLE `product` (
 -- Structure de la table `product_allergen`
 --
 
-DROP TABLE IF EXISTS `product_allergen`;
 CREATE TABLE `product_allergen` (
   `id` int(11) NOT NULL,
   `idProduct` int(11) DEFAULT NULL,
@@ -169,7 +167,6 @@ CREATE TABLE `product_allergen` (
 -- Structure de la table `rang`
 --
 
-DROP TABLE IF EXISTS `rang`;
 CREATE TABLE `rang` (
   `id` int(11) NOT NULL,
   `name` varchar(50) COLLATE utf8mb3_unicode_ci NOT NULL
@@ -181,7 +178,6 @@ CREATE TABLE `rang` (
 -- Structure de la table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `mail` varchar(50) COLLATE utf8mb3_unicode_ci NOT NULL,
@@ -233,7 +229,14 @@ ALTER TABLE `conversation`
 --
 ALTER TABLE `donation`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_annonce_user` (`idUser`);
+  ADD KEY `fk_annonce_user` (`idUser`),
+  ADD KEY `fk_donation_donationCode` (`idDonationCode`);
+
+--
+-- Index pour la table `donationCode`
+--
+ALTER TABLE `donationCode`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `favorite_donation`
@@ -314,6 +317,12 @@ ALTER TABLE `donation`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT pour la table `donationCode`
+--
+ALTER TABLE `donationCode`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT pour la table `favorite_donation`
 --
 ALTER TABLE `favorite_donation`
@@ -379,7 +388,8 @@ ALTER TABLE `conversation`
 -- Contraintes pour la table `donation`
 --
 ALTER TABLE `donation`
-  ADD CONSTRAINT `fk_annonce_user` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `fk_annonce_user` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `fk_donation_donationCode` FOREIGN KEY (`idDonationCode`) REFERENCES `donationCode` (`id`);
 
 --
 -- Contraintes pour la table `favorite_donation`

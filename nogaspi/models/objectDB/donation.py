@@ -1,4 +1,3 @@
-import secrets
 import datetime
 
 from facades.apiConfig import DonationException
@@ -10,8 +9,6 @@ from dbEngine import Base
 
 class Donation (Base):
 
-    CODE_VALIDITY = 5   #minutes
-
     __tablename__ = 'donation'
     id = Column(INTEGER, primary_key=True)
     idUser = Column(INTEGER, ForeignKey('user.id'))
@@ -22,8 +19,8 @@ class Donation (Base):
     startingDate = Column(DATE)
     endingDate = Column(DATE)
     articles = relationship("Article", back_populates="donation")
-    code = Column(VARCHAR)
-    code_expiration = Column(DATETIME)
+    idDonationCode = Column(INTEGER, ForeignKey('donationCode.id'))
+    donationCode = relationship("DonationCode", back_populates="donations")
     archive = Column(BOOLEAN)
     favoriteUsers = relationship("User", secondary='favorite_donation', back_populates="favoriteDonations")
     conversations = relationship("Conversation", back_populates="donation")
@@ -36,11 +33,6 @@ class Donation (Base):
         self.startingDate = datetime.datetime.now()
         self.endingDate = endingDate
         self.archive = archive
-
-    def generateCode(self):
-        self.code = secrets.token_hex()
-        self.code_expiration = datetime.datetime.now() + datetime.timedelta(minutes = self.CODE_VALIDITY)
-        return {'code': self.code, 'code_expiration': self.code_expiration}
 
     def isValide(self):
         if self.archive or self.endingDate < datetime.datetime.now():
@@ -61,14 +53,6 @@ class Donation (Base):
             raise DonationException(message, message, request)
         elif self.endingDate < datetime.datetime.now():
             message = "This donation is expired"
-            raise DonationException(message, message, request)
-    
-    def compareCodeRaiseException(self, inputCode, request):
-        if self.code != inputCode:
-            message = "Donation Code Unknown"
-            raise DonationException(message, message, request)
-        elif self.code_expiration < datetime.datetime.now():
-            message = "Donation Code Expired"
             raise DonationException(message, message, request)
 
     def isFavorite(self, user):
