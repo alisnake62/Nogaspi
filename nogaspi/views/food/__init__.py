@@ -9,7 +9,7 @@ from .postArticlesInFridge import postArticlesInFridge as food_postArticlesInFri
 from .deleteArticlesInFridge import deleteArticlesInFridge as food_deleteArticlesInFridge
 from .getArticlesInFridge import getArticlesInFridge as food_getArticlesInFridge
 from .takeDonations import takeDonations as food_takeDonations
-from .getDonationsCode import getDonationsCode as food_getDonationsCode
+from .generateDonationsCode import generateDonationsCode as food_generateDonationsCode
 from .getFavoriteDonations import getFavoriteDonations as food_getFavoriteDonations
 from .toggleDonationInMyFavorite import toggleDonationInMyFavorite as food_toggleDonationInMyFavorite
 from .getMyDonations import getMyDonations as food_getMyDonations

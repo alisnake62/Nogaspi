@@ -27,20 +27,8 @@ def sqlSelect(table, columnsExpected = '*', conditions = ''):
     return [dict(zip(columnNames, row)) for row in queryRtr]
 
 def sqlDeleteAllData():
-    tables = [
-        'allergen',
-        'article',
-        'conversation',
-        'donation',
-        'donationCode',
-        'favorite_donation',
-        'fridge',
-        'message',
-        'product',
-        'product_allergen',
-        'rang',
-        'userNogaspi'
-    ]
+
+    tables = [n[0] for n in sqlQuery("SHOW TABLES;")]
     
     querys = []
     querys.append("SET foreign_key_checks = 0;")

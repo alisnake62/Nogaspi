@@ -4,16 +4,16 @@ from facades.apiConfig import EmptyException, RegisterException, getArgs
 from facades.utils.registerUtils import getUserFromToken
 
 
-def getDonationsCode(request):
+def generateDonationsCode(request):
     
     token, idDonations = getArgs(request, ['token', 'idDonations'])
-
+    
     with EngineSQLAlchemy() as session:
 
         user = getUserFromToken(token, session, request)
         user.majTokenValidity()
-        
-        donations = session.query( Donation ).filter(Donation.id.in_(idDonations.split(','))).all()
+
+        donations = session.query( Donation ).filter(Donation.id.in_(idDonations)).all()
         if not donations or len(donations) == 0:
             message = "The donations are not present in Database"
             raise EmptyException(message, message, request)

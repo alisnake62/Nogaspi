@@ -54,18 +54,18 @@ class PostArticlesInFridgeInputSchema(Schema):
 
 class DeleteArticlesInFridgeInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
-    idArticles = fields.List(fields.Int(require = True), validate = validate.Length(1,1000), require = True)
+    idArticles = fields.List(fields.Int(require = True, validate = validate.Length(1,1000)), require = True)
 
 class GetArticlesInFridgeInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
 
-class takeDonationsInputSchema(Schema):
+class TakeDonationsInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
     donationCode = fields.Str(required=True, validate = validate.Length(equal=64, error='Donation Code must have 64 characters'))
     
-class getDonationsCodeInputSchema(Schema):
+class GenerateDonationsCodeInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
-    idDonations = fields.Str(require = True)
+    idDonations = fields.List(fields.Int(require = True), require = True)
 
 class GetFavoriteDonationsInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))

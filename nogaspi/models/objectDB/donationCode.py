@@ -25,6 +25,9 @@ class DonationCode (Base):
     def isValide(self):
         return self.expirationDate > datetime.datetime.now()
 
+    def userOwner(self):
+        return self.donations[0].user
+
     def toJson(self):
         toJson = {
             'code': self.code,

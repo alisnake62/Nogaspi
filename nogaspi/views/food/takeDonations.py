@@ -17,19 +17,16 @@ def takeDonations(request):
         if not donationCode:
             message = "This donationCode is not present in Database"
             raise EmptyException(message, message, request)
+
         if not donationCode.isValide():
             message = "This donationCode is expired"
             raise EmptyException(message, message, request)
-        
-        donations = donationCode.donations
-        
-        for donation in donations:
-            donation.checkValidityRaiseException(request)
-            if user == donation.user:
-                message = "You can't take your own donation"
-                raise DonationException(message, message, request)
 
-        for donation in donations:
+        if donationCode.userOwner() == user:
+            message = "You can't take your own donations"
+            raise EmptyException(message, message, request)
+        
+        for donation in donationCode.donations:
             makeDonation(donation.user, user, donation)
 
         session.commit()
