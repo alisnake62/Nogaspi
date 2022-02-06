@@ -20,7 +20,7 @@ def sendNotification(idUserTo, fireBaseToken, title, body, ):
 
 def initAppOnFireBase():
 
-    cred = credentials.Certificate(f"{os.environ['DIRECTORY_FIREBASE_SERVICE_ACCOUNT']}{os.environ['FIREBASE_SERVICE_ACCOUNT']}")
+    cred = credentials.Certificate(f"{os.environ['DIRECTORY_ASSET']}{os.environ['FIREBASE_SERVICE_ACCOUNT']}")
     try:
         if not firebase_admin._apps:
             initialize_app(cred)

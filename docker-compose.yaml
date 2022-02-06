@@ -17,7 +17,7 @@ services:
       PMA_HOST: db_nogaspi
       MYSQL_ROOT_PASSWORD: ${sqlPassword}
       FIREBASE_SERVICE_ACCOUNT: ${fireBaseServiceAccount}
-      DIRECTORY_FIREBASE_SERVICE_ACCOUNT: "../"
+      DIRECTORY_ASSET: "../"
     ports:
       - 5556:5000
     volumes:
@@ -69,7 +69,7 @@ services:
       PMA_HOST: db_nogaspi_test
       MYSQL_ROOT_PASSWORD: ${sqlPassword}
       FIREBASE_SERVICE_ACCOUNT: ${fireBaseServiceAccount}
-      DIRECTORY_FIREBASE_SERVICE_ACCOUNT: "../"
+      DIRECTORY_ASSET: "../"
     volumes:
       - ${path}:/usr/src/app
     networks:
