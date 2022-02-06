@@ -111,6 +111,8 @@ services:
       args:
         - WD=${buildDirectory}
     container_name: build_nogaspi
+    environment:
+      DIRECTORY_ASSET: "../"
     volumes:
       - ${path}:/usr/src/app
 
