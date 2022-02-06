@@ -1,6 +1,5 @@
-from nogaspi.facades.apiConfig.apiResponse import APIException
 from nogaspi.views.register.login import login
-from test.functionalTest.dbMagement import sqlQuery, sqlDeleteAllData
+from test.functionalTest.dbMagement import sqlQuery
 from test.functionalTest.flaskManagement import FakeRequest
 import datetime
 import pytest
@@ -13,12 +12,10 @@ def test_register_login():
     "mail":"toto@toto.fr",
     "password":"toto"
     }
-    fnrtr = login(FakeRequest(inputRequest))
+    funcRtr = login(FakeRequest(inputRequest))
     
-    sqlDeleteAllData()
-    
-    assert len(fnrtr['token']) == 64
-    assert 'token_expiration' in fnrtr
+    assert len(funcRtr['token']) == 64
+    assert 'token_expiration' in funcRtr
 
 def test_register_login_with_bad_password():
     timeAfterNow = datetime.datetime.now()
@@ -30,8 +27,6 @@ def test_register_login_with_bad_password():
     }
     with pytest.raises(Exception):
         login(FakeRequest(inputRequest))
-    
-    sqlDeleteAllData()
 
 def test_register_login_with_bad_user():
     timeAfterNow = datetime.datetime.now()
@@ -43,5 +38,3 @@ def test_register_login_with_bad_user():
     }
     with pytest.raises(Exception):
         login(FakeRequest(inputRequest))
-    
-    sqlDeleteAllData()

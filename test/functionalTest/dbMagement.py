@@ -21,5 +21,9 @@ def sqlDeleteAllData():
         'user'
     ]
     
-    querys = [f"DELETE FROM {table}" for table in tables]
+    querys = []
+    querys.append("SET foreign_key_checks = 0;")
+    for table in tables:
+        querys.append(f"DELETE FROM {table};")
+    querys.append("SET foreign_key_checks = 1;")
     sqlQuery(querys)
