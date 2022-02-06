@@ -1,6 +1,6 @@
 from models.objectDB import Donation, FavoriteDonation
 from dbEngine import EngineSQLAlchemy
-from facades.apiConfig import EmptyException, getArgs
+from facades.apiConfig import EmptyException, DonationException, getArgs
 from facades.utils.registerUtils import getUserFromToken
 
 def toggleDonationInMyFavorite(request):
@@ -16,6 +16,10 @@ def toggleDonationInMyFavorite(request):
         if not donation:
             message = "This donation is not present in Database"
             raise EmptyException(message, message, request)
+        
+        if donation.user == user:
+            message = "This donation is yours"
+            raise DonationException(message, message, request)
         
         donation.checkValidityRaiseException(request)
 

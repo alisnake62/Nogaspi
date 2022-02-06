@@ -10,15 +10,20 @@ def sqlQuery(query):
     with EngineSQLAlchemy() as session:
         return [row for row in session.execute(query)]
 
-#def sqlQuery(query):
-#    with EngineSQLAlchemy() as session:
-#        response = session.execute(query)
-#        for row in response:
-#            for col in row:
-#                i = 1
+def sqlSelect(table, columnsExpected = '*', conditions = ''):
+    
+    columnNamesTmp = sqlQuery(f"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = N'{table}'")
+    if columnsExpected == '*':
+        queryColumns = '*'
+        columnNames = [n[0] for n in columnNamesTmp]
+    else:
+        queryColumns = ", ".join(columnsExpected)
+        columnNames = [n[0] for n in columnNamesTmp if n[0] in columnsExpected]
 
+    queryRtr = sqlQuery(f"SELECT {queryColumns} FROM {table} {conditions};")
 
-        
+    return [dict(zip(columnNames, row)) for row in queryRtr]
+
 def sqlDeleteAllData():
     tables = [
         'allergen',
