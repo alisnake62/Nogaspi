@@ -20,6 +20,9 @@ def test_food_takeDonations():
     ]
     sqlQuerysWithCommit(querys)
     
+    import time
+    time.sleep(180)
+
     funcRtr = takeDonations(FakeRequest({"token":"token_tata", "donationCode": "ABCDEF"}))
     assert funcRtr["isTaked"]
     assert sqlSelect(table="donation", conditions="WHERE id = 1")[0]['archive'] == 1
