@@ -1,4 +1,4 @@
-from models.objectDB import Donation, Conversation
+from models.objectDB.conversation import Conversation
 from dbEngine import EngineSQLAlchemy
 from facades.utils.registerUtils import getUserFromToken
 from facades.apiConfig import getArgs

@@ -1,11 +1,24 @@
 from nogaspi.dbEngine import EngineSQLAlchemy
             
-def sqlQuery(querys):
+def sqlQuerysWithCommit(querys):
     with EngineSQLAlchemy() as session:
         for query in querys:
             session.execute(query)
         session.commit()
 
+def sqlQuery(query):
+    with EngineSQLAlchemy() as session:
+        return [row for row in session.execute(query)]
+
+#def sqlQuery(query):
+#    with EngineSQLAlchemy() as session:
+#        response = session.execute(query)
+#        for row in response:
+#            for col in row:
+#                i = 1
+
+
+        
 def sqlDeleteAllData():
     tables = [
         'allergen',
@@ -26,4 +39,4 @@ def sqlDeleteAllData():
     for table in tables:
         querys.append(f"DELETE FROM {table};")
     querys.append("SET foreign_key_checks = 1;")
-    sqlQuery(querys)
+    sqlQuerysWithCommit(querys)
