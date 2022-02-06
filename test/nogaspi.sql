@@ -2,8 +2,8 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Hôte : db_nogaspi
--- Généré le : dim. 06 fév. 2022 à 15:27
+-- Hôte : db_nogaspi_test
+-- Généré le : dim. 06 fév. 2022 à 17:15
 -- Version du serveur : 10.6.5-MariaDB-1:10.6.5+maria~focal
 -- Version de PHP : 7.4.20
 
@@ -175,10 +175,10 @@ CREATE TABLE `rang` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `user`
+-- Structure de la table `userNogaspi`
 --
 
-CREATE TABLE `user` (
+CREATE TABLE `userNogaspi` (
   `id` int(11) NOT NULL,
   `mail` varchar(50) COLLATE utf8mb3_unicode_ci NOT NULL,
   `password` varchar(200) COLLATE utf8mb3_unicode_ci NOT NULL,
@@ -282,9 +282,9 @@ ALTER TABLE `rang`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `user`
+-- Index pour la table `userNogaspi`
 --
-ALTER TABLE `user`
+ALTER TABLE `userNogaspi`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_user_rang` (`idRang`);
 
@@ -359,9 +359,9 @@ ALTER TABLE `rang`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `user`
+-- AUTO_INCREMENT pour la table `userNogaspi`
 --
-ALTER TABLE `user`
+ALTER TABLE `userNogaspi`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -381,14 +381,14 @@ ALTER TABLE `article`
 --
 ALTER TABLE `conversation`
   ADD CONSTRAINT `fk_conversation_donation` FOREIGN KEY (`idDonation`) REFERENCES `donation` (`id`),
-  ADD CONSTRAINT `fk_conversation_userDonator` FOREIGN KEY (`idUserDonator`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `fk_conversation_userTaker` FOREIGN KEY (`idUserTaker`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `fk_conversation_userDonator` FOREIGN KEY (`idUserDonator`) REFERENCES `userNogaspi` (`id`),
+  ADD CONSTRAINT `fk_conversation_userTaker` FOREIGN KEY (`idUserTaker`) REFERENCES `userNogaspi` (`id`);
 
 --
 -- Contraintes pour la table `donation`
 --
 ALTER TABLE `donation`
-  ADD CONSTRAINT `fk_annonce_user` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `fk_annonce_user` FOREIGN KEY (`idUser`) REFERENCES `userNogaspi` (`id`),
   ADD CONSTRAINT `fk_donation_donationCode` FOREIGN KEY (`idDonationCode`) REFERENCES `donationCode` (`id`);
 
 --
@@ -396,13 +396,13 @@ ALTER TABLE `donation`
 --
 ALTER TABLE `favorite_donation`
   ADD CONSTRAINT `favorite_donation_ibfk_1` FOREIGN KEY (`idDonation`) REFERENCES `donation` (`id`),
-  ADD CONSTRAINT `favorite_donation_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `favorite_donation_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `userNogaspi` (`id`);
 
 --
 -- Contraintes pour la table `fridge`
 --
 ALTER TABLE `fridge`
-  ADD CONSTRAINT `fk_fridge_user` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `fk_fridge_user` FOREIGN KEY (`idUser`) REFERENCES `userNogaspi` (`id`);
 
 --
 -- Contraintes pour la table `message`
@@ -414,7 +414,7 @@ ALTER TABLE `message`
 -- Contraintes pour la table `product`
 --
 ALTER TABLE `product`
-  ADD CONSTRAINT `fk_article_user` FOREIGN KEY (`idLastScanUser`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `fk_article_user` FOREIGN KEY (`idLastScanUser`) REFERENCES `userNogaspi` (`id`);
 
 --
 -- Contraintes pour la table `product_allergen`
@@ -424,9 +424,9 @@ ALTER TABLE `product_allergen`
   ADD CONSTRAINT `product_allergen_ibfk_2` FOREIGN KEY (`idAllergen`) REFERENCES `allergen` (`id`);
 
 --
--- Contraintes pour la table `user`
+-- Contraintes pour la table `userNogaspi`
 --
-ALTER TABLE `user`
+ALTER TABLE `userNogaspi`
   ADD CONSTRAINT `fk_user_rang` FOREIGN KEY (`idRang`) REFERENCES `rang` (`id`);
 COMMIT;
 

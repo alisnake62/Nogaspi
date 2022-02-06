@@ -4,7 +4,7 @@ from test.functionalTest.flaskManagement import FakeRequest
 import pytest
 
 def test_register_login():
-    sqlQuerysWithCommit([f"INSERT INTO `user` (`id`, `mail`, `password`, `pseudo`, `profilePicture`, `token`, `token_expiration`, `idRang`, `points`, `regularPathLatitudeStart`, `regularPathLongitudeStart`, `regularPathLatitudeEnd`, `regularPathLongitudeEnd`, `regularPathPoints`, `fireBaseToken`) VALUES (1, 'toto@toto.fr', 'toto', 'toto', NULL, NULL, NOW(), NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL);"])
+    sqlQuerysWithCommit([f"INSERT INTO `userNogaspi` (`id`, `mail`, `password`, `pseudo`, `profilePicture`, `token`, `token_expiration`, `idRang`, `points`, `regularPathLatitudeStart`, `regularPathLongitudeStart`, `regularPathLatitudeEnd`, `regularPathLongitudeEnd`, `regularPathPoints`, `fireBaseToken`) VALUES (1, 'toto@toto.fr', 'toto', 'toto', NULL, NULL, NOW(), NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL);"])
     
     inputRequest = {
     "mail":"toto@toto.fr",
@@ -16,7 +16,7 @@ def test_register_login():
     assert 'token_expiration' in funcRtr
 
 def test_register_login_with_bad_password():
-    sqlQuerysWithCommit([f"INSERT INTO `user` (`id`, `mail`, `password`, `pseudo`, `profilePicture`, `token`, `token_expiration`, `idRang`, `points`, `regularPathLatitudeStart`, `regularPathLongitudeStart`, `regularPathLatitudeEnd`, `regularPathLongitudeEnd`, `regularPathPoints`, `fireBaseToken`) VALUES (1, 'toto@toto.fr', 'toto', 'toto', NULL, NULL, NOW(), NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL);"])
+    sqlQuerysWithCommit([f"INSERT INTO `userNogaspi` (`id`, `mail`, `password`, `pseudo`, `profilePicture`, `token`, `token_expiration`, `idRang`, `points`, `regularPathLatitudeStart`, `regularPathLongitudeStart`, `regularPathLatitudeEnd`, `regularPathLongitudeEnd`, `regularPathPoints`, `fireBaseToken`) VALUES (1, 'toto@toto.fr', 'toto', 'toto', NULL, NULL, NOW(), NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL);"])
     
     inputRequest = {
     "mail":"toto@toto.fr",
@@ -26,7 +26,7 @@ def test_register_login_with_bad_password():
         login(FakeRequest(inputRequest))
 
 def test_register_login_with_bad_user():
-    sqlQuerysWithCommit([f"INSERT INTO `user` (`id`, `mail`, `password`, `pseudo`, `profilePicture`, `token`, `token_expiration`, `idRang`, `points`, `regularPathLatitudeStart`, `regularPathLongitudeStart`, `regularPathLatitudeEnd`, `regularPathLongitudeEnd`, `regularPathPoints`, `fireBaseToken`) VALUES (1, 'toto@toto.fr', 'toto', 'toto', NULL, NULL, NOW(), NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL);"])
+    sqlQuerysWithCommit([f"INSERT INTO `userNogaspi` (`id`, `mail`, `password`, `pseudo`, `profilePicture`, `token`, `token_expiration`, `idRang`, `points`, `regularPathLatitudeStart`, `regularPathLongitudeStart`, `regularPathLatitudeEnd`, `regularPathLongitudeEnd`, `regularPathPoints`, `fireBaseToken`) VALUES (1, 'toto@toto.fr', 'toto', 'toto', NULL, NULL, NOW(), NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL);"])
     
     inputRequest = {
     "mail":"toto@tata.fr",

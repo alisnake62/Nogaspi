@@ -12,7 +12,7 @@ class User (Base):
 
     TOKEN_VALIDITY = 1440   #minutes
 
-    __tablename__ = 'user'
+    __tablename__ = 'userNogaspi'
     id = Column(INTEGER, primary_key=True)
     mail = Column(VARCHAR)
     password = Column(VARCHAR)

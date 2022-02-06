@@ -9,7 +9,7 @@ class Fridge (Base):
 
     __tablename__ = 'fridge'
     id = Column(INTEGER, primary_key=True)
-    idUser = Column(INTEGER, ForeignKey('user.id'))
+    idUser = Column(INTEGER, ForeignKey('userNogaspi.id'))
     user = relationship("User", back_populates="fridges")
     articles = relationship("Article", back_populates="fridge")
 

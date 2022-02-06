@@ -11,7 +11,7 @@ class Donation (Base):
 
     __tablename__ = 'donation'
     id = Column(INTEGER, primary_key=True)
-    idUser = Column(INTEGER, ForeignKey('user.id'))
+    idUser = Column(INTEGER, ForeignKey('userNogaspi.id'))
     user = relationship("User", back_populates="donations")
     latitude = Column(FLOAT)
     longitude = Column(FLOAT)

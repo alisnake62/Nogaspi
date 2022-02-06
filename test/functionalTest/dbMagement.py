@@ -8,7 +8,9 @@ def sqlQuerysWithCommit(querys):
 
 def sqlQuery(query):
     with EngineSQLAlchemy() as session:
-        return [row for row in session.execute(query)]
+        test = session.execute(query)
+        i = 1
+        return [row for row in test]
 
 def sqlSelect(table, columnsExpected = '*', conditions = ''):
     
@@ -37,7 +39,7 @@ def sqlDeleteAllData():
         'product',
         'product_allergen',
         'rang',
-        'user'
+        'userNogaspi'
     ]
     
     querys = []

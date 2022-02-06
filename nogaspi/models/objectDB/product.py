@@ -21,7 +21,7 @@ class Product (Base):
     nutrimentData = Column(TEXT)
     nutriscoreData = Column(TEXT)
     allergens = relationship("Allergen", secondary='product_allergen', back_populates="products")
-    idLastScanUser = Column(INTEGER, ForeignKey('user.id'))
+    idLastScanUser = Column(INTEGER, ForeignKey('userNogaspi.id'))
     lastUserScan = relationship("User", back_populates="products")
     lastScanDate = Column(DATETIME)
     articles = relationship("Article", back_populates="product")
