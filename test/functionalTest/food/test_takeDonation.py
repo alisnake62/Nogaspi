@@ -24,5 +24,6 @@ def test_food_takeDonations():
     assert funcRtr["isTaked"]
     assert sqlSelect(table="donation", conditions="WHERE id = 1")[0]['archive'] == 1
     assert sqlSelect(table="donation", conditions="WHERE id = 2")[0]['archive'] == 1
+    assert sqlSelect(table="user", conditions="WHERE id = 1") == "toto"
     assert sqlSelect(table="user", conditions="WHERE id = 1")[0]['points'] == 12
     assert sqlSelect(table="user", conditions="WHERE id = 2")[0]['points'] == 3
