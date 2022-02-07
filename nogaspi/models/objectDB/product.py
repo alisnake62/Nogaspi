@@ -53,8 +53,8 @@ class Product (Base):
             'barcode': self.barcode,
             'image_url': self.image_url,
             'ingredient' : self.ingredients,
-            'nutrimentsData' : json.loads(self.nutrimentData),
-            'nutriscoreData' : json.loads(self.nutriscoreData),
+            'nutrimentsData' : None if self.nutrimentData is None else json.loads(self.nutrimentData),
+            'nutriscoreData' : None if self.nutriscoreData is None else json.loads(self.nutriscoreData),
             'allergens': [a.toJson() for a in  self.allergens]
         }
         return toJson

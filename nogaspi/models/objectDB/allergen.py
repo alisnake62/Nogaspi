@@ -17,5 +17,4 @@ class Allergen (Base):
         self.nameFR = nameFR
 
     def toJson(self):
-        if self.nameFR is None: return self.nameEN
-        else : return self.nameFR
+        return self.nameEN if self.nameFR is None else self.nameFR

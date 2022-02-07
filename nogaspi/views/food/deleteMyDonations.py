@@ -13,23 +13,20 @@ def deleteMyDonations(request):
         user = getUserFromToken(token, session, request)
         user.majTokenValidity()
 
-        for idDonation in idDonations:
-            donation = session.query( Donation ).filter(Donation.id == idDonation).first()
-            if not donation:
-                message = "This donation is not present in Database"
-                raise EmptyException(message, message, request)
+        donations = session.query( Donation ).filter(Donation.id.in_(idDonations)).all()
+        if not donations or len(donations) != len(idDonations):
+            message = "The donations are not present in Database"
+            raise EmptyException(message, message, request)
 
+        for donation in donations:
             if donation.user != user:
-                message = "You are not the owner of this donation"
+                message = f"You are not the owner of the donation {donation.id}"
                 raise RegisterException(message, message, request)
-
             donation.checkValidityRaiseException(request)
 
-        for idDonation in idDonations:
+        for donation in donations:
             donation.archive = True
 
         session.commit()
 
-        data = {'isDelete (Archived)':True}
-
-    return data
+    return {'isDelete (Archived)': True}

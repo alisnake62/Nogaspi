@@ -14,7 +14,7 @@ def generateDonationsCode(request):
         user.majTokenValidity()
 
         donations = session.query( Donation ).filter(Donation.id.in_(idDonations)).all()
-        if not donations or len(donations) == 0:
+        if not donations or len(donations) != len(idDonations):
             message = "The donations are not present in Database"
             raise EmptyException(message, message, request)
         
