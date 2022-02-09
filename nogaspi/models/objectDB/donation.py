@@ -55,17 +55,23 @@ class Donation (Base):
             message = "This donation is expired"
             raise DonationException(message, message, request)
 
-    def isFavorite(self, user):
-        if user in self.favoriteUsers:
+    def isFavorite(self, userRequester):
+        if userRequester in self.favoriteUsers:
             return True
         return False
 
-    def toJson(self, user):
+    def toJson(self, userRequester):
 
         allergens = []
         for article in self.articles:
             allergens += [allergen.toJson() for allergen in article.product.allergens]
         allergens = list(set(allergens))
+
+        myTakerConversationInfo = None
+        for conversation in self.conversations:
+            if conversation.userTaker == userRequester:
+                myTakerConversationInfo = conversation.toJsonlight(userRequester)
+                break
 
         toJson = {
             'id': self.id,
@@ -80,9 +86,10 @@ class Donation (Base):
             'articles': [a.toJson() for a in  self.articles],
             'allergens': allergens,
             'owner': self.user.toJson(),
-            'isMine': self.user == user,
-            'conversationsInfo': [c.toJsonlight(user) for c in self.conversations] if self.user == user else None,
-            'isMyFavorite': self.isFavorite(user)
+            'isMine': self.user == userRequester,
+            'myTakerConversationInfo': myTakerConversationInfo,
+            'myDonatorConversationsInfo': [c.toJsonlight(userRequester) for c in self.conversations] if self.user == userRequester else None,
+            'isMyFavorite': self.isFavorite(userRequester)
         }
 
         return toJson
