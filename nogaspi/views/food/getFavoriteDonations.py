@@ -4,7 +4,7 @@ from facades.apiConfig import getArgs
 
 def getFavoriteDonations(request):
 
-    token, = getArgs(request, ['token'])
+    token = getArgs(request, ['token'])
 
     with EngineSQLAlchemy() as session:
 

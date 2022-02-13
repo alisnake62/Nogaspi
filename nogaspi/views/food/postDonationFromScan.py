@@ -1,8 +1,10 @@
 from models.objectDB import Product, Donation, Article, Fridge
 from dbEngine import EngineSQLAlchemy
-from facades.apiConfig import getArgs
+from facades.apiConfig import getArgs, DonationException
 from facades.utils.registerUtils import getUserFromToken
 from facades.utils.scanUtils import getProductFromWeb
+from facades.const import EXPIRATION_DATE_TOLERANCE_IN_DAY
+import datetime
 
 
 def postDonationFromScan(request):
@@ -26,6 +28,11 @@ def postDonationFromScan(request):
         if not fridge: 
             fridge = Fridge(user)
             session.add(fridge)
+
+        for article in articles:
+            if datetime.datetime.fromisoformat(article['expirationDate']) < datetime.datetime.now() - datetime.timedelta(days=EXPIRATION_DATE_TOLERANCE_IN_DAY):
+                message = "One article is expired"
+                raise DonationException(message, message, request)
 
         donation = Donation(user, latitude, longitude, geoPrecision, endingDate)
 

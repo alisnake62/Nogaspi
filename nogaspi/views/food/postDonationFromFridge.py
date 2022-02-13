@@ -2,7 +2,9 @@ from models.objectDB import Donation, Article, Fridge
 from dbEngine import EngineSQLAlchemy
 from facades.apiConfig import EmptyException, DonationException, getArgs
 from facades.utils.registerUtils import getUserFromToken
-from facades.utils.scanUtils import getProductFromWeb
+from facades.const import EXPIRATION_DATE_TOLERANCE_IN_DAY
+import datetime
+
 
 
 def postDonationFromFridge(request):
@@ -33,15 +35,19 @@ def postDonationFromFridge(request):
             idArticle = value['id']
             article = session.query( Article ).filter(Article.id == idArticle).first()
             if not article: 
-                message = "The article {} is unknow".format(idArticle)
+                message = f"The article {idArticle} is unknow"
                 raise EmptyException(message, message, request)
 
+            if datetime.datetime.combine(article.expirationDate, datetime.datetime.min.time()) < datetime.datetime.now() - datetime.timedelta(days=EXPIRATION_DATE_TOLERANCE_IN_DAY):
+                message = f"The article {idArticle} is expired"
+                raise DonationException(message, message, request)
+
             if article.idFridge != fridge.id:
-                message = "The article {} is not in your fridge".format(idArticle)
+                message = f"The article {idArticle} is not in your fridge"
                 raise DonationException(message, message, request)
 
             if article.donation is not None:
-                message = "The article {} is already in donation".format(idArticle)
+                message = f"The article {idArticle} is already in donation"
                 raise DonationException(message, message, request)
 
             article.donation = donation

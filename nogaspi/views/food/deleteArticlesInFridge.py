@@ -22,16 +22,16 @@ def deleteArticlesInFridge(request):
             
             article = session.query( Article ).filter(Article.id == idArticle).first()
             if not article: 
-                message = "The article {} is unknow".format(idArticle)
+                message = f"The article {idArticle} is unknow"
                 raise EmptyException(message, message, request)
 
             if article.fridge != fridge:
-                message = "The article {} is not in you fridge".format(idArticle)
+                message = f"The article {idArticle} is not in you fridge"
                 raise FridgeException(message, message, request)
 
             if article.donation is not None:
                 if article.donation.isValide():
-                    message = "The article {} is in a valid Donation {}, please delete the donation to be able to remote this article from fridge".format(article.id, article.donation.id)
+                    message = f"The article {article.id} is in a valid Donation {article.donation.id}, please delete the donation to be able to remote this article from fridge"
                     raise DonationException(message, message, request)
 
         for idArticle in idArticles:

@@ -6,6 +6,9 @@ def getMyDonations(request):
 
     token, withArchived, withExpired = getArgs(request, ['token', 'withArchived', 'withExpired'])
 
+    withArchived = str(withArchived)
+    withExpired = str(withExpired)
+
     with EngineSQLAlchemy() as session:
 
         user = getUserFromToken(token, session, request)
