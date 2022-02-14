@@ -70,6 +70,12 @@ def route(app):
         data = food_getDonations(request)
         return jsonify(apiResponse(request, data))
 
+    @app.route('/food/getDonationById', methods=['GET'])
+    def getDonationById_endpoint():
+        checkInputAPI(GetDonationByIdInputSchema, request)
+        data = food_getDonationById(request)
+        return jsonify(apiResponse(request, data))
+
     @app.route('/food/getDonationsByRegularPath', methods=['GET'])
     def getDonationsByRegularPath_endpoint():
         checkInputAPI(GetDonationsByRegularPathInputSchema, request)

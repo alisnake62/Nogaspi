@@ -3,6 +3,7 @@ from .postDonationFromScan import postDonationFromScan as food_postDonationFromS
 from .postDonationFromFridge import postDonationFromFridge as food_postDonationFromFridge
 from .deleteMyDonations import deleteMyDonations as food_deleteMyDonations
 from .getDonations import getDonations as food_getDonations
+from .getDonationById import getDonationById as food_getDonationById
 from .getDonationsByRegularPath import getDonationsByRegularPath as food_getDonationsByRegularPath
 from .getAllergens import getAllergens as food_getAllergens
 from .postArticlesInFridge import postArticlesInFridge as food_postArticlesInFridge
