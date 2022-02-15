@@ -17,9 +17,8 @@ def getConversationsByDonation(request):
             message = "This donation is not present in Database"
             raise EmptyException(message, message, request)
 
-        if donation.user != user:
-            message = "This donation is not yours"
-            raise DonationException(message, message, request)
+        for conversation in donation.conversations:
+            conversation.checkLegitimacyRaiseException(user, False, request)
 
         data = {'conversations': [c.toJson(user) for c in donation.conversations]}
 

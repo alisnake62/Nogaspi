@@ -16,8 +16,8 @@ class AcknowledgeMessagesOnConversationInputSchema(Schema):
 
 class GetMyConversationsInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
-    withArchivedDonations = fields.Bool(require = True)
-    withExpiredDonations = fields.Bool(require = True)
+    withArchivedDonations = fields.Str(require = True, validate = validate.OneOf(['0', '1']))
+    withExpiredDonations = fields.Str(require = True, validate = validate.OneOf(['0', '1']))
 
 class GetConversationInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))

@@ -80,5 +80,5 @@ class ToggleDonationInMyFavoriteInputSchema(Schema):
 
 class GetMyDonationsInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
-    withArchived = fields.Bool(require = True)
-    withExpired = fields.Bool(require = True)
+    withArchived = fields.Str(require = True, validate = validate.OneOf(['0', '1']))
+    withExpired = fields.Str(require = True, validate = validate.OneOf(['0', '1']))

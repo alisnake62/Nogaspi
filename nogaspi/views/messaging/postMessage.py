@@ -19,7 +19,7 @@ def postMessage(request):
         
         conversation.checkLegitimacyRaiseException(user, True, request)
 
-        toDonator = False if user == conversation.donation.user else True
+        toDonator = conversation.userTaker == user
         
         message = Message(conversation, toDonator, body)
         session.add(message)

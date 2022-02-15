@@ -30,8 +30,9 @@ class Conversation (Base):
             raise ConversationException(message, message, request)
 
     def toJson(self, userRequester):
-        test = self.messages
         self.messages.sort(key=lambda r: r.dateTime)
+
+        test = self.messages
 
         toJson = {
             'id': self.id,

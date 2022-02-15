@@ -16,7 +16,9 @@ def getConversation(request):
         if not conversation:
             message = "This conversation is not present in Database"
             raise EmptyException(message, message, request)
-        
+
+        conversation.checkLegitimacyRaiseException(user, False, request)
+
         data = {'conversation': conversation.toJson(user)}
 
     return data
