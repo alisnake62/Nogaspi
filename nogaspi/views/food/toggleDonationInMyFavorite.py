@@ -30,7 +30,7 @@ def toggleDonationInMyFavorite(request):
 
         if not row:
             session.add(FavoriteDonation(user.id, donation.id))
-            #donation.user.sendFireBaseNotification(user.id, "Donation", f"{user.pseudo} aime votre donation")
+            donation.user.sendFireBaseNotification(user.id, "Donation", f"{user.pseudo} aime votre donation")
         else:
             session.delete(row)
 

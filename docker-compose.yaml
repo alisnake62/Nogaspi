@@ -17,7 +17,7 @@ services:
       PMA_HOST: db_nogaspi
       MYSQL_ROOT_PASSWORD: ${sqlPassword}
       FIREBASE_SERVICE_ACCOUNT: ${fireBaseServiceAccount}
-      DIRECTORY_ASSET: "../"
+      DIRECTORY_ASSET: "/usr/src/app/"
     ports:
       - 5556:5000
     volumes:
@@ -69,7 +69,7 @@ services:
       PMA_HOST: db_nogaspi_test
       MYSQL_ROOT_PASSWORD: ${sqlPassword}
       FIREBASE_SERVICE_ACCOUNT: ${fireBaseServiceAccount}
-      DIRECTORY_ASSET: "../"
+      DIRECTORY_ASSET: "/usr/src/app/"
     volumes:
       - ${path}:/usr/src/app
     networks:
@@ -112,7 +112,7 @@ services:
         - WD=${buildDirectory}
     container_name: build_nogaspi
     environment:
-      DIRECTORY_ASSET: "../"
+      DIRECTORY_ASSET: "/usr/src/app/"
     volumes:
       - ${path}:/usr/src/app
 
