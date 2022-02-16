@@ -6,6 +6,7 @@ services:
     depends_on:
       - db_nogaspi
       - phpmyadmin_nogaspi
+      - images_nogaspi
     build:
       context: ${path}/Nogaspi/nogaspi
       args:
@@ -56,6 +57,16 @@ services:
       - "8082:80"
     networks:
       - phpmyadmin-db
+
+  images_nogaspi:
+    image: nginx:latest
+    container_name: images_nogaspi
+    ports:
+      - "49080:80"
+    #networks:
+    #  - phpmyadmin-db_test
+    volumes:
+      - ${path}/images:/usr/share/nginx/html
   
   pytest_nogaspi:
     depends_on:

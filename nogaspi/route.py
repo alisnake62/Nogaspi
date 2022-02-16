@@ -2,10 +2,12 @@ from flask import jsonify, request, send_file
 from models.schemas import *
 from views import *
 from facades.apiConfig import apiResponse, checkInputAPI
+import time
 
 def route(app):
     @app.route('/test', methods=['GET'])
     def test():
+        time.sleep(10)
         data = {"toto":  ["tata", "tito"]}
         return jsonify(apiResponse(request, data))
 

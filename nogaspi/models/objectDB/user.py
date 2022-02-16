@@ -59,15 +59,12 @@ class User (Base):
         if self.fireBaseToken:
             fireBaseUtils.sendNotification(idUserTo, self.fireBaseToken, title, body)
 
-    def getProfilePicturePath(self):
-        return f"images/users/{self.profilePicture}"
-
     def toJson(self):
         toJson = {
             'id': self.id,
             'mail': self.mail,
             'pseudo': self.pseudo,
             'points': self.points,
-            'profilePictureUrl': f"https://monappli.ovh:5556/tools/getProfilePicture?idUser={self.id}"
+            'profilePictureUrl': f"http://monappli.ovh:49080/users/{self.profilePicture}"
         }
         return toJson
