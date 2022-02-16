@@ -1,8 +1,10 @@
 from flask import jsonify, request, send_file
-from facades.apiConfig import getArgs
 from models.schemas import *
 from views import *
 from facades.apiConfig import apiResponse, checkInputAPI
+
+import sys
+import traceback
 
 def route(app):
     @app.route('/test', methods=['GET'])
@@ -12,9 +14,13 @@ def route(app):
 
     @app.route('/tools/getProfilePicture', methods=['GET'])
     def getProfilePicture_endpoint():
-        checkInputAPI(GetProfilePictureInputSchema, request)
-        filename = tools_getProfilePicture(request)["picturePath"]
-        return send_file(filename, mimetype='image/jpg')
+        try:
+            checkInputAPI(GetProfilePictureInputSchema, request)
+            filename = tools_getProfilePicture(request)["picturePath"]
+            return send_file(filename, mimetype='image/jpg')
+        except Exception as err:
+            print(traceback.format_exc(), file=sys.stderr)
+        
 
     @app.route('/register/login', methods=['POST'])
     def login_endpoint():
