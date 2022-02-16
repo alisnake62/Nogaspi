@@ -21,5 +21,7 @@ def getProfilePicture(request):
         else:
             picture = user.profilePicture
 
-        data = {'picturePath': f"images/users/{picture}"}
+        #data = {'picturePath': f"../../images/users/{picture}"}
+        data = {'picturePath': f"{os.environ['DIRECTORY_ASSET']}/images/users/{picture}"}
+        
     return data
