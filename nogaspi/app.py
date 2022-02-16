@@ -19,4 +19,4 @@ if __name__ == '__main__':
     try:
         app.run(debug=True, host = "0.0.0.0", ssl_context='adhoc')
     except Exception as err:
-            print(traceback.format_exc(), file=sys.stderr)
+        print(traceback.format_exc(), file=sys.stderr)
