@@ -60,11 +60,12 @@ class User (Base):
             fireBaseUtils.sendNotification(idUserTo, self.fireBaseToken, title, body)
 
     def toJson(self):
+        profilePicture = self.profilePicture if self.profilePicture else "emptyProfile.jpg"
         toJson = {
             'id': self.id,
             'mail': self.mail,
             'pseudo': self.pseudo,
             'points': self.points,
-            'profilePictureUrl': f"http://monappli.ovh:49080/users/{self.profilePicture}"
+            'profilePictureUrl': f"http://monappli.ovh:49080/users/{profilePicture}"
         }
         return toJson
