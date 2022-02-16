@@ -9,11 +9,11 @@ def route(app):
         data = {"toto":  ["tata", "tito"]}
         return jsonify(apiResponse(request, data))
 
-    #@app.route('/tools/getProfilePicture', methods=['GET'])
-    #def getProfilePicture_endpoint():
-    #    checkInputAPI(GetProfilePictureInputSchema, request)
-    #    filename = tools_getProfilePicture(request)["picturePath"]
-    #    return send_file(filename, mimetype='image/jpg')
+    @app.route('/tools/getProfilePicture', methods=['GET'])
+    def getProfilePicture_endpoint():
+        checkInputAPI(GetProfilePictureInputSchema, request)
+        filename = tools_getProfilePicture(request)["picturePath"]
+        return send_file(filename, mimetype='image/jpg')
 
     @app.route('/register/login', methods=['POST'])
     def login_endpoint():
