@@ -24,6 +24,11 @@ def initiateConversation(request):
             message = "You can't initiate a conversation for your own donation"
             raise DonationException(message, message, request)
 
+        for conversation in donation.conversations:
+            if conversation.userTaker == user:
+                message = "You can't initiate more than one conversation for a donation"
+                raise DonationException(message, message, request)
+                
         conversation = Conversation(donation, userOwner, user)
         session.add(conversation)
 
