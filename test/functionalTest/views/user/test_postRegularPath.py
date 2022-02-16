@@ -2,7 +2,7 @@ from nogaspi.views.user.postRegularPath import postRegularPath
 from test.functionalTest.dbMagement import sqlQuerysWithCommit, sqlSelect
 from test.functionalTest.flaskManagement import FakeRequest
 import pytest
-from nogaspi.views.food.getAllergens import Allergen
+
 
 'token',
 'latitudeStart',

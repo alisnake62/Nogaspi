@@ -68,5 +68,6 @@ class User (Base):
             'mail': self.mail,
             'pseudo': self.pseudo,
             'points': self.points,
+            'profilePictureUrl': f"https://monappli.ovh:5556/tools/getProfilePicture?idUser={self.id}"
         }
         return toJson
