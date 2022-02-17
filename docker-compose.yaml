@@ -65,7 +65,7 @@ services:
     ports:
       - "49080:80"
     volumes:
-      - ${path}/assets/images:/usr/share/nginx/html
+      - ${path}/images:/usr/share/nginx/html
   
   pytest_nogaspi:
     depends_on:
