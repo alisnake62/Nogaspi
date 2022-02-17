@@ -3,6 +3,9 @@ from dbEngine import EngineSQLAlchemy
 from facades.apiConfig import EmptyException, DonationException, getArgs
 from facades.utils.registerUtils import getUserFromToken
 
+import sys
+import traceback
+
 def toggleDonationInMyFavorite(request):
 
     token, idDonation = getArgs(request, ['token', 'idDonation'])
@@ -30,7 +33,10 @@ def toggleDonationInMyFavorite(request):
 
         if not row:
             session.add(FavoriteDonation(user.id, donation.id))
-            donation.user.sendFireBaseNotification(user.id, "Donation", f"{user.pseudo} aime votre donation")
+            try:
+                donation.user.sendFireBaseNotification(user.id, "Donation", f"{user.pseudo} aime votre donation")
+            except Exception as err:
+                print(traceback.format_exc(), file = sys.stderr )
         else:
             session.delete(row)
 

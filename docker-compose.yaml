@@ -63,8 +63,6 @@ services:
     container_name: images_nogaspi
     ports:
       - "49080:80"
-    #networks:
-    #  - phpmyadmin-db_test
     volumes:
       - ${path}/images:/usr/share/nginx/html
   

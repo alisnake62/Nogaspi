@@ -2,20 +2,19 @@ from flask import jsonify, request, send_file
 from models.schemas import *
 from views import *
 from facades.apiConfig import apiResponse, checkInputAPI
-import time
+
+import sys
+import traceback
 
 def route(app):
     @app.route('/test', methods=['GET'])
     def test():
-        time.sleep(10)
+        try:
+            i = 2/0
+        except Exception as err:
+            print(traceback.format_exc(), file = sys.stderr )
         data = {"toto":  ["tata", "tito"]}
         return jsonify(apiResponse(request, data))
-
-    @app.route('/tools/getProfilePicture', methods=['GET'])
-    def getProfilePicture_endpoint():
-        checkInputAPI(GetProfilePictureInputSchema, request)
-        filename = tools_getProfilePicture(request)["picturePath"]
-        return send_file(filename, mimetype='image/jpg')
 
     @app.route('/register/login', methods=['POST'])
     def login_endpoint():
