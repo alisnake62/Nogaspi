@@ -3,13 +3,13 @@ FROM python:3.10
 ARG WD
 
 WORKDIR /usr/src/app
-COPY ./Nogaspi/nogaspi .
-COPY ./assets ./assets
+#COPY ./Nogaspi/nogaspi .
+#COPY ./assets ./assets
 
-#COPY requirements.txt ./
+COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-#WORKDIR "/usr/src/app/${WD}"
+WORKDIR "/usr/src/app/${WD}"
 #WORKDIR "/usr/src/app"
 
-CMD [ "python", "app.py" ]
+CMD [ "python", "nogaspi/app.py" ]

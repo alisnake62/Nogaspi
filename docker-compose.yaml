@@ -8,8 +8,7 @@ services:
       - phpmyadmin_nogaspi
       - images_nogaspi
     build:
-      context: ${path}
-      dockerfile: ./Nogaspi/nogaspi/Dockerfile
+      context: ${path}/Nogaspi/nogaspi
       args:
         - WD=Nogaspi
     container_name: backend_nogaspi
@@ -20,10 +19,11 @@ services:
       MYSQL_ROOT_PASSWORD: ${sqlPassword}
       FIREBASE_SERVICE_ACCOUNT: ${fireBaseServiceAccount}
       DIRECTORY_ASSET: "/usr/src/app/assets/"
+      DIRECTORY_LOG: "/usr/src/app/"
     ports:
       - 5556:5000
-    #volumes:
-    #  - ${path}:/usr/src/app
+    volumes:
+      - ${path}:/usr/src/app
     networks:
       - python-db
 
@@ -80,6 +80,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${sqlPassword}
       FIREBASE_SERVICE_ACCOUNT: ${fireBaseServiceAccount}
       DIRECTORY_ASSET: "/usr/src/app/assets/"
+      DIRECTORY_LOG: "/usr/src/app/"
     volumes:
       - ${path}:/usr/src/app
     networks:
@@ -123,8 +124,9 @@ services:
     container_name: build_nogaspi
     environment:
       DIRECTORY_ASSET: "/usr/src/app/assets/"
-    #volumes:
-    #  - ${path}:/usr/src/app
+      DIRECTORY_LOG: "/usr/src/app/"
+    volumes:
+      - ${path}:/usr/src/app
 
 volumes:
   data:
