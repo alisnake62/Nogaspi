@@ -19,7 +19,7 @@ class DonationCode (Base):
 
     def __init__(self):        
         self.code = secrets.token_hex()
-        self.expirationDate = datetime.datetime.now() + datetime.timedelta(minutes = self.DONATION_CODE_VALIDITY)
+        self.expirationDate = datetime.datetime.now() + datetime.timedelta(minutes = DONATION_CODE_VALIDITY)
 
     def isValide(self):
         return self.expirationDate > datetime.datetime.now()

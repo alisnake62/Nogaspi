@@ -44,11 +44,11 @@ class User (Base):
 
     def generateToken(self):
         self.token = secrets.token_hex()
-        self.token_expiration = datetime.datetime.now() + datetime.timedelta(minutes = self.TOKEN_VALIDITY)
+        self.token_expiration = datetime.datetime.now() + datetime.timedelta(minutes = TOKEN_VALIDITY)
         return {'token': self.token, 'token_expiration': self.token_expiration}
 
     def majTokenValidity(self):
-        self.token_expiration = datetime.datetime.now() + datetime.timedelta(minutes = self.TOKEN_VALIDITY)
+        self.token_expiration = datetime.datetime.now() + datetime.timedelta(minutes = TOKEN_VALIDITY)
 
     def killToken(self):
         self.token = None
