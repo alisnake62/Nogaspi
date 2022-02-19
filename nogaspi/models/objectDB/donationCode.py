@@ -5,12 +5,11 @@ from facades.apiConfig import DonationException
 from sqlalchemy import Column, Integer, Text, ForeignKey
 from sqlalchemy.sql.sqltypes import BOOLEAN, DATE, DATETIME, FLOAT, INTEGER, TEXT, VARCHAR, String
 from sqlalchemy.orm import relationship
+from facades.const import DONATION_CODE_VALIDITY
 
 from dbEngine import Base
 
 class DonationCode (Base):
-
-    CODE_VALIDITY = 5   #minutes
 
     __tablename__ = 'donationCode'
     id = Column(INTEGER, primary_key=True)
@@ -20,7 +19,7 @@ class DonationCode (Base):
 
     def __init__(self):        
         self.code = secrets.token_hex()
-        self.expirationDate = datetime.datetime.now() + datetime.timedelta(minutes = self.CODE_VALIDITY)
+        self.expirationDate = datetime.datetime.now() + datetime.timedelta(minutes = self.DONATION_CODE_VALIDITY)
 
     def isValide(self):
         return self.expirationDate > datetime.datetime.now()

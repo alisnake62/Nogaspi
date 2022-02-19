@@ -6,12 +6,11 @@ from sqlalchemy import Column, Integer, Text, ForeignKey, FLOAT
 from sqlalchemy.sql.sqltypes import DATE, DATETIME, INTEGER, JSON, TEXT, VARCHAR, String
 from sqlalchemy.orm import relationship
 from facades.utils import fireBaseUtils
+from facades.const import TOKEN_VALIDITY
 
 from dbEngine import Base
 
 class User (Base):
-
-    TOKEN_VALIDITY = 1440   #minutes
 
     __tablename__ = 'userNogaspi'
     id = Column(INTEGER, primary_key=True)
@@ -56,17 +55,20 @@ class User (Base):
         self.token_expiration = None
         self.fireBaseToken = None
 
+    def profilePictureURL(self):
+        profilePicture = self.profilePicture if self.profilePicture else "emptyProfile.jpg"
+        return f"http://{os.environ['SERVER_ADRESS']}:49080/users/{profilePicture}"
+
     def sendFireBaseNotification(self, title, body):
         if self.fireBaseToken:
-            fireBaseUtils.sendNotification(self.fireBaseToken, title, body)
+            fireBaseUtils.sendNotification(self.fireBaseToken, title, body, imageURL=self.profilePictureURL())
 
     def toJson(self):
-        profilePicture = self.profilePicture if self.profilePicture else "emptyProfile.jpg"
         toJson = {
             'id': self.id,
             'mail': self.mail,
             'pseudo': self.pseudo,
             'points': self.points,
-            'profilePictureUrl': f"http://{os.environ['SERVER_ADRESS']}:49080/users/{profilePicture}"
+            'profilePictureUrl': self.profilePictureURL()
         }
         return toJson
