@@ -1,5 +1,6 @@
 import secrets
 import datetime
+import os
 
 from sqlalchemy import Column, Integer, Text, ForeignKey, FLOAT
 from sqlalchemy.sql.sqltypes import DATE, DATETIME, INTEGER, JSON, TEXT, VARCHAR, String
@@ -55,9 +56,9 @@ class User (Base):
         self.token_expiration = None
         self.fireBaseToken = None
 
-    def sendFireBaseNotification(self, idUserTo, title, body):
+    def sendFireBaseNotification(self, title, body):
         if self.fireBaseToken:
-            fireBaseUtils.sendNotification(idUserTo, self.fireBaseToken, title, body)
+            fireBaseUtils.sendNotification(self.fireBaseToken, title, body)
 
     def toJson(self):
         profilePicture = self.profilePicture if self.profilePicture else "emptyProfile.jpg"
@@ -66,6 +67,6 @@ class User (Base):
             'mail': self.mail,
             'pseudo': self.pseudo,
             'points': self.points,
-            'profilePictureUrl': f"http://monappli.ovh:49080/users/{profilePicture}"
+            'profilePictureUrl': f"http://{os.environ['SERVER_ADRESS']}:49080/users/{profilePicture}"
         }
         return toJson

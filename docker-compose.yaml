@@ -20,6 +20,7 @@ services:
       FIREBASE_SERVICE_ACCOUNT: ${fireBaseServiceAccount}
       DIRECTORY_ASSET: "/usr/src/app/assets/"
       DIRECTORY_LOG: "/usr/src/app/"
+      SERVER_ADRESS: ${serverAdress}
     ports:
       - 5556:5000
     volumes:
@@ -81,6 +82,7 @@ services:
       FIREBASE_SERVICE_ACCOUNT: ${fireBaseServiceAccount}
       DIRECTORY_ASSET: "/usr/src/app/assets/"
       DIRECTORY_LOG: "/usr/src/app/"
+      SERVER_ADRESS: ${serverAdress}
     volumes:
       - ${path}:/usr/src/app
     networks:
@@ -125,6 +127,7 @@ services:
     environment:
       DIRECTORY_ASSET: "/usr/src/app/assets/"
       DIRECTORY_LOG: "/usr/src/app/"
+      SERVER_ADRESS: ${serverAdress}
     volumes:
       - ${path}:/usr/src/app
 

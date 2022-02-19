@@ -33,10 +33,7 @@ def toggleDonationInMyFavorite(request):
 
         if not row:
             session.add(FavoriteDonation(user.id, donation.id))
-            #try:
-            #    donation.user.sendFireBaseNotification(user.id, "Donation", f"{user.pseudo} aime votre donation")
-            #except Exception as err:
-            #    print(traceback.format_exc(), file = sys.stderr )
+            donation.user.sendFireBaseNotification(f"Donation{donation.id}", f"{user.pseudo} aime votre donation ")
         else:
             session.delete(row)
 

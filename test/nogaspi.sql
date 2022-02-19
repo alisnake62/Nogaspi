@@ -43,7 +43,7 @@ CREATE TABLE `article` (
   `id` int(11) NOT NULL,
   `idProduct` int(11) NOT NULL,
   `idDonation` int(11) DEFAULT NULL,
-  `expirationDate` date NOT NULL,
+  `expirationDate` datetime NOT NULL,
   `idFridge` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 

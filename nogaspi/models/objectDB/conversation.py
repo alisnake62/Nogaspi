@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, Text, ForeignKey
 from sqlalchemy.sql.sqltypes import BOOLEAN, DATE, DATETIME, FLOAT, INTEGER, TEXT, VARCHAR, String
 from sqlalchemy.orm import relationship
 from facades.apiConfig import ConversationException
+import datetime
 
 from dbEngine import Base
 
@@ -32,13 +33,11 @@ class Conversation (Base):
     def toJson(self, userRequester):
         self.messages.sort(key=lambda r: r.dateTime)
 
-        test = self.messages
-
         toJson = {
             'id': self.id,
             'idDonation': self.idDonation,
             'isMyDonation': userRequester == self.userDonator,
-            'dateBeginning': self.messages[0].dateTime,
+            'dateBeginning': int(datetime.datetime.timestamp(self.messages[0].dateTime)),
             'lastMessage': self.messages[-1].toJson(userRequester),
             'userDonator': self.userDonator.toJson(),
             'userTaker': self.userTaker.toJson(),

@@ -16,8 +16,8 @@ class Donation (Base):
     latitude = Column(FLOAT)
     longitude = Column(FLOAT)
     geoPrecision = Column(INTEGER)
-    startingDate = Column(DATE)
-    endingDate = Column(DATE)
+    startingDate = Column(DATETIME)
+    endingDate = Column(DATETIME)
     articles = relationship("Article", back_populates="donation")
     idDonationCode = Column(INTEGER, ForeignKey('donationCode.id'))
     donationCode = relationship("DonationCode", back_populates="donations")
@@ -78,8 +78,8 @@ class Donation (Base):
             'latitude': self.latitude,
             'longitude': self.longitude,
             'geoPrecision': self.geoPrecision,
-            'startingDate': self.startingDate,
-            'endingDate': self.endingDate,
+            'startingDate': int(datetime.datetime.timestamp(self.startingDate)),
+            'endingDate': int(datetime.datetime.timestamp(self.endingDate)),
             'isExpired': self.isExpired(),
             'isArchived': self.isArchived(),
             'isValide': self.isValide(),

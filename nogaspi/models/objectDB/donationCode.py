@@ -31,6 +31,6 @@ class DonationCode (Base):
     def toJson(self):
         toJson = {
             'code': self.code,
-            'expirationDate': self.expirationDate
+            'expirationDate': int(datetime.datetime.timestamp(self.expirationDate))
         }
         return toJson

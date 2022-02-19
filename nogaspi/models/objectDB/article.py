@@ -15,7 +15,7 @@ class Article (Base):
     product = relationship("Product", back_populates="articles")
     idDonation = Column(INTEGER, ForeignKey('donation.id'))
     donation = relationship("Donation", back_populates="articles")
-    expirationDate = Column(DATE)
+    expirationDate = Column(DATETIME)
     idFridge = Column(INTEGER, ForeignKey('fridge.id'))
     fridge = relationship("Fridge", back_populates="articles")
 
@@ -29,6 +29,6 @@ class Article (Base):
         toJson = {
             'id': self.id,
             'product': self.product.toJson(),
-            'expirationDate': self.expirationDate
+            'expirationDate': int(datetime.datetime.timestamp(self.expirationDate))
         }
         return toJson

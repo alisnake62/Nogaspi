@@ -31,7 +31,7 @@ class Message (Base):
         toJson = {
             'id': self.id,
             'readed': self.readed,
-            'dateTime': self.dateTime,
+            'dateTime': int(datetime.datetime.timestamp(self.dateTime)),
             'body': self.body,
             'userFrom': userFrom.toJson(),
             'userTo': userTo.toJson(),
