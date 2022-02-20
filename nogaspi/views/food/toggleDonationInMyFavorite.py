@@ -2,7 +2,7 @@ from models.objectDB import Donation, FavoriteDonation
 from dbEngine import EngineSQLAlchemy
 from facades.apiConfig import EmptyException, DonationException, getArgs
 from facades.utils.registerUtils import getUserFromToken
-from facades.firebaseNotifications import likeDonation as notif_likeDonation
+from facades.firebaseNotifications.likeDonation import likeDonation as notif_likeDonation
 
 import sys
 import traceback
