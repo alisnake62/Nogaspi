@@ -17,5 +17,5 @@ def test_article_toJson():
         assert article.toJson() == {
             'id': article.id,
             'product': product.toJson(),
-            'expirationDate': 4796665200
+            'expirationDate': int(datetime.timestamp(datetime(year=2122, month=1, day=1)))
         }

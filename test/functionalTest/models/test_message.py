@@ -22,7 +22,7 @@ def test_message_toJson():
         assert message.toJson(userRequester=titi) == {
             'id': message.id,
             'readed': False,
-            'dateTime': 4796665200,
+            'dateTime': int(datetime.timestamp(datetime(year=2122, month=1, day=1))),
             'body': "My Message",
             'userFrom': titi.toJson(),
             'userTo': toto.toJson(),
@@ -31,7 +31,7 @@ def test_message_toJson():
         assert message.toJson(userRequester=toto) == {
             'id': message.id,
             'readed': False,
-            'dateTime': 4796665200,
+            'dateTime': int(datetime.timestamp(datetime(year=2122, month=1, day=1))),
             'body': "My Message",
             'userFrom': titi.toJson(),
             'userTo': toto.toJson(),
@@ -56,7 +56,7 @@ def test_message_toJson_to_taker():
         assert message.toJson(userRequester=titi) == {
             'id': message.id,
             'readed': False,
-            'dateTime': 4796665200,
+            'dateTime': int(datetime.timestamp(datetime(year=2122, month=1, day=1))),
             'body': "My Message",
             'userFrom': toto.toJson(),
             'userTo': titi.toJson(),
@@ -65,7 +65,7 @@ def test_message_toJson_to_taker():
         assert message.toJson(userRequester=toto) == {
             'id': message.id,
             'readed': False,
-            'dateTime': 4796665200,
+            'dateTime': int(datetime.timestamp(datetime(year=2122, month=1, day=1))),
             'body': "My Message",
             'userFrom': toto.toJson(),
             'userTo': titi.toJson(),
