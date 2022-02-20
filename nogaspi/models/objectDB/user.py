@@ -11,7 +11,6 @@ from facades.const import TOKEN_VALIDITY
 from dbEngine import Base
 
 class User (Base):
-
     __tablename__ = 'userNogaspi'
     id = Column(INTEGER, primary_key=True)
     mail = Column(VARCHAR)
@@ -41,6 +40,7 @@ class User (Base):
         self.password = password
         self.pseudo = pseudo
         self.profilePicture = profilePicture
+        self.points = 0
 
     def generateToken(self):
         self.token = secrets.token_hex()

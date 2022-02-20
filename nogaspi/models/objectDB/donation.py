@@ -8,7 +8,6 @@ from sqlalchemy.orm import relationship
 from dbEngine import Base
 
 class Donation (Base):
-
     __tablename__ = 'donation'
     id = Column(INTEGER, primary_key=True)
     idUser = Column(INTEGER, ForeignKey('userNogaspi.id'))

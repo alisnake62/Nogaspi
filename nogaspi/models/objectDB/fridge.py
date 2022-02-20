@@ -7,7 +7,6 @@ from facades.const import EXPIRATION_DATE_TOLERANCE_IN_DAY
 from dbEngine import Base
 
 class Fridge (Base):
-
     __tablename__ = 'fridge'
     id = Column(INTEGER, primary_key=True)
     idUser = Column(INTEGER, ForeignKey('userNogaspi.id'))

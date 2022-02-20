@@ -1,5 +1,4 @@
 import datetime
-import json
 
 from sqlalchemy import Column, Integer, Text, ForeignKey
 from sqlalchemy.sql.sqltypes import BOOLEAN, DATE, DATETIME, INTEGER, TEXT, VARCHAR, String
@@ -8,7 +7,6 @@ from sqlalchemy.orm import relationship
 from dbEngine import Base
 
 class Article (Base):
-
     __tablename__ = 'article'
     id = Column(INTEGER, primary_key=True)
     idProduct = Column(INTEGER, ForeignKey('product.id'))
@@ -19,7 +17,7 @@ class Article (Base):
     idFridge = Column(INTEGER, ForeignKey('fridge.id'))
     fridge = relationship("Fridge", back_populates="articles")
 
-    def __init__(self, product, donation, expirationDate, fridge):                    
+    def __init__(self, product, donation, expirationDate, fridge=None):                    
         self.product = product
         self.donation = donation
         self.expirationDate = expirationDate

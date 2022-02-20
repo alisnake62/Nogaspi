@@ -7,7 +7,6 @@ import datetime
 from dbEngine import Base
 
 class Conversation (Base):
-
     __tablename__ = 'conversation'
     id = Column(INTEGER, primary_key=True)
     idDonation = Column(INTEGER, ForeignKey('donation.id'))

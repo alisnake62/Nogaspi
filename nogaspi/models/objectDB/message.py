@@ -6,7 +6,6 @@ from sqlalchemy.orm import relationship
 from dbEngine import Base
 
 class Message (Base):
-
     __tablename__ = 'message'
     id = Column(INTEGER, primary_key=True)
     idConversation = Column(INTEGER, ForeignKey('conversation.id'))

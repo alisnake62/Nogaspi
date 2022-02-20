@@ -10,7 +10,6 @@ from facades.const import DONATION_CODE_VALIDITY
 from dbEngine import Base
 
 class DonationCode (Base):
-
     __tablename__ = 'donationCode'
     id = Column(INTEGER, primary_key=True)
     code = Column(VARCHAR)

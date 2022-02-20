@@ -5,7 +5,6 @@ from sqlalchemy.orm import relationship
 from dbEngine import Base
 
 class Rang (Base):
-
     __tablename__ = 'rang'
     id = Column(INTEGER, primary_key=True)
     name = Column(VARCHAR)

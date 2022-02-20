@@ -5,7 +5,6 @@ from sqlalchemy.orm import relationship
 from dbEngine import Base
 
 class Allergen (Base):
-
     __tablename__ = 'allergen'
     id = Column(INTEGER, primary_key=True)
     nameEN = Column(VARCHAR)

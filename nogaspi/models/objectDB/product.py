@@ -8,7 +8,6 @@ from sqlalchemy.orm import relationship
 from dbEngine import Base
 
 class Product (Base):
-
     __tablename__ = 'product'
     id = Column(INTEGER, primary_key=True)
     opinion = Column(TEXT)
