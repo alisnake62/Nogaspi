@@ -33,9 +33,9 @@ class DeleteMyDonationsInputSchema(Schema):
 
 class GetDonationsInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
-    latitude = fields.Float(validate=validate.Range(min=-90.0, max=90.0))
-    longitude = fields.Float(validate=validate.Range(min=-180.0, max=180.0))
-    distanceMax = fields.Int()
+    latitude = fields.Float(require = True, validate=validate.Range(min=-90.0, max=90.0))
+    longitude = fields.Float(require = True, validate=validate.Range(min=-180.0, max=180.0))
+    distanceMax = fields.Int(require = True)
 
 class GetDonationByIdInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
@@ -82,3 +82,8 @@ class GetMyDonationsInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
     withArchived = fields.Str(require = True, validate = validate.OneOf(['0', '1']))
     withExpired = fields.Str(require = True, validate = validate.OneOf(['0', '1']))
+
+class RateDonationInputSchema(Schema):
+    token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
+    idDonation = fields.Int(require = True)
+    note = fields.Int(require = True, validate=validate.Range(min=0, max=5))

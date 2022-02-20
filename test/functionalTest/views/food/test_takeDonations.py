@@ -2,7 +2,6 @@ from nogaspi.views.food.takeDonations import takeDonations
 from test.functionalTest.dbMagement import sqlQuerysWithCommit, sqlSelect
 from test.functionalTest.flaskManagement import FakeRequest
 import pytest
-import datetime
 
 def test_food_takeDonations():
     querys = [
@@ -24,6 +23,8 @@ def test_food_takeDonations():
     assert funcRtr["isTaked"]
     assert sqlSelect(table="donation", conditions="WHERE id = 1")[0]['archive'] == 1
     assert sqlSelect(table="donation", conditions="WHERE id = 2")[0]['archive'] == 1
+    assert sqlSelect(table="donation", conditions="WHERE id = 1")[0]['idUserTaker'] == 2
+    assert sqlSelect(table="donation", conditions="WHERE id = 2")[0]['idUserTaker'] == 2
     assert sqlSelect(table="userNogaspi", conditions="WHERE id = 1")[0]['points'] == 12
     assert sqlSelect(table="userNogaspi", conditions="WHERE id = 2")[0]['points'] == 3
 

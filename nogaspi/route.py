@@ -1,4 +1,4 @@
-from flask import jsonify, request, send_file
+from flask import jsonify, request
 from models.schemas import *
 from views import *
 from facades.apiConfig import apiResponse, checkInputAPI
@@ -129,6 +129,12 @@ def route(app):
     def getMyDonations_endpoint():
         checkInputAPI(GetMyDonationsInputSchema, request)
         data = food_getMyDonations(request)
+        return jsonify(apiResponse(request, data))
+
+    @app.route('/food/rateDonation', methods=['POST'])
+    def rateDonation_endpoint():
+        checkInputAPI(RateDonationInputSchema, request)
+        data = food_rateDonation(request)
         return jsonify(apiResponse(request, data))
         
     @app.route('/user/postRegularPath', methods=['POST'])

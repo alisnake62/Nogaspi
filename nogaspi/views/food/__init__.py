@@ -14,3 +14,4 @@ from .generateDonationsCode import generateDonationsCode as food_generateDonatio
 from .getFavoriteDonations import getFavoriteDonations as food_getFavoriteDonations
 from .toggleDonationInMyFavorite import toggleDonationInMyFavorite as food_toggleDonationInMyFavorite
 from .getMyDonations import getMyDonations as food_getMyDonations
+from .rateDonation import rateDonation as food_rateDonation

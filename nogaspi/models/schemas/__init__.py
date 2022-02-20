@@ -16,6 +16,7 @@ from .food import (
     GetFavoriteDonationsInputSchema,
     ToggleDonationInMyFavoriteInputSchema,
     GetMyDonationsInputSchema,
+    RateDonationInputSchema
 )
 from .user import (
     PostRegularPathInputSchema,

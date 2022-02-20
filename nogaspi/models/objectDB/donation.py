@@ -11,7 +11,7 @@ class Donation (Base):
     __tablename__ = 'donation'
     id = Column(INTEGER, primary_key=True)
     idUser = Column(INTEGER, ForeignKey('userNogaspi.id'))
-    user = relationship("User", back_populates="donations")
+    user = relationship("User", back_populates="donations", foreign_keys=idUser)
     latitude = Column(FLOAT)
     longitude = Column(FLOAT)
     geoPrecision = Column(INTEGER)
@@ -23,6 +23,9 @@ class Donation (Base):
     archive = Column(BOOLEAN)
     favoriteUsers = relationship("User", secondary='favorite_donation', back_populates="favoriteDonations")
     conversations = relationship("Conversation", back_populates="donation")
+    rating = Column(INTEGER)
+    idUserTaker = Column(INTEGER, ForeignKey('userNogaspi.id'))
+    userTaker = relationship("User", back_populates="donationsTaked", foreign_keys=idUserTaker)
 
     def __init__(self, user, latitude, longitude, geoPrecision, endingDate, archive = False):        
         self.user = user
@@ -88,7 +91,9 @@ class Donation (Base):
             'isMine': self.user == userRequester,
             'myTakerConversationInfo': myTakerConversationInfo,
             'myDonatorConversationsInfo': [c.toJsonlight(userRequester) for c in self.conversations] if self.user == userRequester else None,
-            'isMyFavorite': self.isFavorite(userRequester)
+            'isMyFavorite': self.isFavorite(userRequester),
+            'userTaker': self.userTaker.toJson() if self.userTaker is not None else None,
+            'rating': self.rating
         }
 
         return toJson

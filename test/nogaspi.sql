@@ -2,8 +2,8 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Hôte : db_nogaspi_test
--- Généré le : dim. 06 fév. 2022 à 17:15
+-- Hôte : db_nogaspi
+-- Généré le : dim. 20 fév. 2022 à 21:00
 -- Version du serveur : 10.6.5-MariaDB-1:10.6.5+maria~focal
 -- Version de PHP : 7.4.20
 
@@ -75,7 +75,9 @@ CREATE TABLE `donation` (
   `startingDate` datetime NOT NULL,
   `endingDate` datetime NOT NULL,
   `idDonationCode` int(11) DEFAULT NULL,
-  `archive` tinyint(1) NOT NULL
+  `rating` int(11) DEFAULT NULL,
+  `idUserTaker` int(11) DEFAULT NULL,
+  `archive` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
@@ -193,7 +195,9 @@ CREATE TABLE `userNogaspi` (
   `regularPathLatitudeEnd` float DEFAULT NULL,
   `regularPathLongitudeEnd` float DEFAULT NULL,
   `regularPathPoints` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`regularPathPoints`)),
-  `fireBaseToken` varchar(200) COLLATE utf8mb3_unicode_ci DEFAULT NULL
+  `fireBaseToken` varchar(200) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `rating` float NOT NULL DEFAULT 0,
+  `ratingCount` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
@@ -230,7 +234,8 @@ ALTER TABLE `conversation`
 ALTER TABLE `donation`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_annonce_user` (`idUser`),
-  ADD KEY `fk_donation_donationCode` (`idDonationCode`);
+  ADD KEY `fk_donation_donationCode` (`idDonationCode`),
+  ADD KEY `fk_usertaker_user` (`idUserTaker`);
 
 --
 -- Index pour la table `donationCode`
@@ -389,7 +394,8 @@ ALTER TABLE `conversation`
 --
 ALTER TABLE `donation`
   ADD CONSTRAINT `fk_annonce_user` FOREIGN KEY (`idUser`) REFERENCES `userNogaspi` (`id`),
-  ADD CONSTRAINT `fk_donation_donationCode` FOREIGN KEY (`idDonationCode`) REFERENCES `donationCode` (`id`);
+  ADD CONSTRAINT `fk_donation_donationCode` FOREIGN KEY (`idDonationCode`) REFERENCES `donationCode` (`id`),
+  ADD CONSTRAINT `fk_usertaker_user` FOREIGN KEY (`idUserTaker`) REFERENCES `userNogaspi` (`id`);
 
 --
 -- Contraintes pour la table `favorite_donation`

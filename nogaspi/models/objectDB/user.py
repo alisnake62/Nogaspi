@@ -28,12 +28,15 @@ class User (Base):
     regularPathLatitudeEnd = Column(FLOAT)
     regularPathLongitudeEnd = Column(FLOAT)
     regularPathPoints = Column(JSON)
-    donations = relationship("Donation", back_populates="user")
+    donations = relationship("Donation", foreign_keys="Donation.idUser", back_populates="user")
     fridges = relationship("Fridge", back_populates="user")
     favoriteDonations = relationship("Donation", secondary='favorite_donation', back_populates="favoriteUsers")
     fireBaseToken = Column(VARCHAR)
     conversationsDonator = relationship("Conversation", foreign_keys="Conversation.idUserDonator", back_populates="userDonator")
     conversationsTaker = relationship("Conversation", foreign_keys="Conversation.idUserTaker", back_populates="userTaker")
+    donationsTaked = relationship("Donation", foreign_keys="Donation.idUserTaker", back_populates="userTaker")
+    rating = Column(FLOAT)
+    ratingCount = Column(INTEGER)
 
     def __init__(self, mail, password, pseudo, profilePicture):                    
         self.mail = mail             
@@ -41,6 +44,8 @@ class User (Base):
         self.pseudo = pseudo
         self.profilePicture = profilePicture
         self.points = 0
+        self.rating = 0.0
+        self.ratingCount = 0
 
     def generateToken(self):
         self.token = secrets.token_hex()
@@ -69,6 +74,10 @@ class User (Base):
             'mail': self.mail,
             'pseudo': self.pseudo,
             'points': self.points,
-            'profilePictureUrl': self.profilePictureURL()
+            'profilePictureUrl': self.profilePictureURL(),
+            'rating':{
+                'average': self.rating,
+                'count': self.ratingCount
+            }
         }
         return toJson
