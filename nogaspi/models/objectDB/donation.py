@@ -64,7 +64,7 @@ class Donation (Base):
         allergens = []
         for article in self.articles:
             allergens += [allergen.toJson() for allergen in article.product.allergens]
-        allergens = list(set(allergens))
+        allergens = sorted(list(set(allergens)))
 
         myTakerConversationInfo = None
         for conversation in self.conversations:
@@ -82,7 +82,7 @@ class Donation (Base):
             'isExpired': self.isExpired(),
             'isArchived': self.isArchived(),
             'isValide': self.isValide(),
-            'articles': [a.toJson() for a in  self.articles],
+            'articles': [a.toJson() for a in self.articles],
             'allergens': allergens,
             'owner': self.user.toJson(),
             'isMine': self.user == userRequester,

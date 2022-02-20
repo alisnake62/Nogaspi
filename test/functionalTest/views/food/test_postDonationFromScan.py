@@ -14,13 +14,13 @@ def test_food_postDonationFromScan():
     funcRtr = postDonationFromScan(FakeRequest({
         "token": "token_toto",
         "articles": [
-            {"barcode": "3267110001144", "expirationDate":str(datetime.date.today() - datetime.timedelta(days=10))},
+            {"barcode": "3267110001144", "expirationDate":str(datetime.date.today() - datetime.timedelta(days=14))},
             {"barcode": "3163937012007", "expirationDate":str(datetime.date.today() + datetime.timedelta(days=5))}
         ],
         "latitude": 43.5,
         "longitude": 1.5,
         "geoPrecision": 500,
-        "endingDate": str(datetime.date.today() + datetime.timedelta(days=10))
+        "endingDate": str(datetime.date.today() + datetime.timedelta(days=14))
     }))
     assert funcRtr['isPosted']
     assert len(sqlSelect(table='donation')) == 1
@@ -48,13 +48,13 @@ def test_food_postDonationFromScan_with_barcode_already_present_in_db():
     funcRtr = postDonationFromScan(FakeRequest({
         "token": "token_toto",
         "articles": [
-            {"barcode": "3267110001144", "expirationDate":str(datetime.date.today() - datetime.timedelta(days=10))},
+            {"barcode": "3267110001144", "expirationDate":str(datetime.date.today() - datetime.timedelta(days=14))},
             {"barcode": "3163937012007", "expirationDate":str(datetime.date.today() + datetime.timedelta(days=5))}
         ],
         "latitude": 43.5,
         "longitude": 1.5,
         "geoPrecision": 500,
-        "endingDate": str(datetime.date.today() + datetime.timedelta(days=10))
+        "endingDate": str(datetime.date.today() + datetime.timedelta(days=14))
     }))
     assert funcRtr['isPosted']
     assert len(sqlSelect(table='donation')) == 1
@@ -87,7 +87,7 @@ def test_food_postDonationFromScan_without_fridge():
         "latitude": 43.5,
         "longitude": 1.5,
         "geoPrecision": 500,
-        "endingDate": str(datetime.date.today() + datetime.timedelta(days=10))
+        "endingDate": str(datetime.date.today() + datetime.timedelta(days=14))
     }))
 
     assert funcRtr['isPosted']
@@ -125,7 +125,7 @@ def test_food_postDonationFromScan_with_bad_barcode():
             "latitude": 43.5,
             "longitude": 1.5,
             "geoPrecision": 500,
-            "endingDate": str(datetime.date.today() + datetime.timedelta(days=10))
+            "endingDate": str(datetime.date.today() + datetime.timedelta(days=14))
         }))
 
 def test_food_postDonationFromScan_with_bad_expiration_date():
@@ -139,11 +139,11 @@ def test_food_postDonationFromScan_with_bad_expiration_date():
         postDonationFromScan(FakeRequest({
             "token": "token_toto",
             "articles": [
-                {"barcode": "3267110001144", "expirationDate": str(datetime.date.today() - datetime.timedelta(days=20))},
+                {"barcode": "3267110001144", "expirationDate": str(datetime.date.today() - datetime.timedelta(days=16))},
                 {"barcode": "3163937012007", "expirationDate": str(datetime.date.today() + datetime.timedelta(days=5))}
             ],
             "latitude": 43.5,
             "longitude": 1.5,
             "geoPrecision": 500,
-            "endingDate": str(datetime.date.today() + datetime.timedelta(days=10))
+            "endingDate": str(datetime.date.today() + datetime.timedelta(days=14))
         }))

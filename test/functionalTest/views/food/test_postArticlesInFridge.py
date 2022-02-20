@@ -16,11 +16,11 @@ def test_food_postArticlesInFridge():
         "articles": [
             {
                 "barcode": "3267110001144",
-                "expirationDate": str(datetime.date.today() + datetime.timedelta(days=10))
+                "expirationDate": str(datetime.date.today() + datetime.timedelta(days=14))
             },
             {
                 "barcode": "3163937012007",
-                "expirationDate": str(datetime.date.today() - datetime.timedelta(days=10))
+                "expirationDate": str(datetime.date.today() - datetime.timedelta(days=14))
             }
         ]
     }))
@@ -48,11 +48,11 @@ def test_food_postArticlesInFridge_with_bad_expiration_date():
             "articles": [
                 {
                     "barcode": "3267110001144",
-                    "expirationDate": str(datetime.date.today() + datetime.timedelta(days=10))
+                    "expirationDate": str(datetime.date.today() + datetime.timedelta(days=14))
                 },
                 {
                     "barcode": "3163937012007",
-                    "expirationDate": str(datetime.date.today() - datetime.timedelta(days=20)) #bad date
+                    "expirationDate": str(datetime.date.today() - datetime.timedelta(days=16)) #bad date
                 }
             ]
         }))
@@ -70,11 +70,11 @@ def test_food_postArticlesInFridge_with_bad_barcode():
             "articles": [
             {
                 "barcode": "0",
-                "expirationDate": str(datetime.date.today() + datetime.timedelta(days=10))
+                "expirationDate": str(datetime.date.today() + datetime.timedelta(days=14))
             },
             {
                 "barcode": "3163937012007",
-                "expirationDate": str(datetime.date.today() - datetime.timedelta(days=10))
+                "expirationDate": str(datetime.date.today() - datetime.timedelta(days=14))
             }
         ]
         }))

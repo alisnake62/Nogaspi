@@ -7,7 +7,7 @@ from datetime import datetime
 
 def test_product_toJson():
     with EngineSQLAlchemy() as session:
-        toto = User("toto@toto.fr", "toto_password", "toto", "http://toto.image")
+        toto = User("toto@toto.fr", "toto_password", "toto", "image_toto.jpg")
         product = Product(toto, datetime.now(), "101010101")
         product.opinion = "My Opinion"
         product.name = "My Name"
@@ -48,7 +48,7 @@ def test_product_toJson():
 
 def test_product_toJson_without_nutriscore_and_nutriments_datas():
     with EngineSQLAlchemy() as session:
-        toto = User("toto@toto.fr", "toto_password", "toto", "http://toto.image")
+        toto = User("toto@toto.fr", "toto_password", "toto", "image_toto.jpg")
         product = Product(toto, datetime.now(), "101010101")
         product.opinion = "My Opinion"
         product.name = "My Name"

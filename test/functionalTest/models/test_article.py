@@ -6,7 +6,7 @@ from datetime import datetime
 
 def test_article_toJson():
     with EngineSQLAlchemy() as session:
-        toto = User("toto@toto.fr", "toto_password", "toto", "http://toto.image")
+        toto = User("toto@toto.fr", "toto_password", "toto", "image_toto.jpg")
         product = Product(toto, datetime.now(), "101010101")
         article = Article(product, donation=None, expirationDate=datetime(year=2122, month=1, day=1))
         session.add(toto)

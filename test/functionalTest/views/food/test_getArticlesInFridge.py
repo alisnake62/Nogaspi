@@ -53,7 +53,7 @@ def test_food_getArticlesInFridge_with_expired_article_more_than_15_days():
         "INSERT INTO `product` (`id`, `barcode`, `idLastScanUser`, `lastScanDate`) VALUES (1, '101010', '1', NOW())",
         "INSERT INTO `article` (`id`, `idProduct`, `expirationDate`, `idFridge`) VALUES ('1', '1', NOW() + INTERVAL 1 DAY, '1');",
         "INSERT INTO `article` (`id`, `idProduct`, `expirationDate`, `idFridge`) VALUES ('2', '1', NOW() + INTERVAL 1 DAY, '2');",
-        "INSERT INTO `article` (`id`, `idProduct`, `expirationDate`, `idFridge`) VALUES ('3', '1', NOW() - INTERVAL 20 DAY, '1');",
+        "INSERT INTO `article` (`id`, `idProduct`, `expirationDate`, `idFridge`) VALUES ('3', '1', NOW() - INTERVAL 16 DAY, '1');",
     ]
     sqlQuerysWithCommit(querys)
     

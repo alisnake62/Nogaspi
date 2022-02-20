@@ -14,11 +14,11 @@ def test_food_generateDonationsCode():
     
     funcRtr = generateDonationsCode(FakeRequest({"token":"token_toto", "idDonations": [1,2]}))
     assert len(funcRtr["code"]) == 64
-    assert sqlSelect(table='donationCode', conditions='WHERE id = 1')[0]['code'] == funcRtr["code"]
-    assert sqlSelect(table='donation', conditions='WHERE id = 1')[0]['idDonationCode'] == 1
-    assert sqlSelect(table='donation', conditions='WHERE id = 2')[0]['idDonationCode'] == 1
-    assert sqlSelect(table='donationCode', conditions='WHERE id = 1')[0]['expirationDate'] > datetime.datetime.now()
-    assert sqlSelect(table='donationCode', conditions='WHERE id = 1')[0]['expirationDate'] < datetime.datetime.now() + datetime.timedelta(minutes = 10)
+    assert sqlSelect(table='donationCode')[0]['code'] == funcRtr["code"]
+    assert sqlSelect(table='donation', conditions='WHERE id = 1')[0]['idDonationCode'] == sqlSelect(table='donationCode')[0]['id']
+    assert sqlSelect(table='donation', conditions='WHERE id = 2')[0]['idDonationCode'] == sqlSelect(table='donationCode')[0]['id']
+    assert sqlSelect(table='donationCode')[0]['expirationDate'] > datetime.datetime.now() + datetime.timedelta(minutes = 4)
+    assert sqlSelect(table='donationCode')[0]['expirationDate'] < datetime.datetime.now() + datetime.timedelta(minutes = 6)
 
 def test_food_generateDonationsCode_with_one_donation():
     querys = [
@@ -32,7 +32,7 @@ def test_food_generateDonationsCode_with_one_donation():
     assert sqlSelect(table='donationCode')[0]['code'] == funcRtr["code"]
     assert sqlSelect(table='donation', conditions='WHERE id = 1')[0]['idDonationCode'] == sqlSelect(table='donationCode')[0]['id']
     assert sqlSelect(table='donationCode')[0]['expirationDate'] > datetime.datetime.now()
-    assert sqlSelect(table='donationCode')[0]['expirationDate'] < datetime.datetime.now() + datetime.timedelta(minutes = 10)
+    assert sqlSelect(table='donationCode')[0]['expirationDate'] < datetime.datetime.now() + datetime.timedelta(minutes = 6)
 
 def test_food_generateDonationsCode_with_bad_donations():
     querys = [
