@@ -17,13 +17,14 @@ from firebase_admin import messaging, credentials, initialize_app
     print("Hey there! I timed out! You can do things after me!")
 """
 
-def sendNotification(fireBaseToken, title, body, imageURL = None):
+def sendNotification(fireBaseToken, title, body, data, imageURL):
 
     initAppOnFireBase()
     try:
         message = messaging.Message(
             notification=messaging.Notification(title=title, body=body, image=imageURL),
-            token=fireBaseToken,
+            data = data,
+            token=fireBaseToken
         )
         messaging.send(message)
     except Exception:

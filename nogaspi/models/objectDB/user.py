@@ -59,9 +59,9 @@ class User (Base):
         profilePicture = self.profilePicture if self.profilePicture else "emptyProfile.jpg"
         return f"http://{os.environ['SERVER_ADRESS']}:49080/users/{profilePicture}"
 
-    def sendFireBaseNotification(self, title, body):
+    def sendFireBaseNotification(self, title, body, data = None, imageURL=None):
         if self.fireBaseToken:
-            fireBaseUtils.sendNotification(self.fireBaseToken, title, body, imageURL=self.profilePictureURL())
+            fireBaseUtils.sendNotification(self.fireBaseToken, title, body, data, imageURL)
 
     def toJson(self):
         toJson = {

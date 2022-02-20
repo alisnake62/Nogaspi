@@ -2,6 +2,7 @@ from models.objectDB import Donation, FavoriteDonation
 from dbEngine import EngineSQLAlchemy
 from facades.apiConfig import EmptyException, DonationException, getArgs
 from facades.utils.registerUtils import getUserFromToken
+from facades.firebaseNotifications import likeDonation as notif_likeDonation
 
 import sys
 import traceback
@@ -33,7 +34,7 @@ def toggleDonationInMyFavorite(request):
 
         if not row:
             session.add(FavoriteDonation(user.id, donation.id))
-            donation.user.sendFireBaseNotification(f"Donation {donation.id}", f"{user.pseudo} aime votre donation ")
+            notif_likeDonation(user, donation.user, donation)
         else:
             session.delete(row)
 

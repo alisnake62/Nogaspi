@@ -2,6 +2,7 @@ from models.objectDB import Conversation, Message
 from dbEngine import EngineSQLAlchemy
 from facades.apiConfig import EmptyException, getArgs
 from facades.utils.registerUtils import getUserFromToken
+from facades.firebaseNotifications import newMessage as notif_newMessage
 
 def postMessage(request):
 
@@ -25,6 +26,8 @@ def postMessage(request):
         session.add(message)
 
         session.commit()
+        
+        notif_newMessage(user, message.userTo(), conversation, body)
 
         data = {'posted':True}
 
