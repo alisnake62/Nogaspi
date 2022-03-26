@@ -58,7 +58,7 @@ class PostArticlesInFridgeInputSchema(Schema):
 
 class DeleteArticlesInFridgeInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
-    idArticles = fields.List(fields.Int(require = True, validate = validate.Length(1,1000)), require = True)
+    idArticles = fields.List(fields.Int(require = True), require = True, validate = validate.Length(1,1000))
 
 class GetArticlesInFridgeInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
