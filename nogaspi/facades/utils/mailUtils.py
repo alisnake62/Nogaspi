@@ -11,11 +11,6 @@ def sendConfirmationCode(mailTo, pseudo, code):
 
     mailFrom = os.environ['MAIL_SENDER']
     password = os.environ['MAIL_SENDER_PASSWORD']
-    
-    logging.error('mailFrom')
-    logging.error(mailFrom)
-    logging.error('password')
-    logging.error(password)
 
     mail_subject = "NoGaspi - Inscription"
 
