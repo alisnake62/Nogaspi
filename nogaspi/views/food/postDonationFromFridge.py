@@ -9,9 +9,9 @@ import datetime
 
 def postDonationFromFridge(request):
 
-    token, articles, latitude, longitude, geoPrecision, endingDate = getArgs(request, [
+    token, idArticles, latitude, longitude, geoPrecision, endingDate = getArgs(request, [
         'token',
-        'articles',
+        'idArticles',
         'latitude',
         'longitude',
         'geoPrecision',
@@ -31,8 +31,7 @@ def postDonationFromFridge(request):
 
         donation = Donation(user, latitude, longitude, geoPrecision, endingDate)
 
-        for value in articles:
-            idArticle = value['id']
+        for idArticle in idArticles:
             article = session.query( Article ).filter(Article.id == idArticle).first()
             if not article: 
                 message = f"The article {idArticle} is unknow"

@@ -167,6 +167,12 @@ def route(app):
         data = user_postFireBaseToken(request)
         return jsonify(apiResponse(request, data))
 
+    @app.route('/user/getMyInfos', methods=['GET'])
+    def getMyInfos_endpoint():
+        checkInputAPI(GetMyInfosInputSchema, request)
+        data = user_getMyInfos(request)
+        return jsonify(apiResponse(request, data))
+
     @app.route('/messaging/initiateConversation', methods=['POST'])
     def initiateConversation_endpoint():
         checkInputAPI(InitiateConversationInputSchema, request)

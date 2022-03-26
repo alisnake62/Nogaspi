@@ -18,10 +18,7 @@ class PostDonationFromScanInputSchema(Schema):
 
 class PostDonationFromFridgeInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
-    articles = fields.List(fields.Nested(Schema.from_dict(
-        {
-            'id': fields.Int(require = True)
-        })), validate = validate.Length(1,100), require = True)
+    idArticles = fields.List(fields.Int(require = True), require = True, validate = validate.Length(1,1000))
     latitude = fields.Float(validate=validate.Range(min=-90.0, max=90.0), require = True)
     longitude = fields.Float(validate=validate.Range(min=-180.0, max=180.0), require = True)
     geoPrecision = fields.Int(require = True)
@@ -29,7 +26,7 @@ class PostDonationFromFridgeInputSchema(Schema):
 
 class DeleteMyDonationsInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
-    idDonations = fields.List(fields.Int(require = True), validate = validate.Length(1,1000), require = True)
+    idDonations = fields.List(fields.Int(require = True), require = True, validate = validate.Length(1,1000))
 
 class GetDonationsInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
@@ -69,7 +66,7 @@ class TakeDonationsInputSchema(Schema):
     
 class GenerateDonationsCodeInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
-    idDonations = fields.List(fields.Int(require = True), require = True)
+    idDonations = fields.List(fields.Int(require = True), require = True, validate = validate.Length(1,1000))
 
 class GetFavoriteDonationsInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))

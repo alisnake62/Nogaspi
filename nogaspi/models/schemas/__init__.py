@@ -28,7 +28,8 @@ from .food import (
 from .user import (
     PostRegularPathInputSchema,
     GetRegularPathInputSchema,
-    PostFireBaseTokenInputSchema
+    PostFireBaseTokenInputSchema,
+    GetMyInfosInputSchema
 )
 
 from .messaging import (

@@ -17,7 +17,7 @@ def test_food_postDonationFromFridge():
     
     funcRtr = postDonationFromFridge(FakeRequest({
         "token": "token_toto",
-        "articles": [{"id": 1}, {"id": 2}],
+        "idArticles": [1, 2],
         "latitude": 43.5,
         "longitude": 1.5,
         "geoPrecision": 500,
@@ -47,7 +47,7 @@ def test_food_postDonationFromFridge_bad_user():
     with pytest.raises(Exception):
         postDonationFromFridge(FakeRequest({
             "token": "token_tata",
-            "articles": [{"id": 1}, {"id": 2}],
+            "idArticles": [1, 2],
             "latitude": 43.5,
             "longitude": 1.5,
             "geoPrecision": 500,
@@ -67,7 +67,7 @@ def test_food_postDonationFromFridge_with_expire_article():
     with pytest.raises(Exception):
         postDonationFromFridge(FakeRequest({
             "token": "token_toto",
-            "articles": [{"id": 1}, {"id": 2}],
+            "idArticles": [1, 2],
             "latitude": 43.5,
             "longitude": 1.5,
             "geoPrecision": 500,
@@ -88,7 +88,7 @@ def test_food_postDonationFromFridge_article_already_in_donation():
     with pytest.raises(Exception):
         postDonationFromFridge(FakeRequest({
             "token": "token_toto",
-            "articles": [{"id": 1}, {"id": 2}],
+            "idArticles": [1, 2],
             "latitude": 43.5,
             "longitude": 1.5,
             "geoPrecision": 500,
@@ -110,7 +110,7 @@ def test_food_postDonationFromFridge_with_bad_fridge():
     with pytest.raises(Exception):
         postDonationFromFridge(FakeRequest({
             "token": "token_toto",
-            "articles": [{"id": 1}, {"id": 3}],
+            "idArticles": [1, 3],
             "latitude": 43.5,
             "longitude": 1.5,
             "geoPrecision": 500,
@@ -131,7 +131,7 @@ def test_food_postDonationFromFridge_with_bad_article():
     with pytest.raises(Exception):
         postDonationFromFridge(FakeRequest({
             "token": "token_toto",
-            "articles": [{"id": 1}, {"id": 4}],
+            "idArticles": [1, 4],
             "latitude": 43.5,
             "longitude": 1.5,
             "geoPrecision": 500,
