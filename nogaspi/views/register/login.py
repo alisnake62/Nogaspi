@@ -13,7 +13,8 @@ def login(request):
 
         try:
             user = session.query( User ).filter(User.mail == mail).first()
-            if (user.password != password): raise Exception()
+            if user.password != password: raise Exception()
+            if not user.isConfirmate: raise Exception()
         except Exception:
             raise RegisterException("login / password incorrect", traceback.format_exc(), request)
 

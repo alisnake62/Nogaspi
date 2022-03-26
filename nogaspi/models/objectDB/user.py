@@ -1,12 +1,13 @@
 import secrets
 import datetime
 import os
+import random
 
 from sqlalchemy import Column, Integer, Text, ForeignKey, FLOAT
-from sqlalchemy.sql.sqltypes import DATE, DATETIME, INTEGER, JSON, TEXT, VARCHAR, String
+from sqlalchemy.sql.sqltypes import DATE, DATETIME, INTEGER, JSON, TEXT, VARCHAR, String, BOOLEAN
 from sqlalchemy.orm import relationship
 from facades.utils import fireBaseUtils
-from facades.const import TOKEN_VALIDITY
+from facades.const import TOKEN_VALIDITY, CONFIRMATION_CODE_VALIDITY
 
 from dbEngine import Base
 
@@ -37,8 +38,11 @@ class User (Base):
     donationsTaked = relationship("Donation", foreign_keys="Donation.idUserTaker", back_populates="userTaker")
     rating = Column(FLOAT)
     ratingCount = Column(INTEGER)
-
-    def __init__(self, mail, password, pseudo, profilePicture):                    
+    isConfirmate = Column(BOOLEAN)
+    confirmationCode = Column(VARCHAR)
+    confirmationCodeExpiration = Column(DATETIME)
+    
+    def __init__(self, mail, password, pseudo, profilePicture = None):                    
         self.mail = mail             
         self.password = password
         self.pseudo = pseudo
@@ -46,6 +50,7 @@ class User (Base):
         self.points = 0
         self.rating = 0.0
         self.ratingCount = 0
+        self.isConfirmate = False
 
     def generateToken(self):
         self.token = secrets.token_hex()
@@ -62,12 +67,21 @@ class User (Base):
 
     def profilePictureURL(self):
         profilePicture = self.profilePicture if self.profilePicture else "emptyProfile.jpg"
-        return f"http://{os.environ['SERVER_ADRESS']}:49080/users/{profilePicture}"
+        return f"http://{os.environ['SERVER_ADDRESS']}:49080/users/{profilePicture}"
 
     def sendFireBaseNotification(self, title, body, data = None, imageURL=None):
         if self.fireBaseToken:
             fireBaseUtils.sendNotification(self.fireBaseToken, title, body, data, imageURL)
 
+    def generateConfirmationCode(self):
+        chars = "ABCDEFGHIJQLMNOPQRSTUVWXYZ0123456789"
+        self.confirmationCode = "".join(random.choices(chars, k = 10))
+        self.confirmationCodeExpiration = datetime.datetime.now() + datetime.timedelta(minutes = CONFIRMATION_CODE_VALIDITY)
+
+    def confirmationCodeIsValide(self, code):
+        if self.confirmationCode != code: return False
+        return self.confirmationCodeExpiration > datetime.datetime.now()
+    
     def toJson(self):
         toJson = {
             'id': self.id,

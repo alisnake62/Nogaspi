@@ -28,3 +28,12 @@ def test_register_checkTokenValidity_with_bad_expirationDate():
 
     assert not funcRtr['validity']
     assert funcRtr['user'] == 'toto@toto.fr'
+
+def test_register_checkTokenValidity_without_token():
+    querys = ["INSERT INTO `userNogaspi` (`id`, `mail`, `password`, `pseudo`, `profilePicture`, `token`, `token_expiration`, `idRang`, `points`, `regularPathLatitudeStart`, `regularPathLongitudeStart`, `regularPathLatitudeEnd`, `regularPathLongitudeEnd`, `regularPathPoints`, `fireBaseToken`) VALUES (1, 'toto@toto.fr', 'toto', 'toto', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL);"]
+    sqlQuerysWithCommit(querys)
+    
+    funcRtr = checkTokenValidity(FakeRequest({"token":"token_toto"}))
+    
+    assert not funcRtr['validity']
+    assert funcRtr['user'] == 'Unknown'

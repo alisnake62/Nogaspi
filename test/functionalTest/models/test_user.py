@@ -15,7 +15,7 @@ def test_user_toJson():
             'mail': "toto@toto.fr",
             'pseudo': "toto",
             'points': 0,
-            'profilePictureUrl': f"http://{os.environ['SERVER_ADRESS']}:49080/users/image_toto.jpg",
+            'profilePictureUrl': f"http://{os.environ['SERVER_ADDRESS']}:49080/users/image_toto.jpg",
             'rating':{
                 'average': 2.4,
                 'count': 4

@@ -4,21 +4,10 @@ from facades.apiConfig import logging
 import firebase_admin
 from firebase_admin import messaging, credentials, initialize_app
 
-# processing this if it's not ok
-""" 
-    action_process = Process(target=do_actions)
- 
-    # We start the process and we block for 5 seconds.
-    action_process.start()
-    action_process.join(timeout=5)
- 
-    # We terminate the process.
-    action_process.terminate()
-    print("Hey there! I timed out! You can do things after me!")
-"""
-
 def sendNotification(fireBaseToken, title, body, data, imageURL):
 
+    if os.environ['LAUNCH_ENV'] == 'test': return
+    
     initAppOnFireBase()
     try:
         message = messaging.Message(

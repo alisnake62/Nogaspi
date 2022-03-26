@@ -20,7 +20,11 @@ services:
       FIREBASE_SERVICE_ACCOUNT: ${fireBaseServiceAccount}
       DIRECTORY_ASSET: "/usr/src/app/assets/"
       DIRECTORY_LOG: "/usr/src/app/"
-      SERVER_ADRESS: ${serverAdress}
+      DIRECTORY_RACINE: "/usr/src/app/Nogaspi/"
+      MAIL_SENDER: ${mailSender}
+      MAIL_SENDER_PASSWORD: ${mailSenderPassword}
+      SERVER_ADDRESS: ${serverAddress}
+      LAUNCH_ENV: "prod"
     ports:
       - 5556:5000
     volumes:
@@ -82,7 +86,11 @@ services:
       FIREBASE_SERVICE_ACCOUNT: ${fireBaseServiceAccount}
       DIRECTORY_ASSET: "/usr/src/app/assets/"
       DIRECTORY_LOG: "/usr/src/app/"
-      SERVER_ADRESS: ${serverAdress}
+      DIRECTORY_RACINE: "/usr/src/app/Nogaspi/"
+      MAIL_SENDER: ${mailSender}
+      MAIL_SENDER_PASSWORD: ${mailSenderPassword}
+      SERVER_ADDRESS: ${serverAddress}
+      LAUNCH_ENV: "test"
     volumes:
       - ${path}:/usr/src/app
     networks:
@@ -127,7 +135,8 @@ services:
     environment:
       DIRECTORY_ASSET: "/usr/src/app/assets/"
       DIRECTORY_LOG: "/usr/src/app/"
-      SERVER_ADRESS: ${serverAdress}
+      DIRECTORY_RACINE: "/usr/src/app/Nogaspi/"
+      SERVER_ADDRESS: ${serverAddress}
     volumes:
       - ${path}:/usr/src/app
 

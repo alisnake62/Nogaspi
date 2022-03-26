@@ -16,6 +16,18 @@ def route(app):
         data = {"toto":  ["tata", "tito"]}
         return jsonify(apiResponse(request, data))
 
+    @app.route('/register/createUser', methods=['POST'])
+    def createUser_endpoint():
+        checkInputAPI(CreateUserInputSchema, request)
+        data = register_createUser(request)
+        return jsonify(apiResponse(request, data))
+
+    @app.route('/register/confirmUserCreation', methods=['POST'])
+    def confirmUserCreation_endpoint():
+        checkInputAPI(ConfirmUserCreationInputSchema, request)
+        data = register_confirmUserCreation(request)
+        return jsonify(apiResponse(request, data))
+
     @app.route('/register/login', methods=['POST'])
     def login_endpoint():
         checkInputAPI(LoginInputSchema, request)

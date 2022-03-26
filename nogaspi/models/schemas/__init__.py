@@ -1,4 +1,11 @@
-from .register import LoginInputSchema, LogoutInputSchema, CheckTokenValidityInputSchema
+from .register import (
+    CreateUserInputSchema,
+    ConfirmUserCreationInputSchema,
+    LoginInputSchema,
+    LogoutInputSchema,
+    CheckTokenValidityInputSchema
+    )
+
 from .food import (
     GetProductInputSchema,
     PostDonationFromScanInputSchema,
@@ -23,8 +30,6 @@ from .user import (
     GetRegularPathInputSchema,
     PostFireBaseTokenInputSchema
 )
-
-from .tools import GetProfilePictureInputSchema
 
 from .messaging import (
     InitiateConversationInputSchema,
