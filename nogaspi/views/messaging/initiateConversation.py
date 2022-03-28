@@ -2,7 +2,7 @@ from models.objectDB import Donation, Conversation, Message
 from dbEngine import EngineSQLAlchemy
 from facades.apiConfig import EmptyException, DonationException, getArgs
 from facades.utils.registerUtils import getUserFromToken
-from facades.firebaseNotifications.newConversation import newConversation as notif_newConversation
+from facades.firebaseMessages.newConversation import newConversation as fbMessage_newConversation
 
 def initiateConversation(request):
 
@@ -38,7 +38,7 @@ def initiateConversation(request):
 
         session.commit()
 
-        notif_newConversation(user, userOwner, conversation, firstMessage)
+        fbMessage_newConversation(user, userOwner, conversation, firstMessage)
 
         data = {'isInitiate':True}
 

@@ -4,9 +4,12 @@ from facades.apiConfig import logging
 import firebase_admin
 from firebase_admin import messaging, credentials, initialize_app
 
-def sendNotification(fireBaseToken, title, body, data, imageURL):
+def sendNotification(fireBaseToken, event, data, title, body, imageURL):
 
     if os.environ['LAUNCH_ENV'] == 'test': return
+
+    if data: data['event'] = event
+    else: data = {'event': event}
     
     initAppOnFireBase()
     try:

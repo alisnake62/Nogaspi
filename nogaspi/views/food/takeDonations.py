@@ -3,6 +3,8 @@ from dbEngine import EngineSQLAlchemy
 from facades.apiConfig import EmptyException, getArgs
 from facades.utils.registerUtils import getUserFromToken
 from facades.utils.donationUtils import makeDonation
+from facades.firebaseMessages.donationTaked import donationTaked as fbMessage_donationTaked
+
 
 def takeDonations(request):
 
@@ -26,8 +28,11 @@ def takeDonations(request):
             message = "You can't take your own donations"
             raise EmptyException(message, message, request)
         
+        userOwnerPointsWin = 0
         for donation in donationCode.donations:
-            makeDonation(donation.user, user, donation)
+            userOwnerPointsWin += makeDonation(donation.user, user, donation)
+        
+        fbMessage_donationTaked(donation.user, userOwnerPointsWin)
 
         session.commit()
 

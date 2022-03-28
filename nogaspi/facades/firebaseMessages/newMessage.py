@@ -1,9 +1,8 @@
-def newMessageNotif(userFrom, conversation, messageBody):  
+def newMessageMessage(userFrom, conversation, messageBody):  
     return {
         'title': f"Message reçu de {userFrom.pseudo}",
         'body': f"Donation {conversation.donation.id}: {messageBody}",
         'data': {
-            "event": "NewMessage",
             "userFrom": userFrom.pseudo,
             "idDonation": str(conversation.donation.id),
             "idConversation": str(conversation.id),
@@ -12,5 +11,5 @@ def newMessageNotif(userFrom, conversation, messageBody):
         'imageURL': None
     }
 def newMessage(userFrom, userTo, conversation, messageBody):
-    notif = newMessageNotif(userFrom, conversation, messageBody)
-    userTo.sendFireBaseNotification(notif['title'], notif['body'], notif['data'], notif['imageURL'])
+    message = newMessageMessage(userFrom, conversation, messageBody)
+    userTo.sendFireBaseNotification('newMessage', message['title'], message['body'], message['imageURL'], message['data'])

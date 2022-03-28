@@ -2,7 +2,7 @@ from models.objectDB import Donation, FavoriteDonation
 from dbEngine import EngineSQLAlchemy
 from facades.apiConfig import EmptyException, DonationException, getArgs
 from facades.utils.registerUtils import getUserFromToken
-from facades.firebaseNotifications.likeDonation import likeDonation as notif_likeDonation
+from facades.firebaseMessages.likeDonation import likeDonation as fbMessage_likeDonation
 
 import sys
 import traceback
@@ -34,7 +34,7 @@ def toggleDonationInMyFavorite(request):
 
         if not row:
             session.add(FavoriteDonation(user.id, donation.id))
-            notif_likeDonation(user, donation.user, donation)
+            fbMessage_likeDonation(user, donation.user, donation)
         else:
             session.delete(row)
 
