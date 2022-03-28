@@ -7,4 +7,4 @@ def likeDonationMessage(userFrom, donation):
     }
 def likeDonation(userFrom, userTo, donation):
     message = likeDonationMessage(userFrom, donation)
-    userTo.sendFireBaseNotification('likeDonation', message['title'], message['body'], message['imageURL'], message['data'])
+    userTo.sendFireBaseNotification('likeDonation', message['data'], message['title'], message['body'], message['imageURL'])

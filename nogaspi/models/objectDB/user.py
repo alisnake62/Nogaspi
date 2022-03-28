@@ -2,6 +2,7 @@ import secrets
 import datetime
 import os
 import random
+import json
 
 from sqlalchemy import Column, Integer, Text, ForeignKey, FLOAT
 from sqlalchemy.sql.sqltypes import DATE, DATETIME, INTEGER, JSON, TEXT, VARCHAR, String, BOOLEAN
@@ -85,6 +86,9 @@ class User (Base):
     def confirmationCodeIsValide(self, code):
         if self.confirmationCode != code: return False
         return self.confirmationCodeExpiration > datetime.datetime.now()
+
+    def regularPath(self):
+        return None if self.regularPathPoints is None else json.loads(self.regularPathPoints)
     
     def toJson(self):
         toJson = {

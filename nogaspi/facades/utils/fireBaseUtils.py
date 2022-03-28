@@ -38,7 +38,24 @@ def sendEvent(fireBaseToken, event, data):
         messaging.send(message)
     except Exception:
         logging.error(traceback.format_exc())
+
+def sendNotificationMultiUser(fireBaseTokens, event, data, title, body, imageURL):
+
+    if os.environ['LAUNCH_ENV'] == 'test': return
+
+    if data: data['event'] = event
+    else: data = {'event': event}
     
+    initAppOnFireBase()
+    try:
+        message = messaging.MulticastMessage(
+            notification=messaging.Notification(title=title, body=body, image=imageURL),
+            data = data,
+            tokens = fireBaseTokens
+        )
+        messaging.send_multicast(message)
+    except Exception:
+        logging.error(traceback.format_exc())
 
 def initAppOnFireBase():
 

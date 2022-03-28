@@ -15,7 +15,7 @@ def getDonationsByRegularPath(request):
         user = getUserFromToken(token, session, request)
         user.majTokenValidity()
 
-        regularPathPoints = json.loads(user.regularPathPoints)
+        regularPathPoints = user.regularPath()
         if regularPathPoints is None:
             message = "you don't have a regular path in your profile"
             raise UserException(message, message, request)

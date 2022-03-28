@@ -3,6 +3,7 @@ from dbEngine import EngineSQLAlchemy
 from facades.apiConfig import getArgs, DonationException
 from facades.utils.registerUtils import getUserFromToken
 from facades.utils.scanUtils import getProductFromWeb
+from facades.utils.donationUtils import sendFireBaseNotificationsOneNewNearDonation
 from facades.const import EXPIRATION_DATE_TOLERANCE_IN_DAY
 import datetime
 
@@ -51,6 +52,8 @@ def postDonationFromScan(request):
 
         session.add(donation)
         session.commit()
+
+        sendFireBaseNotificationsOneNewNearDonation(session, donation)
 
         data = {'isPosted':True}
 

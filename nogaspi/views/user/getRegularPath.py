@@ -1,7 +1,6 @@
 from dbEngine import EngineSQLAlchemy
 from facades.utils.registerUtils import getUserFromToken
 from facades.apiConfig import getArgs
-import json
 
 def getRegularPath(request):
 
@@ -17,7 +16,7 @@ def getRegularPath(request):
             'longitudeStart': user.regularPathLongitudeStart,
             'latitudeEnd': user.regularPathLatitudeEnd,
             'longitudeEnd': user.regularPathLongitudeEnd,
-            'pathPoints': None if user.regularPathPoints is None else json.loads(user.regularPathPoints)
+            'pathPoints': None if user.regularPathPoints is None else user.regularPath()
         }
 
         data = {'regularPath': regularPath}

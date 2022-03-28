@@ -1,3 +1,8 @@
+from models.objectDB import User
+from facades.const import DISTANCE_MAX_TO_SEND_NOTIFICATION_IN_NEW_DONATION
+from facades.utils.coordUtils import isAroundPath
+from facades.firebaseMessages.newNearDonation import newNearDonation
+
 def makeDonation(userOwner, userTaker, donation):
     donation.archive = True
     donation.userTaker = userTaker
@@ -14,3 +19,18 @@ def updateRatingUser(user, note):
     newRating = (rating * ratingCount + note) / (ratingCount + 1)
     user.rating = newRating
     user.ratingCount = ratingCount + 1
+
+def sendFireBaseNotificationsOneNewNearDonation(session, donation):
+    coordToCheck = (donation.latitude, donation.longitude)
+    usersToCheck = session.query( User ).filter(User.isConfirmate).all()
+
+    usersToSend = []
+    for user in usersToCheck:
+        regulatPathPoints = user.regularPath()
+        if regulatPathPoints: 
+            if isAroundPath(regulatPathPoints, coordToCheck, DISTANCE_MAX_TO_SEND_NOTIFICATION_IN_NEW_DONATION):
+                usersToSend.append(user)
+
+    newNearDonation(usersToSend, donation)
+    
+    
