@@ -73,6 +73,10 @@ class User (Base):
         if self.fireBaseToken:
             fireBaseUtils.sendNotification(self.fireBaseToken, title, body, data, imageURL)
 
+    def sendFireBaseEvent(self, event, data = None):
+        if self.fireBaseToken:
+            fireBaseUtils.sendEvent(self.fireBaseToken, event, data)
+
     def generateConfirmationCode(self):
         chars = "ABCDEFGHIJQLMNOPQRSTUVWXYZ0123456789"
         self.confirmationCode = "".join(random.choices(chars, k = 10))

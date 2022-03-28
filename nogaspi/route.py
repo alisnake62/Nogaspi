@@ -16,6 +16,11 @@ def route(app):
         data = {"toto":  ["tata", "tito"]}
         return jsonify(apiResponse(request, data))
 
+    @app.route('/tools/sendFireBaseEvent', methods=['POST'])
+    def sendFireBaseEvent_endpoint():
+        data = tools_sendFireBaseEvent(request)
+        return jsonify(apiResponse(request, data))
+
     @app.route('/register/createUser', methods=['POST'])
     def createUser_endpoint():
         checkInputAPI(CreateUserInputSchema, request)

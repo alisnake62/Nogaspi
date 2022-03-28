@@ -18,6 +18,23 @@ def sendNotification(fireBaseToken, title, body, data, imageURL):
         messaging.send(message)
     except Exception:
         logging.error(traceback.format_exc())
+
+def sendEvent(fireBaseToken, event, data):
+
+    if os.environ['LAUNCH_ENV'] == 'test': return
+
+    if data: data['event'] = event
+    else: data = {'event': event}
+
+    initAppOnFireBase()
+    try:
+        message = messaging.Message(
+            data = data,
+            token = fireBaseToken
+        )
+        messaging.send(message)
+    except Exception:
+        logging.error(traceback.format_exc())
     
 
 def initAppOnFireBase():

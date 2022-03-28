@@ -6,6 +6,7 @@ def makeDonation(userOwner, userTaker, donation):
         article.fridge = None
     userTaker.points += articleCount
     userOwner.points += articleCount * 4
+    userOwner.sendFireBaseEvent("donationTaked", {'points': str(articleCount * 4), 'idDonation': str(donation.id)})
 
 def updateRatingUser(user, note):
     ratingCount = user.ratingCount
