@@ -12,4 +12,4 @@ def newConversationMessage(userFrom, conversation, messageBody):
     }
 def newConversation(userFrom, userTo, conversation, messageBody):
     message = newConversationMessage(userFrom, conversation, messageBody)
-    userTo.sendFireBaseNotification('newMessage', message['title'], message['body'], message['imageURL'], message['data'])
+    userTo.sendFireBaseNotification('newConversation', message['title'], message['body'], message['imageURL'], message['data'])

@@ -13,4 +13,4 @@ def newNearDonationMessage(donation):
 def newNearDonation(users, donation):
     message = newNearDonationMessage(donation)
     firebaseTokens = [user.fireBaseToken for user in users if user.fireBaseToken]
-    sendNotificationMultiUser(firebaseTokens, 'newMessage', message['data'], message['title'], message['body'], message['imageURL'])
+    sendNotificationMultiUser(firebaseTokens, 'newNearDonation', message['data'], message['title'], message['body'], message['imageURL'])
