@@ -4,7 +4,7 @@ import traceback
 from facades.apiConfig import logging
 import firebase_admin
 from firebase_admin import messaging, credentials, initialize_app
-from facades.const import ANDROID_GLOBAL_ACTIVITY
+from facades.const import ANDROID_MAIN_ACTIVITY
 
 def sendNotification(fireBaseToken, event, data, title, body, imageURL):
 
@@ -17,7 +17,7 @@ def sendNotification(fireBaseToken, event, data, title, body, imageURL):
     try:
         message = messaging.Message(
             android = messaging.AndroidConfig(
-                notification=messaging.AndroidNotification(title=title, body=body, image=imageURL, click_action="com.example.modulescan.activity.MessageActivity")
+                notification=messaging.AndroidNotification(title=title, body=body, image=imageURL, click_action=ANDROID_MAIN_ACTIVITY)
             ),
             #notification = messaging.Notification(title=title, body=body, image=imageURL),
             data = data,
@@ -55,7 +55,7 @@ def sendNotificationMultiUser(fireBaseTokens, event, data, title, body, imageURL
     try:
         message = messaging.MulticastMessage(
             android = messaging.AndroidConfig(
-                notification=messaging.AndroidNotification(title=title, body=body, image=imageURL, click_action="com.example.modulescan.activity.MessageActivity")
+                notification=messaging.AndroidNotification(title=title, body=body, image=imageURL, click_action=ANDROID_MAIN_ACTIVITY)
             ),
             #notification=messaging.Notification(title=title, body=body, image=imageURL),
             data = data,
