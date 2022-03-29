@@ -1,3 +1,6 @@
+import click
+
+
 def newConversationMessage(userFrom, conversation, messageBody):  
     return {
         'title': f"{userFrom.pseudo} veut vous parler",

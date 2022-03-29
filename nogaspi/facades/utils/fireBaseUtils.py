@@ -1,8 +1,10 @@
 import os
 import traceback
+
 from facades.apiConfig import logging
 import firebase_admin
 from firebase_admin import messaging, credentials, initialize_app
+from facades.const import ANDROID_GLOBAL_ACTIVITY
 
 def sendNotification(fireBaseToken, event, data, title, body, imageURL):
 
@@ -14,7 +16,10 @@ def sendNotification(fireBaseToken, event, data, title, body, imageURL):
     initAppOnFireBase()
     try:
         message = messaging.Message(
-            notification=messaging.Notification(title=title, body=body, image=imageURL),
+            android = messaging.AndroidConfig(
+                notification=messaging.AndroidNotification(title=title, body=body, image=imageURL, click_action=ANDROID_GLOBAL_ACTIVITY)
+            ),
+            #notification = messaging.Notification(title=title, body=body, image=imageURL),
             data = data,
             token=fireBaseToken
         )
