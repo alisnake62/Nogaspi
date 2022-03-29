@@ -5,8 +5,7 @@ def newMessageMessage(userFrom, conversation, messageBody):
         'data': {
             "userFrom": userFrom.pseudo,
             "idDonation": str(conversation.donation.id),
-            "idConversation": str(conversation.id),
-            "body": messageBody
+            "idConversation": str(conversation.id)
         },
         'imageURL': None
     }
