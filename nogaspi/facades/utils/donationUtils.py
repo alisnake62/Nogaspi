@@ -22,15 +22,12 @@ def updateRatingUser(user, note):
 
 def sendFireBaseNotificationsOneNewNearDonation(session, donation):
     coordToCheck = (donation.latitude, donation.longitude)
-    usersToCheck = session.query( User ).filter(User.isConfirmate).all()
+    usersToCheck = session.query( User ).filter(User.isConfirmate, User.regulatPathPoints).all()
 
     usersToSend = []
     for user in usersToCheck:
-        regulatPathPoints = user.regularPath()
-        if regulatPathPoints: 
-            if isAroundPath(regulatPathPoints, coordToCheck, DISTANCE_MAX_TO_SEND_NOTIFICATION_IN_NEW_DONATION):
-                usersToSend.append(user)
+        regulatPathPoints = user.regularPath(False)
+        if isAroundPath(user.regularPath(False), coordToCheck, DISTANCE_MAX_TO_SEND_NOTIFICATION_IN_NEW_DONATION):
+            usersToSend.append(user)
 
     newNearDonation(usersToSend, donation)
-    
-    

@@ -87,8 +87,16 @@ class User (Base):
         if self.confirmationCode != code: return False
         return self.confirmationCodeExpiration > datetime.datetime.now()
 
-    def regularPath(self):
-        return None if self.regularPathPoints is None else json.loads(self.regularPathPoints)
+    def regularPath(self, withExtremePoints):
+        if self.regularPathPoints:
+            regularPathPointsDict = json.loads(self.regularPathPoints)
+            if withExtremePoints:
+                startPoint = [self.regularPathLatitudeStart, self.regularPathLongitudeStart]
+                endPoint = [self.regularPathLatitudeEnd, self.regularPathLongitudeEnd]
+                regularPathPointsDict = startPoint + regularPathPointsDict + endPoint
+            return regularPathPointsDict
+        else:
+            return None
     
     def toJson(self):
         toJson = {
