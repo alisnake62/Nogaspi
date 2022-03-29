@@ -16,10 +16,10 @@ def sendNotification(fireBaseToken, event, data, title, body, imageURL):
     initAppOnFireBase()
     try:
         message = messaging.Message(
-            android = messaging.AndroidConfig(
-                notification=messaging.AndroidNotification(title=title, body=body, image=imageURL, click_action=ANDROID_GLOBAL_ACTIVITY)
-            ),
-            #notification = messaging.Notification(title=title, body=body, image=imageURL),
+            # android = messaging.AndroidConfig(
+            #     notification=messaging.AndroidNotification(title=title, body=body, image=imageURL, click_action=ANDROID_GLOBAL_ACTIVITY)
+            # ),
+            notification = messaging.Notification(title=title, body=body, image=imageURL),
             data = data,
             token=fireBaseToken
         )
@@ -54,10 +54,10 @@ def sendNotificationMultiUser(fireBaseTokens, event, data, title, body, imageURL
     initAppOnFireBase()
     try:
         message = messaging.MulticastMessage(
-            android = messaging.AndroidConfig(
-                notification=messaging.AndroidNotification(title=title, body=body, image=imageURL, click_action=ANDROID_GLOBAL_ACTIVITY)
-            ),
-            #notification=messaging.Notification(title=title, body=body, image=imageURL),
+            # android = messaging.AndroidConfig(
+            #     notification=messaging.AndroidNotification(title=title, body=body, image=imageURL, click_action=ANDROID_GLOBAL_ACTIVITY)
+            # ),
+            notification=messaging.Notification(title=title, body=body, image=imageURL),
             data = data,
             tokens = fireBaseTokens
         )
