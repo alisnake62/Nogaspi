@@ -1,6 +1,11 @@
 from nogaspi.views.messaging.getMyConversations import getMyConversations
 from test.functionalTest.dbMagement import sqlQuerysWithCommit
 from test.functionalTest.flaskManagement import FakeRequest
+import pytest
+
+encryptedMessage1 = f"[\\\"{pytest.encryptedMessage1}\\\"]"
+encryptedMessage2 = f"[\\\"{pytest.encryptedMessage2}\\\"]"
+encryptedMessage12 = f"[\\\"{pytest.encryptedMessage1}\\\",\\\"{pytest.encryptedMessage2}\\\"]"
 
 def test_messaging_getMyConversations1():
     querys = [
@@ -12,10 +17,10 @@ def test_messaging_getMyConversations1():
         "INSERT INTO `conversation` (`id`, `idDonation`, `idUserDonator`, `idUserTaker`) VALUES (3, '1', '2', '1');",
         "INSERT INTO `conversation` (`id`, `idDonation`, `idUserDonator`, `idUserTaker`) VALUES (1, '1', '1', '2');",
         "INSERT INTO `conversation` (`id`, `idDonation`, `idUserDonator`, `idUserTaker`) VALUES (2, '2', '1', '2');",
-        "INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (1, '1', '1', '0', NOW() - INTERVAL 2 MINUTE, 'mon beau message');",
-        "INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (2, '2', '1', '0', NOW() - INTERVAL 2 MINUTE, 'mon beau message 2');",
-        "INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (4, '3', '0', '0', NOW() - INTERVAL 2 MINUTE, 'mon beau message 3');",
-        "INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (3, '1', '0', '0', NOW() - INTERVAL 2 MINUTE, 'mon beau message 3');"
+        f"INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (1, '1', '1', '0', NOW() - INTERVAL 2 MINUTE, '{encryptedMessage1}');",
+        f"INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (2, '2', '1', '0', NOW() - INTERVAL 2 MINUTE, '{encryptedMessage2}');",
+        f"INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (4, '3', '0', '0', NOW() - INTERVAL 2 MINUTE, '{encryptedMessage12}');",
+        f"INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (3, '1', '0', '0', NOW() - INTERVAL 2 MINUTE, '{encryptedMessage12}');"
     ]
     sqlQuerysWithCommit(querys)
     
@@ -36,10 +41,10 @@ def test_messaging_getMyConversations2():
         "INSERT INTO `conversation` (`id`, `idDonation`, `idUserDonator`, `idUserTaker`) VALUES (3, '1', '1', '3');",
         "INSERT INTO `conversation` (`id`, `idDonation`, `idUserDonator`, `idUserTaker`) VALUES (1, '1', '1', '2');",
         "INSERT INTO `conversation` (`id`, `idDonation`, `idUserDonator`, `idUserTaker`) VALUES (2, '2', '1', '2');",
-        "INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (1, '1', '1', '0', NOW() - INTERVAL 2 MINUTE, 'mon beau message');",
-        "INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (2, '2', '1', '0', NOW() - INTERVAL 2 MINUTE, 'mon beau message 2');",
-        "INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (4, '3', '0', '0', NOW() - INTERVAL 2 MINUTE, 'mon beau message 3');",
-        "INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (3, '1', '0', '0', NOW() - INTERVAL 2 MINUTE, 'mon beau message 3');"
+        f"INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (1, '1', '1', '0', NOW() - INTERVAL 2 MINUTE, '{encryptedMessage1}');",
+        f"INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (2, '2', '1', '0', NOW() - INTERVAL 2 MINUTE, '{encryptedMessage2}');",
+        f"INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (4, '3', '0', '0', NOW() - INTERVAL 2 MINUTE, '{encryptedMessage12}');",
+        f"INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (3, '1', '0', '0', NOW() - INTERVAL 2 MINUTE, '{encryptedMessage12}');"
     ]
     sqlQuerysWithCommit(querys)
     
@@ -60,10 +65,10 @@ def test_messaging_getMyConversations_with_bad_user():
         "INSERT INTO `conversation` (`id`, `idDonation`, `idUserDonator`, `idUserTaker`) VALUES (3, '1', '2', '1');",
         "INSERT INTO `conversation` (`id`, `idDonation`, `idUserDonator`, `idUserTaker`) VALUES (1, '1', '1', '2');",
         "INSERT INTO `conversation` (`id`, `idDonation`, `idUserDonator`, `idUserTaker`) VALUES (2, '2', '1', '2');",
-        "INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (1, '1', '1', '0', NOW() - INTERVAL 2 MINUTE, 'mon beau message');",
-        "INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (2, '2', '1', '0', NOW() - INTERVAL 2 MINUTE, 'mon beau message 2');",
-        "INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (4, '3', '0', '0', NOW() - INTERVAL 2 MINUTE, 'mon beau message 3');",
-        "INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (3, '1', '0', '0', NOW() - INTERVAL 2 MINUTE, 'mon beau message 3');"
+        f"INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (1, '1', '1', '0', NOW() - INTERVAL 2 MINUTE, '{encryptedMessage1}');",
+        f"INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (2, '2', '1', '0', NOW() - INTERVAL 2 MINUTE, '{encryptedMessage2}');",
+        f"INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (4, '3', '0', '0', NOW() - INTERVAL 2 MINUTE, '{encryptedMessage12}');",
+        f"INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (3, '1', '0', '0', NOW() - INTERVAL 2 MINUTE, '{encryptedMessage12}');"
     ]
     sqlQuerysWithCommit(querys)
     
@@ -84,10 +89,10 @@ def test_messaging_getMyConversations_with_archived_donation1():
         "INSERT INTO `conversation` (`id`, `idDonation`, `idUserDonator`, `idUserTaker`) VALUES (3, '1', '2', '1');",
         "INSERT INTO `conversation` (`id`, `idDonation`, `idUserDonator`, `idUserTaker`) VALUES (1, '1', '1', '2');",
         "INSERT INTO `conversation` (`id`, `idDonation`, `idUserDonator`, `idUserTaker`) VALUES (2, '2', '1', '2');",
-        "INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (1, '1', '1', '0', NOW() - INTERVAL 2 MINUTE, 'mon beau message');",
-        "INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (2, '2', '1', '0', NOW() - INTERVAL 2 MINUTE, 'mon beau message 2');",
-        "INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (4, '3', '0', '0', NOW() - INTERVAL 2 MINUTE, 'mon beau message 3');",
-        "INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (3, '1', '0', '0', NOW() - INTERVAL 2 MINUTE, 'mon beau message 3');"
+        f"INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (1, '1', '1', '0', NOW() - INTERVAL 2 MINUTE, '{encryptedMessage1}');",
+        f"INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (2, '2', '1', '0', NOW() - INTERVAL 2 MINUTE, '{encryptedMessage2}');",
+        f"INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (4, '3', '0', '0', NOW() - INTERVAL 2 MINUTE, '{encryptedMessage12}');",
+        f"INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (3, '1', '0', '0', NOW() - INTERVAL 2 MINUTE, '{encryptedMessage12}');"
     ]
     sqlQuerysWithCommit(querys)
     
@@ -108,10 +113,10 @@ def test_messaging_getMyConversations_with_archived_donation2():
         "INSERT INTO `conversation` (`id`, `idDonation`, `idUserDonator`, `idUserTaker`) VALUES (3, '1', '2', '1');",
         "INSERT INTO `conversation` (`id`, `idDonation`, `idUserDonator`, `idUserTaker`) VALUES (1, '1', '1', '2');",
         "INSERT INTO `conversation` (`id`, `idDonation`, `idUserDonator`, `idUserTaker`) VALUES (2, '2', '1', '2');",
-        "INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (1, '1', '1', '0', NOW() - INTERVAL 2 MINUTE, 'mon beau message');",
-        "INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (2, '2', '1', '0', NOW() - INTERVAL 2 MINUTE, 'mon beau message 2');",
-        "INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (4, '3', '0', '0', NOW() - INTERVAL 2 MINUTE, 'mon beau message 3');",
-        "INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (3, '1', '0', '0', NOW() - INTERVAL 2 MINUTE, 'mon beau message 3');"
+        f"INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (1, '1', '1', '0', NOW() - INTERVAL 2 MINUTE, '{encryptedMessage1}');",
+        f"INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (2, '2', '1', '0', NOW() - INTERVAL 2 MINUTE, '{encryptedMessage2}');",
+        f"INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (4, '3', '0', '0', NOW() - INTERVAL 2 MINUTE, '{encryptedMessage12}');",
+        f"INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (3, '1', '0', '0', NOW() - INTERVAL 2 MINUTE, '{encryptedMessage12}');"
     ]
     sqlQuerysWithCommit(querys)
     
@@ -132,10 +137,10 @@ def test_messaging_getMyConversations_with_expired_donation1():
         "INSERT INTO `conversation` (`id`, `idDonation`, `idUserDonator`, `idUserTaker`) VALUES (3, '1', '2', '1');",
         "INSERT INTO `conversation` (`id`, `idDonation`, `idUserDonator`, `idUserTaker`) VALUES (1, '1', '1', '2');",
         "INSERT INTO `conversation` (`id`, `idDonation`, `idUserDonator`, `idUserTaker`) VALUES (2, '2', '1', '2');",
-        "INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (1, '1', '1', '0', NOW() - INTERVAL 2 MINUTE, 'mon beau message');",
-        "INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (2, '2', '1', '0', NOW() - INTERVAL 2 MINUTE, 'mon beau message 2');",
-        "INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (4, '3', '0', '0', NOW() - INTERVAL 2 MINUTE, 'mon beau message 3');",
-        "INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (3, '1', '0', '0', NOW() - INTERVAL 2 MINUTE, 'mon beau message 3');"
+        f"INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (1, '1', '1', '0', NOW() - INTERVAL 2 MINUTE, '{encryptedMessage1}');",
+        f"INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (2, '2', '1', '0', NOW() - INTERVAL 2 MINUTE, '{encryptedMessage2}');",
+        f"INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (4, '3', '0', '0', NOW() - INTERVAL 2 MINUTE, '{encryptedMessage12}');",
+        f"INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (3, '1', '0', '0', NOW() - INTERVAL 2 MINUTE, '{encryptedMessage12}');"
     ]
     sqlQuerysWithCommit(querys)
     
@@ -156,10 +161,10 @@ def test_messaging_getMyConversations_with_expired_donation2():
         "INSERT INTO `conversation` (`id`, `idDonation`, `idUserDonator`, `idUserTaker`) VALUES (3, '1', '2', '1');",
         "INSERT INTO `conversation` (`id`, `idDonation`, `idUserDonator`, `idUserTaker`) VALUES (1, '1', '1', '2');",
         "INSERT INTO `conversation` (`id`, `idDonation`, `idUserDonator`, `idUserTaker`) VALUES (2, '2', '1', '2');",
-        "INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (1, '1', '1', '0', NOW() - INTERVAL 2 MINUTE, 'mon beau message');",
-        "INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (2, '2', '1', '0', NOW() - INTERVAL 2 MINUTE, 'mon beau message 2');",
-        "INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (4, '3', '0', '0', NOW() - INTERVAL 2 MINUTE, 'mon beau message 3');",
-        "INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (3, '1', '0', '0', NOW() - INTERVAL 2 MINUTE, 'mon beau message 3');"
+        f"INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (1, '1', '1', '0', NOW() - INTERVAL 2 MINUTE, '{encryptedMessage1}');",
+        f"INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (2, '2', '1', '0', NOW() - INTERVAL 2 MINUTE, '{encryptedMessage2}');",
+        f"INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (4, '3', '0', '0', NOW() - INTERVAL 2 MINUTE, '{encryptedMessage12}');",
+        f"INSERT INTO `message` (`id`, `idConversation`, `toDonator`, `readed`, `dateTime`, `body`) VALUES (3, '1', '0', '0', NOW() - INTERVAL 2 MINUTE, '{encryptedMessage12}');"
     ]
     sqlQuerysWithCommit(querys)
     

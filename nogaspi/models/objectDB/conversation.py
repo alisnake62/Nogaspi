@@ -49,6 +49,16 @@ class Conversation (Base):
 
     def toJsonlight(self, userRequester):
 
-        toJson = self.toJson(userRequester)
-        del toJson['messages']
+        toJson = {
+            'id': self.id,
+            'idDonation': self.idDonation,
+            'isMyDonation': userRequester == self.userDonator,
+            'dateBeginning': int(datetime.datetime.timestamp(self.messages[0].dateTime)),
+            'lastMessage': self.messages[-1].toJson(userRequester),
+            'userDonator': self.userDonator.toJson(),
+            'userTaker': self.userTaker.toJson(),
+            'donationIsExpired': self.donation.isExpired(),
+            'donationIsArchived': self.donation.isArchived(),
+            'donationIsValide': self.donation.isValide()
+        }
         return toJson
