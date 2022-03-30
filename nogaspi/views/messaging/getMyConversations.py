@@ -20,5 +20,5 @@ def getMyConversations(request):
         if withExpiredDonations == '0':
             conversations = [c for c in conversations if not c.donation.isExpired()]
 
-        data = {'conversations': [c.toJson(user) for c in conversations]}
+        data = {'conversations': [c.toJsonlight(user) for c in conversations]}
     return data
