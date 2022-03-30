@@ -2,7 +2,7 @@ import datetime
 from sqlalchemy import Column, Integer, Text, ForeignKey
 from sqlalchemy.sql.sqltypes import BOOLEAN, DATE, DATETIME, FLOAT, INTEGER, TEXT, VARCHAR, String
 from sqlalchemy.orm import relationship
-from facades.utils.cypherUtils import encrypt, decrypt
+from facades.utils.cypherUtils import encrypt, decrypt, getEncryptor, getDecryptor
 import json
 
 from dbEngine import Base
@@ -25,14 +25,17 @@ class Message (Base):
         self.postBody(body)
 
     def postBody(self, messageText):
-        x = 100
-        splitedMessageText = [messageText[y-x:y] for y in range(x, len(messageText)+x,x)]
-        encrpytedMessageText = [encrypt(part) for part in splitedMessageText]
+        encryptor = getEncryptor()
+        splitSize = 50
+        splitedMessageText = [messageText[y-splitSize:y] for y in range(splitSize, len(messageText)+splitSize,splitSize)]
+        encrpytedMessageText = [encrypt(encryptor, part) for part in splitedMessageText]
         self.body = json.dumps(encrpytedMessageText)
 
-    def getBody(self):
+    def getBody(self, decryptor = None):
+        if decryptor is None: decryptor = getDecryptor()
+
         encrpytedMessageText = json.loads(self.body)
-        splitedMessageText = [decrypt(part) for part in encrpytedMessageText]
+        splitedMessageText = [decrypt(decryptor, part) for part in encrpytedMessageText]
         return "".join(splitedMessageText)
 
     def userFrom(self):
@@ -41,12 +44,12 @@ class Message (Base):
     def userTo(self):
         return self.conversation.userDonator if self.toDonator else self.conversation.userTaker
     
-    def toJson(self, userRequester):
+    def toJson(self, userRequester, decryptor = None):
         toJson = {
             'id': self.id,
             'readed': self.readed,
             'dateTime': int(datetime.datetime.timestamp(self.dateTime)),
-            'body': self.getBody(),
+            'body': self.getBody(decryptor),
             'userFrom': self.userFrom().toJson(),
             'userTo': self.userTo().toJson(),
             'isAMessageFromMe': userRequester == self.userFrom()

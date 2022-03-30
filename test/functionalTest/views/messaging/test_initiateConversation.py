@@ -76,7 +76,7 @@ def test_messaging_initiateConversation_with_long_message():
     assert sqlSelect(table='message')[0]['toDonator'] == 1
     assert sqlSelect(table='message')[0]['readed'] == 0
     assert type(json.loads(sqlSelect(table='message')[0]['body'])) == list
-    assert len(json.loads(sqlSelect(table='message')[0]['body'])) == 2
+    assert len(json.loads(sqlSelect(table='message')[0]['body'])) == 3
 
 
 def test_messaging_initiateConversation_if_conversation_already_exist_with_your_user():

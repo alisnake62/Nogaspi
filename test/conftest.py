@@ -2,7 +2,7 @@ import pytest
 from nogaspi.dbEngine import EngineSQLAlchemy
 from test.functionalTest.dbMagement import sqlDeleteAllData
 
-from nogaspi.facades.utils.cypherUtils import encrypt
+from nogaspi.facades.utils.cypherUtils import encrypt, getEncryptor
 
 
 
@@ -18,12 +18,14 @@ def pytest_sessionstart( ):
         session.commit()
 
 def pytest_configure():
+    encryptor = getEncryptor()
+    
     message1 = "message1"
     message2 = "message2"
     message3 = "message3"
-    encryptedMessage1 = encrypt(message1)
-    encryptedMessage2 = encrypt(message2)
-    encryptedMessage3 = encrypt(message3)
+    encryptedMessage1 = encrypt(encryptor, message1)
+    encryptedMessage2 = encrypt(encryptor, message2)
+    encryptedMessage3 = encrypt(encryptor, message3)
 
     pytest.message1 = message1
     pytest.message2 = message2

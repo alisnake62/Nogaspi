@@ -98,7 +98,7 @@ def test_messaging_postMessage_with_long_message():
     assert sqlSelect(table='message', conditions="WHERE id > 5")[0]['toDonator'] == 1
     assert sqlSelect(table='message', conditions="WHERE id > 5")[0]['readed'] == 0
     assert type(json.loads(sqlSelect(table='message', conditions="WHERE id > 5")[0]['body'])) == list
-    assert len(json.loads(sqlSelect(table='message', conditions="WHERE id > 5")[0]['body'])) == 2
+    assert len(json.loads(sqlSelect(table='message', conditions="WHERE id > 5")[0]['body'])) == 3
 
 def test_messaging_postMessage_with_bad_user():
     querys = [

@@ -1,6 +1,6 @@
 from models.objectDB import Donation
 from dbEngine import EngineSQLAlchemy
-from facades.apiConfig import EmptyException, DonationException, getArgs
+from facades.apiConfig import EmptyException, getArgs
 from facades.utils.registerUtils import getUserFromToken
 
 def getConversationsByDonation(request):
@@ -20,6 +20,6 @@ def getConversationsByDonation(request):
         for conversation in donation.conversations:
             conversation.checkLegitimacyRaiseException(user, False, request)
 
-        data = {'conversations': [c.toJson(user) for c in donation.conversations]}
+        data = {'conversations': [c.toJsonlight(user) for c in donation.conversations]}
 
     return data
