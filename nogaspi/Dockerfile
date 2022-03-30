@@ -8,6 +8,7 @@ WORKDIR /usr/src/app
 
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install pycryptodome
 
 WORKDIR "/usr/src/app/${WD}"
 #WORKDIR "/usr/src/app"

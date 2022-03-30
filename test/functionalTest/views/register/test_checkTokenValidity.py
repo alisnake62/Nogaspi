@@ -11,7 +11,6 @@ def test_register_checkTokenValidity():
     assert funcRtr['validity']
     assert funcRtr['user'] == 'toto@toto.fr'
 
-
 def test_register_checkTokenValidity_with_bad_Token():
     querys = ["INSERT INTO `userNogaspi` (`id`, `mail`, `password`, `pseudo`, `profilePicture`, `token`, `token_expiration`, `idRang`, `points`, `regularPathLatitudeStart`, `regularPathLongitudeStart`, `regularPathLatitudeEnd`, `regularPathLongitudeEnd`, `regularPathPoints`, `fireBaseToken`) VALUES (1, 'toto@toto.fr', 'toto', 'toto', NULL, 'token_toto', NOW() + INTERVAL 1 DAY, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL);"]
     sqlQuerysWithCommit(querys)

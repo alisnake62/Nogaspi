@@ -3,6 +3,7 @@ from sqlalchemy.sql.sqltypes import BOOLEAN, DATE, DATETIME, FLOAT, INTEGER, TEX
 from sqlalchemy.orm import relationship
 from facades.apiConfig import ConversationException
 import datetime
+from facades.utils.cypherUtils import getDecryptor
 
 from dbEngine import Base
 
@@ -31,6 +32,24 @@ class Conversation (Base):
 
     def toJson(self, userRequester):
         self.messages.sort(key=lambda r: r.dateTime)
+        decryptor = getDecryptor()
+
+        toJson = {
+            'id': self.id,
+            'idDonation': self.idDonation,
+            'isMyDonation': userRequester == self.userDonator,
+            'dateBeginning': int(datetime.datetime.timestamp(self.messages[0].dateTime)),
+            'lastMessage': self.messages[-1].toJson(userRequester, decryptor),
+            'userDonator': self.userDonator.toJson(),
+            'userTaker': self.userTaker.toJson(),
+            'messages': [message.toJson(userRequester, decryptor) for message in self.messages],
+            'donationIsExpired': self.donation.isExpired(),
+            'donationIsArchived': self.donation.isArchived(),
+            'donationIsValide': self.donation.isValide()
+        }
+        return toJson
+
+    def toJsonlight(self, userRequester):
 
         toJson = {
             'id': self.id,
@@ -40,15 +59,8 @@ class Conversation (Base):
             'lastMessage': self.messages[-1].toJson(userRequester),
             'userDonator': self.userDonator.toJson(),
             'userTaker': self.userTaker.toJson(),
-            'messages': [message.toJson(userRequester) for message in self.messages],
             'donationIsExpired': self.donation.isExpired(),
             'donationIsArchived': self.donation.isArchived(),
             'donationIsValide': self.donation.isValide()
         }
-        return toJson
-
-    def toJsonlight(self, userRequester):
-
-        toJson = self.toJson(userRequester)
-        del toJson['messages']
         return toJson
