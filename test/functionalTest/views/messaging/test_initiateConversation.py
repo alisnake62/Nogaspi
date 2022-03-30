@@ -18,7 +18,6 @@ def test_messaging_initiateConversation():
         "firstMessage": "Mon beau Message"
     }))
     assert funcRtr['isInitiate']
-    assert funcRtr['idNewConversation'] == sqlSelect(table='conversation')[0]['id']
     assert len(sqlSelect(table='conversation')) == 1
     assert len(sqlSelect(table='message')) == 1
     assert sqlSelect(table='conversation')[0]['idDonation'] == 1
@@ -45,7 +44,6 @@ def test_messaging_initiateConversation_if_conversation_already_exist_with_other
         "firstMessage": "Mon beau Message"
     }))
     assert funcRtr['isInitiate']
-    assert funcRtr['idNewConversation'] == sqlSelect(table='conversation', conditions="WHERE id > 2")[0]['id']
     assert len(sqlSelect(table='conversation')) == 2
     assert len(sqlSelect(table='message')) == 1
     assert sqlSelect(table='conversation', conditions="WHERE idUserTaker = 2")[0]['idDonation'] == 1
