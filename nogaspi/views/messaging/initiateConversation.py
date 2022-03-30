@@ -40,6 +40,6 @@ def initiateConversation(request):
 
         fbMessage_newConversation(user, userOwner, conversation, firstMessage)
 
-        data = {'isInitiate':True}
+        data = {'isInitiate':True, 'idNewConversation': conversation.id}
 
     return data
