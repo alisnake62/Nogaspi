@@ -30,6 +30,10 @@ def postDonationFromScan(request):
             fridge = Fridge(user)
             session.add(fridge)
 
+        if datetime.datetime.fromisoformat(endingDate) < datetime.datetime.now():
+            message = "The given endingDate is not valid"
+            raise DonationException(message, message, request)
+        
         for article in articles:
             if datetime.datetime.fromisoformat(article['expirationDate']) < datetime.datetime.now() - datetime.timedelta(days=EXPIRATION_DATE_TOLERANCE_IN_DAY):
                 message = "One article is expired"

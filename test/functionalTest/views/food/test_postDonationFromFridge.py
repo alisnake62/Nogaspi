@@ -128,6 +128,7 @@ def test_food_postDonationFromFridge_with_bad_article():
         "INSERT INTO `article` (`id`, `idProduct`, `expirationDate`, `idFridge`) VALUES ('3', '1', NOW() + INTERVAL 1 DAY, '1');"
     ]
     sqlQuerysWithCommit(querys)
+
     with pytest.raises(Exception):
         postDonationFromFridge(FakeRequest({
             "token": "token_toto",
@@ -136,4 +137,25 @@ def test_food_postDonationFromFridge_with_bad_article():
             "longitude": 1.5,
             "geoPrecision": 500,
             "endingDate": str(datetime.date.today() + datetime.timedelta(days=14))
+        }))
+
+def test_food_postDonationFromFridge_with_bad_ending_date():
+    querys = [
+        "INSERT INTO `userNogaspi` (`id`, `mail`, `password`, `pseudo`, `profilePicture`, `token`, `token_expiration`, `points`) VALUES (1, 'toto@toto.fr', 'toto', 'toto', NULL, 'token_toto', NOW() + INTERVAL 1 DAY, '0');",
+        "INSERT INTO `fridge` (`id`, `idUser`) VALUES ('1', '1'); ",
+        "INSERT INTO `product` (`id`, `barcode`, `idLastScanUser`, `lastScanDate`) VALUES (1, '101010', '1', NOW())",
+        "INSERT INTO `article` (`id`, `idProduct`, `expirationDate`, `idFridge`) VALUES ('1', '1', NOW() - INTERVAL 14 DAY, '1');",
+        "INSERT INTO `article` (`id`, `idProduct`, `expirationDate`, `idFridge`) VALUES ('2', '1', NOW() + INTERVAL 1 DAY, '1');",
+        "INSERT INTO `article` (`id`, `idProduct`, `expirationDate`, `idFridge`) VALUES ('3', '1', NOW() + INTERVAL 1 DAY, '1');"
+    ]
+    sqlQuerysWithCommit(querys)
+    
+    with pytest.raises(Exception):
+        postDonationFromFridge(FakeRequest({
+            "token": "token_toto",
+            "idArticles": [1, 2],
+            "latitude": 43.5,
+            "longitude": 1.5,
+            "geoPrecision": 500,
+            "endingDate": str(datetime.date.today() - datetime.timedelta(days=1))
         }))

@@ -147,3 +147,23 @@ def test_food_postDonationFromScan_with_bad_expiration_date():
             "geoPrecision": 500,
             "endingDate": str(datetime.date.today() + datetime.timedelta(days=14))
         }))
+
+def test_food_postDonationFromScan_with_bad_ending_date():
+    querys = [
+        "INSERT INTO `userNogaspi` (`id`, `mail`, `password`, `pseudo`, `profilePicture`, `token`, `token_expiration`, `points`) VALUES (1, 'toto@toto.fr', 'toto', 'toto', NULL, 'token_toto', NOW() + INTERVAL 1 DAY, '0');",
+        "INSERT INTO `fridge` (`id`, `idUser`) VALUES ('1', '1'); "
+    ]
+    sqlQuerysWithCommit(querys)
+
+    with pytest.raises(Exception):
+        postDonationFromScan(FakeRequest({
+            "token": "token_toto",
+            "articles": [
+                {"barcode": "3267110001144", "expirationDate":str(datetime.date.today() - datetime.timedelta(days=14))},
+                {"barcode": "3163937012007", "expirationDate":str(datetime.date.today() + datetime.timedelta(days=5))}
+            ],
+            "latitude": 43.5,
+            "longitude": 1.5,
+            "geoPrecision": 500,
+            "endingDate": str(datetime.date.today() - datetime.timedelta(days=1))
+        }))

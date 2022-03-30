@@ -24,6 +24,10 @@ def postDonationFromFridge(request):
         user = getUserFromToken(token, session, request)
         user.majTokenValidity()
 
+        if datetime.datetime.fromisoformat(endingDate) < datetime.datetime.now():
+            message = "The given endingDate is not valid"
+            raise DonationException(message, message, request)
+        
         fridge = session.query( Fridge ).filter(Fridge.user == user).first()
         if not fridge: 
             fridge = Fridge(user)
