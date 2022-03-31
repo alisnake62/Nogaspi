@@ -58,6 +58,6 @@ def postDonationFromFridge(request):
         session.add(donation)
         session.commit()
 
-        data = {'isPosted':True}
+        data = {'isPosted':True, 'newDonationId': donation.id}
 
     return data
