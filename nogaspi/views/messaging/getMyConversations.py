@@ -20,5 +20,7 @@ def getMyConversations(request):
         if withExpiredDonations == '0':
             conversations = [c for c in conversations if not c.donation.isExpired()]
 
-        data = {'conversations': [c.toJsonlight(user) for c in conversations]}
+        conversationSortedByLastMessage = sorted(conversations, key=lambda x: x.lastMessageDate(), reverse=True)
+
+        data = {'conversations': [c.toJsonlight(user) for c in conversationSortedByLastMessage]}
     return data

@@ -20,6 +20,8 @@ def getConversationsByDonation(request):
         for conversation in donation.conversations:
             conversation.checkLegitimacyRaiseException(user, False, request)
 
-        data = {'conversations': [c.toJsonlight(user) for c in donation.conversations]}
+        conversationSortedByLastMessage = sorted(donation.conversations, key=lambda x: x.lastMessageDate(), reverse=True)
+
+        data = {'conversations': [c.toJsonlight(user) for c in conversationSortedByLastMessage]}
 
     return data

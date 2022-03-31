@@ -30,6 +30,9 @@ class Conversation (Base):
             message = "You can't interact with this conversation, it's not yours"
             raise ConversationException(message, message, request)
 
+    def lastMessageDate(self):
+        return self.messages[-1].dateTime,
+
     def toJson(self, userRequester):
         self.messages.sort(key=lambda r: r.dateTime)
         decryptor = getDecryptor()
