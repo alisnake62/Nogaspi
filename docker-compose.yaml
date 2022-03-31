@@ -25,6 +25,7 @@ services:
       MAIL_SENDER_PASSWORD: ${mailSenderPassword}
       SERVER_ADDRESS: ${serverAddress}
       LAUNCH_ENV: "prod"
+      OPENROUTESERVICE_KEY: ${openRouteServiceKey}
     ports:
       - 5556:5000
     volumes:

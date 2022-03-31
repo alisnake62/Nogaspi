@@ -18,6 +18,9 @@ class InputAPIException(APIException):
 class OpenFoodException(APIException):
     pass
 
+class OpenRouteServiceException(APIException):
+    pass
+
 class DonationException(APIException):
     pass
 

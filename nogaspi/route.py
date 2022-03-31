@@ -154,10 +154,10 @@ def route(app):
         data = food_rateDonation(request)
         return jsonify(apiResponse(request, data))
         
-    @app.route('/user/postRegularPath', methods=['POST'])
-    def postRegularPath_endpoint():
-        checkInputAPI(PostRegularPathInputSchema, request)
-        data = user_postRegularPath(request)
+    @app.route('/user/generateRegularPath', methods=['POST'])
+    def generateRegularPath_endpoint():
+        checkInputAPI(GenerateRegularPathInputSchema, request)
+        data = user_generateRegularPath(request)
         return jsonify(apiResponse(request, data))
 
     @app.route('/user/getRegularPath', methods=['GET'])

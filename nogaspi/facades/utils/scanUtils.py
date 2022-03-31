@@ -39,7 +39,7 @@ class ProductHTTP:
 
 def getProductFromWeb(barcode, user, request, session):
     
-    url = "https://world.openfoodfacts.org/api/v0/product/{}.json".format(barcode)
+    url = f"https://world.openfoodfacts.org/api/v0/product/{barcode}.json"
 
     try:
         productHTTP = req.get(url).json()

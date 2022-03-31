@@ -26,7 +26,7 @@ from .food import (
     RateDonationInputSchema
 )
 from .user import (
-    PostRegularPathInputSchema,
+    GenerateRegularPathInputSchema,
     GetRegularPathInputSchema,
     PostFireBaseTokenInputSchema,
     GetMyInfosInputSchema

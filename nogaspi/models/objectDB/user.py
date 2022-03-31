@@ -30,6 +30,7 @@ class User (Base):
     regularPathLatitudeEnd = Column(FLOAT)
     regularPathLongitudeEnd = Column(FLOAT)
     regularPathPoints = Column(JSON)
+    lastPathType = Column(VARCHAR)
     donations = relationship("Donation", foreign_keys="Donation.idUser", back_populates="user")
     fridges = relationship("Fridge", back_populates="user")
     favoriteDonations = relationship("Donation", secondary='favorite_donation', back_populates="favoriteUsers")

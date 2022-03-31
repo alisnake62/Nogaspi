@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db_nogaspi
--- Generation Time: Mar 20, 2022 at 04:40 PM
+-- Generation Time: Mar 31, 2022 at 03:16 PM
 -- Server version: 10.7.3-MariaDB-1:10.7.3+maria~focal
 -- PHP Version: 8.0.15
 
@@ -206,6 +206,7 @@ CREATE TABLE `userNogaspi` (
   `regularPathLatitudeEnd` float DEFAULT NULL,
   `regularPathLongitudeEnd` float DEFAULT NULL,
   `regularPathPoints` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`regularPathPoints`)),
+  `lastPathType` varchar(10) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
   `fireBaseToken` varchar(200) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
   `rating` float NOT NULL DEFAULT 0,
   `ratingCount` int(11) NOT NULL DEFAULT 0,

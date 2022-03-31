@@ -1,4 +1,8 @@
 import math
+import requests
+import os
+import traceback
+from facades.apiConfig import OpenRouteServiceException
 
 def isAround(coord1, coord2, distance):
     lat1, lon1 = coord1
@@ -28,3 +32,35 @@ def distanceBetween(lat1, lon1, lat2, lon2):
         dist = dist * 60 * 1.1515
         dist *= 1.609344
         return dist
+
+def isEquals(lat1, lon1, lat2, lon2):
+    marge = 0.00005 # ~ 4 meters
+
+    if None in (lat1, lon1, lat2, lon2): return False
+    
+    return abs(lat1 - lat2) <= marge and abs(lon1 - lon2) <= marge
+
+def getPathPoints(request, latStart, lonStart, latEnd, lonEnd, pathType):
+
+    if os.environ['LAUNCH_ENV'] == 'test': return None
+
+    routeByPathType = {
+        "car": "driving-car",
+        "bike": "cycling-regular",
+        "foot": "foot-walking"
+    }
+
+    apiKey = os.environ['OPENROUTESERVICE_KEY']
+
+    headers = {'Accept': 'application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8'}
+    url = f"https://api.openrouteservice.org/v2/directions/{routeByPathType[pathType]}?api_key={apiKey}&start={lonStart},{latStart}&end={lonEnd},{latEnd}"
+
+    try:
+        call = requests.get(url, headers=headers)
+        if call.status_code != 200: raise Exception()
+    except Exception:
+        raise OpenRouteServiceException("Problem to access at OpenRoute web Service", traceback.format_exc(), request)
+
+    pathPoints = call.json()['features'][0]['geometry']['coordinates']
+
+    return [{'latitude': lat, 'longitude': lon} for [lon, lat] in pathPoints]

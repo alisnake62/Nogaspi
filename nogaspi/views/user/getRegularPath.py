@@ -16,6 +16,7 @@ def getRegularPath(request):
             'longitudeStart': user.regularPathLongitudeStart,
             'latitudeEnd': user.regularPathLatitudeEnd,
             'longitudeEnd': user.regularPathLongitudeEnd,
+            'pathType': user.lastPathType,
             'pathPoints': None if user.regularPathPoints is None else user.regularPath(False)
         }
 

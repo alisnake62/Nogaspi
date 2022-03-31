@@ -7,6 +7,7 @@ from .exception import (
     DBException,
     InputAPIException,
     OpenFoodException,
+    OpenRouteServiceException,
     DonationException,
     CoordException,
     UserException,
