@@ -4,6 +4,7 @@ from facades.apiConfig import EmptyException, DonationException, getArgs
 from facades.utils.registerUtils import getUserFromToken
 from facades.const import EXPIRATION_DATE_TOLERANCE_IN_DAY
 import datetime
+from facades.utils.donationUtils import sendFireBaseNotificationsOneNewNearDonation
 
 
 
@@ -57,6 +58,8 @@ def postDonationFromFridge(request):
 
         session.add(donation)
         session.commit()
+
+        sendFireBaseNotificationsOneNewNearDonation(session, donation)
 
         data = {'isPosted':True, 'newDonationId': donation.id}
 

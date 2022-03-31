@@ -2,6 +2,7 @@ from models.objectDB import Conversation
 from dbEngine import EngineSQLAlchemy
 from facades.apiConfig import EmptyException, getArgs
 from facades.utils.registerUtils import getUserFromToken
+from facades.firebaseMessages.messageReaded import messageReaded as fbMessage_messageReaded
 
 def acknowledgeMessagesOnConversation(request):
 
@@ -23,9 +24,11 @@ def acknowledgeMessagesOnConversation(request):
             if message.toDonator:
                 if user == conversation.userDonator:
                     message.readed = True
+                    fbMessage_messageReaded(conversation.userTaker)
             else:
                 if user == conversation.userTaker:
                     message.readed = True
+                    fbMessage_messageReaded(conversation.userDonator)
 
         session.commit()
 
