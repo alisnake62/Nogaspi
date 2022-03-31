@@ -24,11 +24,11 @@ def acknowledgeMessagesOnConversation(request):
             if message.toDonator:
                 if user == conversation.userDonator:
                     message.readed = True
-                    fbMessage_messageReaded(conversation.userTaker)
+                    fbMessage_messageReaded(conversation.userTaker, conversation)
             else:
                 if user == conversation.userTaker:
                     message.readed = True
-                    fbMessage_messageReaded(conversation.userDonator)
+                    fbMessage_messageReaded(conversation.userDonator, conversation)
 
         session.commit()
 
