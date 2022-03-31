@@ -24,6 +24,7 @@ def test_food_postDonationFromFridge():
         "endingDate": str(datetime.date.today() + datetime.timedelta(days=14))
     }))
     assert funcRtr['isPosted']
+    assert funcRtr['newDonationId'] == sqlSelect(table='donation')[0]["id"]
     assert len(sqlSelect(table='donation')) == 1
     assert sqlSelect(table='article', conditions="WHERE id = 1")[0]['idDonation'] == sqlSelect(table='donation')[0]['id']
     assert sqlSelect(table='article', conditions="WHERE id = 2")[0]['idDonation'] == sqlSelect(table='donation')[0]['id']

@@ -59,6 +59,6 @@ def postDonationFromScan(request):
 
         sendFireBaseNotificationsOneNewNearDonation(session, donation)
 
-        data = {'isPosted':True}
+        data = {'isPosted':True, 'newDonationId': donation.id}
 
     return data

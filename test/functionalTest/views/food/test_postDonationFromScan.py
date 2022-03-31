@@ -23,6 +23,7 @@ def test_food_postDonationFromScan():
         "endingDate": str(datetime.date.today() + datetime.timedelta(days=14))
     }))
     assert funcRtr['isPosted']
+    assert funcRtr['newDonationId'] == sqlSelect(table='donation')[0]["id"]
     assert len(sqlSelect(table='donation')) == 1
     assert len(sqlSelect(table='product')) == 2
     assert len(sqlSelect(table='article')) == 2
@@ -57,6 +58,7 @@ def test_food_postDonationFromScan_with_barcode_already_present_in_db():
         "endingDate": str(datetime.date.today() + datetime.timedelta(days=14))
     }))
     assert funcRtr['isPosted']
+    assert funcRtr['newDonationId'] == sqlSelect(table='donation')[0]["id"]
     assert len(sqlSelect(table='donation')) == 1
     assert len(sqlSelect(table='product')) == 2
     assert len(sqlSelect(table='article')) == 2
@@ -91,6 +93,7 @@ def test_food_postDonationFromScan_without_fridge():
     }))
 
     assert funcRtr['isPosted']
+    assert funcRtr['newDonationId'] == sqlSelect(table='donation')[0]["id"]
     assert len(sqlSelect(table='donation')) == 1
     assert len(sqlSelect(table='product')) == 2
     assert len(sqlSelect(table='article')) == 2
