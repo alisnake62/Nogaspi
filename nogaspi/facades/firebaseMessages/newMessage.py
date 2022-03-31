@@ -4,7 +4,6 @@ def body(donation, message):
 
     body = message.toStringToNotification(donation)
 
-
     bodySize = len(body)
 
     if bodySize > MAX_LETTER_COUNT_ON_NOTIFICATION: 
@@ -15,7 +14,7 @@ def body(donation, message):
 def newMessageMessage(userFrom, conversation, message):  
     return {
         'title': f"Message reçu de {userFrom.pseudo}",
-        'body': f"Donation {conversation.donation.id}: {message}",
+        'body': body(conversation.donation, message),
         'data': {
             "userFrom": userFrom.pseudo,
             "idDonation": str(conversation.donation.id),
