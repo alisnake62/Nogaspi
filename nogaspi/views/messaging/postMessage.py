@@ -27,7 +27,7 @@ def postMessage(request):
 
         session.commit()
         
-        fbMessage_newMessage(user, message.userTo(), conversation, body)
+        fbMessage_newMessage(user, message.userTo(), conversation, message)
 
         data = {'posted':True}
 

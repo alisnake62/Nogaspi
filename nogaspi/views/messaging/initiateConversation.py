@@ -38,7 +38,7 @@ def initiateConversation(request):
 
         session.commit()
 
-        fbMessage_newConversation(user, userOwner, conversation, firstMessage)
+        fbMessage_newConversation(user, userOwner, conversation, message)
 
         data = {'isInitiate':True, 'newConversationId': conversation.id}
 

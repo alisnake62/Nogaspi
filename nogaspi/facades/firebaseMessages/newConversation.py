@@ -1,10 +1,20 @@
-import click
+from facades.const import MAX_LETTER_COUNT_ON_NOTIFICATION
 
+def body(donation, message):
 
-def newConversationMessage(userFrom, conversation, messageBody):  
+    body = message.toStringToNotification(donation)
+
+    bodySize = len(body)
+
+    if bodySize > MAX_LETTER_COUNT_ON_NOTIFICATION: 
+        body = body[:MAX_LETTER_COUNT_ON_NOTIFICATION] + "..."
+
+    return body
+
+def newConversationMessage(userFrom, conversation, message):  
     return {
         'title': f"{userFrom.pseudo} veut vous parler",
-        'body': f"Donation {conversation.donation.id}: {messageBody}",
+        'body': body(conversation.donation, message),
         'data': {
             "userFrom": userFrom.pseudo,
             "idDonation": str(conversation.donation.id),
@@ -12,6 +22,6 @@ def newConversationMessage(userFrom, conversation, messageBody):
         },
         'imageURL': None
     }
-def newConversation(userFrom, userTo, conversation, messageBody):
-    message = newConversationMessage(userFrom, conversation, messageBody)
-    userTo.sendFireBaseNotification('newConversation', message['title'], message['body'], message['imageURL'], message['data'])
+def newConversation(userFrom, userTo, conversation, message):
+    fbMessage = newConversationMessage(userFrom, conversation, message)
+    userTo.sendFireBaseNotification('newConversation', fbMessage['title'], fbMessage['body'], fbMessage['imageURL'], fbMessage['data'])

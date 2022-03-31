@@ -43,6 +43,9 @@ class Message (Base):
 
     def userTo(self):
         return self.conversation.userDonator if self.toDonator else self.conversation.userTaker
+
+    def toStringToNotification(self, donation): 
+        return f"Message: {self.body}, Donation : {donation.productNameListToNotification()}",
     
     def toJson(self, userRequester, decryptor = None):
         toJson = {

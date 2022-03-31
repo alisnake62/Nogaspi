@@ -62,6 +62,9 @@ class Donation (Base):
             return True
         return False
 
+    def productNameListToNotification(self): 
+        return ", ".join([a.product.name for a in self.articles])
+
     def toJson(self, userRequester):
 
         allergens = []

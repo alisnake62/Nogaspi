@@ -5,6 +5,6 @@ def donationTakedMessage(points):
         }
     }
 def donationTaked(userOwner, points):
-    message = donationTakedMessage(points)
+    fbMessage = donationTakedMessage(points)
 
-    userOwner.sendFireBaseEvent('donationTaked', message['data'])
+    userOwner.sendFireBaseEvent('donationTaked', fbMessage['data'])
