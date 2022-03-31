@@ -1,9 +1,21 @@
 from facades.utils.fireBaseUtils import sendNotificationMultiUser
+from facades.const import MAX_LETTER_COUNT_ON_NOTIFICATION
+
+
+def body(donation):
+
+    productNamesToString = donation.productNameListToNotification()
+    productNamesToStringSize = len(productNamesToString)
+
+    if productNamesToStringSize > MAX_LETTER_COUNT_ON_NOTIFICATION: 
+        productNamesToString = productNamesToString[:MAX_LETTER_COUNT_ON_NOTIFICATION] + "..."
+
+    return productNamesToString
 
 def newNearDonationMessage(donation):  
     return {
         'title': "Une nouvelle donation proche de votre chemin",
-        'body': f"Donation {donation.id} de la part de {donation.user.pseudo}",
+        'body': body(donation),
         'data': {
             "userDonation": donation.user.pseudo,
             "idDonation": str(donation.id)
