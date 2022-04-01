@@ -22,4 +22,4 @@ def test_user_toJson():
             }
         }
 
-        assert toto.toJson()['profilePictureUrl'] in ('localhost', 'monappli.ovh')
+        assert toto.toJson()['profilePictureUrl'] in ("http://localhost:49080/users/image_toto.jpg", "http://monappli.ovh:49080/users/image_toto.jpg")
