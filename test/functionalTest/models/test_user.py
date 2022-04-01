@@ -21,3 +21,5 @@ def test_user_toJson():
                 'count': 4
             }
         }
+
+        assert toto.toJson()['profilePictureUrl'] in ('localhost', 'monappli.ovh')
