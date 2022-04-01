@@ -2,12 +2,12 @@ from marshmallow import Schema, fields, INCLUDE, ValidationError, validate
 
 class InitiateConversationInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
-    firstMessage = fields.Str(required=True, validate = validate.Length(max=2000, error='The message should not have more than 800 characters'))
+    firstMessage = fields.Str(required=True, validate = validate.Length(min=1, max=2000, error='The message should not have more than 2000 characters'))
     idDonation = fields.Int(require = True)
 
 class PostMessageInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
-    body = fields.Str(required=True, validate = validate.Length(max=2000, error='The message should not have more than 800 characters'))
+    body = fields.Str(required=True, validate = validate.Length(min=1, max=2000, error='The message should not have more than 2000 characters'))
     idConversation = fields.Int(require = True)
 
 class AcknowledgeMessagesOnConversationInputSchema(Schema):
