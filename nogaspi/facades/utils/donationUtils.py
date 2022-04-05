@@ -25,7 +25,7 @@ def sendFireBaseNotificationsOneNewNearDonation(session, donation):
     usersToCheck = session.query( User ).filter(
         User.isConfirmate == 1,
         User.regularPathPoints != None,
-        User.id != donation.user
+        User != donation.user
     ).all()
 
     usersToSend = []
