@@ -39,15 +39,20 @@ class ProductHTTP:
 def getProductFromBarcode(barcode, user, request, session):
     product = session.query( Product ).filter(Product.barcode == barcode).first()
 
-    if not product or product.lastScanDate < datetime.datetime.now() - datetime.timedelta(days=PRODUCT_DATA_VALIDITY):
-        product = getProductFromWeb(barcode, user, request, session)
+    if not product:
+        product = createProductFromWeb(barcode, user, request, session)
+        product.majInfoLastScan(user)
+        session.add(product)
+        session.commit()
+    elif product.lastScanDate < datetime.datetime.now() - datetime.timedelta(days=PRODUCT_DATA_VALIDITY):
+        product = majProductFromWeb(product, barcode, request, session)
         product.majInfoLastScan(user)
         session.commit()
     
     return product
 
 
-def getProductFromWeb(barcode, user, request, session):
+def createProductFromWeb(barcode, user, request, session):
     
     url = f"https://world.openfoodfacts.org/api/v0/product/{barcode}.json"
 
@@ -74,6 +79,33 @@ def getProductFromWeb(barcode, user, request, session):
         nutrimentData = productHTTP.nutrimentData,
         nutriscoreData = productHTTP.nutriscoreData
     )
+    product.allergens = majAllergenInDB(productHTTP.allergens, session)
+
+    return product
+
+def majProductFromWeb(product, barcode, request, session):
+    
+    url = f"https://world.openfoodfacts.org/api/v0/product/{barcode}.json"
+
+    try:
+        productHTTP = req.get(url).json()
+    except Exception:
+        raise OpenFoodException("Problem to access at OpenFood web Service", traceback.format_exc(), request)
+
+    if productHTTP['status'] == 0: 
+        message = "This barcode is unknown in the WebService"
+        raise OpenFoodException(message, message, request)
+    
+    productHTTP = ProductHTTP(productHTTP['product'])
+    
+    product.name = productHTTP.name
+    product.quantity = productHTTP.quantity
+    product.brand = productHTTP.brand
+    product.image_url=productHTTP.image_url
+    product.ingredients=productHTTP.ingredients
+    product.nutrimentData = productHTTP.nutrimentData
+    product.nutriscoreData = productHTTP.nutriscoreData
+    
     product.allergens = majAllergenInDB(productHTTP.allergens, session)
 
     return product
