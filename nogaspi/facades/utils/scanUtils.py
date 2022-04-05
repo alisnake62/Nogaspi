@@ -3,6 +3,7 @@ import traceback
 import datetime
 from models.objectDB import Product, Allergen
 from facades.apiConfig import OpenFoodException
+from facades.const import PRODUCT_DATA_VALIDITY
 
 import json
 
@@ -33,8 +34,17 @@ class ProductHTTP:
             self.allergens = self.getProductInfo('allergens_hierarchy')
 
     def getProductInfo(self, info):
-        if info in self.productHTTP: return self.productHTTP[info]
-        else: return None
+        return self.productHTTP[info] if info in self.productHTTP else None
+
+def getProductFromBarcode(barcode, user, request, session):
+    product = session.query( Product ).filter(Product.barcode == barcode).first()
+
+    if not product or product.lastScanDate < datetime.datetime.now() - datetime.timedelta(days=PRODUCT_DATA_VALIDITY):
+        product = getProductFromWeb(barcode, user, request, session)
+        product.majInfoLastScan(user)
+        session.commit()
+    
+    return product
 
 
 def getProductFromWeb(barcode, user, request, session):

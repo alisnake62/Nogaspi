@@ -2,7 +2,7 @@ from models.objectDB import Product, Donation, Article, Fridge
 from dbEngine import EngineSQLAlchemy
 from facades.apiConfig import getArgs, DonationException
 from facades.utils.registerUtils import getUserFromToken
-from facades.utils.scanUtils import getProductFromWeb
+from facades.utils.scanUtils import getProductFromBarcode
 from facades.utils.donationUtils import sendFireBaseNotificationsOneNewNearDonation
 from facades.const import EXPIRATION_DATE_TOLERANCE_IN_DAY
 import datetime
@@ -44,12 +44,8 @@ def postDonationFromScan(request):
         for article in articles:
             barcode = article['barcode']
             expirationDate = article['expirationDate']
-            product = session.query( Product ).filter(Product.barcode == barcode).first()
-
-            if not product: 
-                product = getProductFromWeb(barcode, user, request, session)
-                product.majInfoLastScan(user)
-                session.add(product)
+            
+            product = getProductFromBarcode(barcode, user, request, session)
 
             article = Article(product, donation, expirationDate, fridge)
             session.add(article)

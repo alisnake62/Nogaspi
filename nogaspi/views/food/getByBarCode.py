@@ -2,7 +2,7 @@ from models.objectDB import Product
 from dbEngine import EngineSQLAlchemy
 from facades.apiConfig import getArgs
 from facades.utils.registerUtils import getUserFromToken
-from facades.utils.scanUtils import getProductFromWeb
+from facades.utils.scanUtils import getProductFromBarcode
 
 def getByBarCode(request):
 
@@ -12,13 +12,8 @@ def getByBarCode(request):
 
         user = getUserFromToken(token, session, request)
         user.majTokenValidity()
-        
-        product = session.query( Product ).filter(Product.barcode == barcode).first()
 
-        if not product: product = getProductFromWeb(barcode, user, request, session)
-
-        product.majInfoLastScan(user)
-        session.commit()
+        product = getProductFromBarcode(barcode, user, request, session)
 
         data = product.toJson()
 
