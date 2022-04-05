@@ -49,12 +49,12 @@ def test_food_getByBarCode_with_barcode_already_in_db_but_old():
     
     funcRtr = getByBarCode(FakeRequest({"token":"token_tata", "barcode": "3267110001144"}))
     assert funcRtr['name'] == "Purée Noix de Cajou"
-    assert len (sqlSelect(table="product")) == 2
-    assert sqlSelect(table="product", conditions="WHERE id > 1")[0]["barcode"] == "3267110001144"
-    assert sqlSelect(table="product", conditions="WHERE id > 1")[0]["name"] == "Purée Noix de Cajou"
-    assert sqlSelect(table="product", conditions="WHERE id > 1")[0]["idLastScanUser"] == 2
+    assert len (sqlSelect(table="product")) == 1
+    assert sqlSelect(table="product")[0]["barcode"] == "3267110001144"
+    assert sqlSelect(table="product")[0]["name"] == "Purée Noix de Cajou"
+    assert sqlSelect(table="product")[0]["idLastScanUser"] == 2
 
-    lastScanDateDb = sqlSelect(table="product", conditions="WHERE id > 1")[0]["lastScanDate"]
+    lastScanDateDb = sqlSelect(table="product")[0]["lastScanDate"]
     assert (lastScanDateDb.year, lastScanDateDb.month, lastScanDateDb.day, lastScanDateDb.hour, lastScanDateDb.minute) != (lastScanDate.year, lastScanDate.month, lastScanDate.day, lastScanDate.hour, lastScanDate.minute)
 
 
