@@ -7,7 +7,8 @@ import datetime
 def test_food_postDonationFromScan():
     querys = [
         "INSERT INTO `userNogaspi` (`id`, `mail`, `password`, `pseudo`, `profilePicture`, `token`, `token_expiration`, `points`) VALUES (1, 'toto@toto.fr', 'toto', 'toto', NULL, 'token_toto', NOW() + INTERVAL 1 DAY, '0');",
-        "INSERT INTO `fridge` (`id`, `idUser`) VALUES ('1', '1'); "
+        "INSERT INTO `fridge` (`id`, `idUser`) VALUES ('1', '1'); ",
+        "INSERT INTO `donation` (`id`, `idUser`, `latitude`, `longitude`, `geoPrecision`, `startingDate`, `endingDate`, `idUserTaker`, `archive`) VALUES ('1', '1', '40', '40', '500', NOW() - INTERVAL 2 DAY, NOW() + INTERVAL 2 DAY, NULL, '0');",
     ]
     sqlQuerysWithCommit(querys)
     
@@ -23,21 +24,21 @@ def test_food_postDonationFromScan():
         "endingDate": str(datetime.date.today() + datetime.timedelta(days=14))
     }))
     assert funcRtr['isPosted']
-    assert funcRtr['newDonationId'] == sqlSelect(table='donation')[0]["id"]
-    assert len(sqlSelect(table='donation')) == 1
+    assert funcRtr['newDonationId'] == sqlSelect(table='donation', conditions="WHERE id > 1")[0]["id"]
+    assert len(sqlSelect(table='donation')) == 2
     assert len(sqlSelect(table='product')) == 2
     assert len(sqlSelect(table='article')) == 2
     assert sqlSelect(
         table='article',
         conditions="WHERE idProduct = (SELECT id FROM product WHERE barcode = '3267110001144')"
-    )[0]['idDonation'] == sqlSelect(table='donation')[0]['id']
+    )[0]['idDonation'] == sqlSelect(table='donation', conditions="WHERE id > 1")[0]['id']
     assert sqlSelect(
         table='article',
         conditions="WHERE idProduct = (SELECT id FROM product WHERE barcode = '3163937012007')"
-    )[0]['idDonation'] == sqlSelect(table='donation')[0]['id']
-    assert sqlSelect(table='donation')[0]["latitude"] == 43.5
-    assert sqlSelect(table='donation')[0]["longitude"] == 1.5
-    assert sqlSelect(table='donation')[0]["geoPrecision"] == 500
+    )[0]['idDonation'] == sqlSelect(table='donation', conditions="WHERE id > 1")[0]['id']
+    assert sqlSelect(table='donation', conditions="WHERE id > 1")[0]["latitude"] == 43.5
+    assert sqlSelect(table='donation', conditions="WHERE id > 1")[0]["longitude"] == 1.5
+    assert sqlSelect(table='donation', conditions="WHERE id > 1")[0]["geoPrecision"] == 500
 
 def test_food_postDonationFromScan_with_barcode_already_present_in_db():
     querys = [
@@ -169,4 +170,25 @@ def test_food_postDonationFromScan_with_bad_ending_date():
             "longitude": 1.5,
             "geoPrecision": 500,
             "endingDate": str(datetime.date.today() - datetime.timedelta(days=1))
+        }))
+
+def test_food_postDonationFromScan_if_donation_already_posted_today():
+    querys = [
+        "INSERT INTO `userNogaspi` (`id`, `mail`, `password`, `pseudo`, `profilePicture`, `token`, `token_expiration`, `points`) VALUES (1, 'toto@toto.fr', 'toto', 'toto', NULL, 'token_toto', NOW() + INTERVAL 1 DAY, '0');",
+        "INSERT INTO `fridge` (`id`, `idUser`) VALUES ('1', '1'); ",
+        "INSERT INTO `donation` (`id`, `idUser`, `latitude`, `longitude`, `geoPrecision`, `startingDate`, `endingDate`, `idUserTaker`, `archive`) VALUES ('1', '1', '40', '40', '500', NOW(), NOW() + INTERVAL 1 DAY, NULL, '0');",
+    ]
+    sqlQuerysWithCommit(querys)
+    
+    with pytest.raises(Exception):
+        postDonationFromScan(FakeRequest({
+            "token": "token_toto",
+            "articles": [
+                {"barcode": "3267110001144", "expirationDate":str(datetime.date.today() - datetime.timedelta(days=14))},
+                {"barcode": "3163937012007", "expirationDate":str(datetime.date.today() + datetime.timedelta(days=5))}
+            ],
+            "latitude": 43.5,
+            "longitude": 1.5,
+            "geoPrecision": 500,
+            "endingDate": str(datetime.date.today() + datetime.timedelta(days=14))
         }))

@@ -4,7 +4,7 @@ from facades.apiConfig import EmptyException, DonationException, getArgs
 from facades.utils.registerUtils import getUserFromToken
 from facades.const import EXPIRATION_DATE_TOLERANCE_IN_DAY
 import datetime
-from facades.utils.donationUtils import sendFireBaseNotificationsOneNewNearDonation
+from facades.utils.donationUtils import sendFireBaseNotificationsOneNewNearDonation, donationIsOnQuota
 
 
 
@@ -24,6 +24,10 @@ def postDonationFromFridge(request):
 
         user = getUserFromToken(token, session, request)
         user.majTokenValidity()
+
+        if not donationIsOnQuota(user, session):
+            message = "You can't create one more donation for today"
+            raise DonationException(message, message, request)
 
         if datetime.datetime.fromisoformat(endingDate) < datetime.datetime.now():
             message = "The given endingDate is not valid"

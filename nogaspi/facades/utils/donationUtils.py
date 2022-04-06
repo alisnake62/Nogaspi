@@ -1,7 +1,10 @@
-from models.objectDB import User
-from facades.const import DISTANCE_MAX_TO_SEND_NOTIFICATION_IN_NEW_DONATION
+from datetime import datetime
+from models.objectDB import User, Donation
+from facades.const import DISTANCE_MAX_TO_SEND_NOTIFICATION_IN_NEW_DONATION, MAX_DONATION_PER_DAY_ON_UNIT_TEST, MAX_DONATION_PER_DAY_ON_PROD
 from facades.utils.coordUtils import isAroundPath
 from facades.firebaseMessages.newNearDonation import newNearDonation
+import os
+from sqlalchemy import extract
 
 def makeDonation(userOwner, userTaker, donation):
     donation.archive = True
@@ -35,3 +38,14 @@ def sendFireBaseNotificationsOneNewNearDonation(session, donation):
 
     if usersToSend != []:
         newNearDonation(usersToSend, donation)
+
+def donationIsOnQuota(user, session):
+    maxDonationPerDay = MAX_DONATION_PER_DAY_ON_UNIT_TEST if os.environ['LAUNCH_ENV'] == 'test' else MAX_DONATION_PER_DAY_ON_PROD
+    donationCountToday = session.query( Donation ).filter(
+        Donation.user == user,
+        extract('year', Donation.startingDate) == datetime.now().year,
+        extract('month', Donation.startingDate) == datetime.now().month,
+        extract('day', Donation.startingDate) == datetime.now().day
+    ).count()
+
+    return donationCountToday < maxDonationPerDay

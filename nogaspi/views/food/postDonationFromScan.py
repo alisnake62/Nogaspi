@@ -1,9 +1,9 @@
-from models.objectDB import Product, Donation, Article, Fridge
+from models.objectDB import Donation, Article, Fridge
 from dbEngine import EngineSQLAlchemy
 from facades.apiConfig import getArgs, DonationException
 from facades.utils.registerUtils import getUserFromToken
 from facades.utils.scanUtils import getProductFromBarcode
-from facades.utils.donationUtils import sendFireBaseNotificationsOneNewNearDonation
+from facades.utils.donationUtils import sendFireBaseNotificationsOneNewNearDonation, donationIsOnQuota
 from facades.const import EXPIRATION_DATE_TOLERANCE_IN_DAY
 import datetime
 
@@ -24,6 +24,10 @@ def postDonationFromScan(request):
 
         user = getUserFromToken(token, session, request)
         user.majTokenValidity()
+
+        if not donationIsOnQuota(user, session):
+            message = "You can't create one more donation for today"
+            raise DonationException(message, message, request)
 
         fridge = session.query( Fridge ).filter(Fridge.user == user).first()
         if not fridge: 
