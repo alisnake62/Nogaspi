@@ -8,7 +8,7 @@ def test_conversation_toJson():
     with EngineSQLAlchemy() as session:
         toto = User("toto@toto.fr", "toto_password", "toto", "image_toto.jpg")
         titi = User("titi@titi.fr", "titi_password", "titi", "image_titi.jpg")
-        donation = Donation(toto, 45, 3, 500, datetime(year=2122, month=1, day=1))
+        donation = Donation(toto, 45, 3, 500, True, datetime(year=2122, month=1, day=1))
         conversation = Conversation(donation=donation, userDonator=toto, userTaker=titi)
         message1 = Message(conversation=conversation, toDonator=True, body="My Message 1")
         message1.dateTime = datetime(year=2122, month=1, day=1)
@@ -77,7 +77,7 @@ def test_conversation_toJson_with_one_message():
     with EngineSQLAlchemy() as session:
         toto = User("toto@toto.fr", "toto_password", "toto", "image_toto.jpg")
         titi = User("titi@titi.fr", "titi_password", "titi", "image_titi.jpg")
-        donation = Donation(toto, 45, 3, 500, datetime(year=2122, month=1, day=1))
+        donation = Donation(toto, 45, 3, 500, True, datetime(year=2122, month=1, day=1))
         conversation = Conversation(donation=donation, userDonator=toto, userTaker=titi)
         message = Message(conversation=conversation, toDonator=True, body="My Message 1")
         message.dateTime = datetime(year=2122, month=1, day=1)
@@ -142,7 +142,7 @@ def test_conversation_toJson_with_expired_donation():
     with EngineSQLAlchemy() as session:
         toto = User("toto@toto.fr", "toto_password", "toto", "image_toto.jpg")
         titi = User("titi@titi.fr", "titi_password", "titi", "image_titi.jpg")
-        donation = Donation(toto, 45, 3, 500, datetime(year=2022, month=1, day=1))
+        donation = Donation(toto, 45, 3, 500, True, datetime(year=2022, month=1, day=1))
         conversation = Conversation(donation=donation, userDonator=toto, userTaker=titi)
         message1 = Message(conversation=conversation, toDonator=True, body="My Message 1")
         message1.dateTime = datetime(year=2122, month=1, day=1)
@@ -211,7 +211,7 @@ def test_conversation_toJson_with_archived_donation():
     with EngineSQLAlchemy() as session:
         toto = User("toto@toto.fr", "toto_password", "toto", "image_toto.jpg")
         titi = User("titi@titi.fr", "titi_password", "titi", "image_titi.jpg")
-        donation = Donation(toto, 45, 3, 500, datetime(year=2122, month=1, day=1))
+        donation = Donation(toto, 45, 3, 500, True, datetime(year=2122, month=1, day=1))
         donation.archive = 1
         conversation = Conversation(donation=donation, userDonator=toto, userTaker=titi)
         message1 = Message(conversation=conversation, toDonator=True, body="My Message 1")

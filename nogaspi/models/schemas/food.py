@@ -10,37 +10,39 @@ class PostDonationFromScanInputSchema(Schema):
         {
             'barcode': fields.Str(required=True, validate = validate.Length(max=20, error='Your barcode has not a good format')),
             'expirationDate': fields.Date(required = True)
-        })), validate = validate.Length(1,100), require = True)
-    latitude = fields.Float(validate=validate.Range(min=-90.0, max=90.0), require = True)
-    longitude = fields.Float(validate=validate.Range(min=-180.0, max=180.0), require = True)
-    geoPrecision = fields.Int(require = True)
+        })), validate = validate.Length(1,100), required = True)
+    latitude = fields.Float(validate=validate.Range(min=-90.0, max=90.0), required = True)
+    longitude = fields.Float(validate=validate.Range(min=-180.0, max=180.0), required = True)
+    geoPrecision = fields.Int(required = True)
+    visibilityOnMap = fields.Str(required = True, validate = validate.OneOf(['0', '1']))
     endingDate = fields.Date(required = True)
 
 class PostDonationFromFridgeInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
-    idArticles = fields.List(fields.Int(require = True), require = True, validate = validate.Length(1,1000))
-    latitude = fields.Float(validate=validate.Range(min=-90.0, max=90.0), require = True)
-    longitude = fields.Float(validate=validate.Range(min=-180.0, max=180.0), require = True)
-    geoPrecision = fields.Int(require = True)
+    idArticles = fields.List(fields.Int(required = True), required = True, validate = validate.Length(1,1000))
+    latitude = fields.Float(validate=validate.Range(min=-90.0, max=90.0), required = True)
+    longitude = fields.Float(validate=validate.Range(min=-180.0, max=180.0), required = True)
+    geoPrecision = fields.Int(required = True)
+    visibilityOnMap = fields.Str(required = True, validate = validate.OneOf(['0', '1']))
     endingDate = fields.Date(required = True)
 
 class DeleteMyDonationsInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
-    idDonations = fields.List(fields.Int(require = True), require = True, validate = validate.Length(1,1000))
+    idDonations = fields.List(fields.Int(required = True), required = True, validate = validate.Length(1,1000))
 
 class GetDonationsInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
-    latitude = fields.Float(require = True, validate=validate.Range(min=-90.0, max=90.0))
-    longitude = fields.Float(require = True, validate=validate.Range(min=-180.0, max=180.0))
-    distanceMax = fields.Int(require = True)
+    latitude = fields.Float(required = True, validate=validate.Range(min=-90.0, max=90.0))
+    longitude = fields.Float(required = True, validate=validate.Range(min=-180.0, max=180.0))
+    distanceMax = fields.Int(required = True)
 
 class GetDonationByIdInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
-    idDonation = fields.Int(require = True)
+    idDonation = fields.Int(required = True)
 
 class GetDonationsByRegularPathInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
-    distanceMax = fields.Int(require = True)
+    distanceMax = fields.Int(required = True)
 
 class GetAllergensInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
@@ -51,11 +53,11 @@ class PostArticlesInFridgeInputSchema(Schema):
         {
             'barcode': fields.Str(required=True, validate = validate.Length(max=20, error='Your barcode has not a good format')),
             'expirationDate': fields.Date(required = True)
-        })), validate = validate.Length(1,1000), require = True)
+        })), validate = validate.Length(1,1000), required = True)
 
 class DeleteArticlesInFridgeInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
-    idArticles = fields.List(fields.Int(require = True), require = True, validate = validate.Length(1,1000))
+    idArticles = fields.List(fields.Int(required = True), required = True, validate = validate.Length(1,1000))
 
 class GetArticlesInFridgeInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
@@ -66,21 +68,21 @@ class TakeDonationsInputSchema(Schema):
     
 class GenerateDonationsCodeInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
-    idDonations = fields.List(fields.Int(require = True), require = True, validate = validate.Length(1,1000))
+    idDonations = fields.List(fields.Int(required = True), required = True, validate = validate.Length(1,1000))
 
 class GetFavoriteDonationsInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
 
 class ToggleDonationInMyFavoriteInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
-    idDonation = fields.Int(require = True)
+    idDonation = fields.Int(required = True)
 
 class GetMyDonationsInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
-    withArchived = fields.Str(require = True, validate = validate.OneOf(['0', '1']))
-    withExpired = fields.Str(require = True, validate = validate.OneOf(['0', '1']))
+    withArchived = fields.Str(required = True, validate = validate.OneOf(['0', '1']))
+    withExpired = fields.Str(required = True, validate = validate.OneOf(['0', '1']))
 
 class RateDonationInputSchema(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
-    idDonation = fields.Int(require = True)
-    note = fields.Int(require = True, validate=validate.Range(min=0, max=5))
+    idDonation = fields.Int(required = True)
+    note = fields.Int(required = True, validate=validate.Range(min=0, max=5))

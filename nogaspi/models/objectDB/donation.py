@@ -15,6 +15,7 @@ class Donation (Base):
     latitude = Column(FLOAT)
     longitude = Column(FLOAT)
     geoPrecision = Column(INTEGER)
+    visibilityOnMap = Column(BOOLEAN)
     startingDate = Column(DATETIME)
     endingDate = Column(DATETIME)
     articles = relationship("Article", back_populates="donation")
@@ -27,13 +28,14 @@ class Donation (Base):
     idUserTaker = Column(INTEGER, ForeignKey('userNogaspi.id'))
     userTaker = relationship("User", back_populates="donationsTaked", foreign_keys=idUserTaker)
 
-    def __init__(self, user, latitude, longitude, geoPrecision, endingDate, archive = False):        
+    def __init__(self, user, latitude, longitude, geoPrecision, visibilityOnMap, endingDate, archive = False):        
         self.user = user
         self.latitude = latitude
         self.longitude = longitude
         self.geoPrecision = geoPrecision
         self.startingDate = datetime.datetime.now()
         self.endingDate = endingDate
+        self.visibilityOnMap = visibilityOnMap
         self.archive = archive
 
     def isValide(self):
@@ -83,6 +85,7 @@ class Donation (Base):
             'latitude': self.latitude,
             'longitude': self.longitude,
             'geoPrecision': self.geoPrecision,
+            'visibilityOnMap': self.visibilityOnMap,
             'startingDate': int(datetime.datetime.timestamp(self.startingDate)),
             'endingDate': int(datetime.datetime.timestamp(self.endingDate)),
             'isExpired': self.isExpired(),

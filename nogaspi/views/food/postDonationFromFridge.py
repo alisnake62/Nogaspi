@@ -10,15 +10,17 @@ from facades.utils.donationUtils import sendFireBaseNotificationsOneNewNearDonat
 
 def postDonationFromFridge(request):
 
-    token, idArticles, latitude, longitude, geoPrecision, endingDate = getArgs(request, [
+    token, idArticles, latitude, longitude, geoPrecision, visibilityOnMap, endingDate = getArgs(request, [
         'token',
         'idArticles',
         'latitude',
         'longitude',
         'geoPrecision',
+        'visibilityOnMap',
         'endingDate'
     ])
     latitude, longitude, geoPrecision = (float(f) for f in (latitude, longitude, geoPrecision))
+    visibilityOnMap = True if visibilityOnMap == '1' else False
 
     with EngineSQLAlchemy() as session:
 
@@ -38,7 +40,7 @@ def postDonationFromFridge(request):
             fridge = Fridge(user)
             session.add(fridge)
 
-        donation = Donation(user, latitude, longitude, geoPrecision, endingDate)
+        donation = Donation(user, latitude, longitude, geoPrecision, visibilityOnMap, endingDate)
 
         for idArticle in idArticles:
             article = session.query( Article ).filter(Article.id == idArticle).first()

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db_nogaspi
--- Generation Time: Mar 31, 2022 at 03:16 PM
+-- Generation Time: Apr 06, 2022 at 03:12 PM
 -- Server version: 10.7.3-MariaDB-1:10.7.3+maria~focal
 -- PHP Version: 8.0.15
 
@@ -72,6 +72,7 @@ CREATE TABLE `donation` (
   `latitude` float NOT NULL,
   `longitude` float NOT NULL,
   `geoPrecision` int(20) NOT NULL,
+  `visibilityOnMap` tinyint(1) NOT NULL DEFAULT 1,
   `startingDate` datetime NOT NULL,
   `endingDate` datetime NOT NULL,
   `idDonationCode` int(11) DEFAULT NULL,

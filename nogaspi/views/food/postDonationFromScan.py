@@ -10,15 +10,17 @@ import datetime
 
 def postDonationFromScan(request):
 
-    token, articles, latitude, longitude, geoPrecision, endingDate = getArgs(request, [
+    token, articles, latitude, longitude, geoPrecision, visibilityOnMap, endingDate = getArgs(request, [
         'token',
         'articles',
         'latitude',
         'longitude',
         'geoPrecision',
+        'visibilityOnMap',
         'endingDate'
     ])
     latitude, longitude, geoPrecision = (float(f) for f in (latitude, longitude, geoPrecision))
+    visibilityOnMap = True if visibilityOnMap == '1' else False
 
     with EngineSQLAlchemy() as session:
 
@@ -43,7 +45,7 @@ def postDonationFromScan(request):
                 message = "One article is expired"
                 raise DonationException(message, message, request)
 
-        donation = Donation(user, latitude, longitude, geoPrecision, endingDate)
+        donation = Donation(user, latitude, longitude, geoPrecision, visibilityOnMap, endingDate)
 
         for article in articles:
             barcode = article['barcode']

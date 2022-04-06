@@ -21,6 +21,7 @@ def test_food_postDonationFromScan():
         "latitude": 43.5,
         "longitude": 1.5,
         "geoPrecision": 500,
+        'visibilityOnMap' : '1',
         "endingDate": str(datetime.date.today() + datetime.timedelta(days=14))
     }))
     assert funcRtr['isPosted']
@@ -39,6 +40,45 @@ def test_food_postDonationFromScan():
     assert sqlSelect(table='donation', conditions="WHERE id > 1")[0]["latitude"] == 43.5
     assert sqlSelect(table='donation', conditions="WHERE id > 1")[0]["longitude"] == 1.5
     assert sqlSelect(table='donation', conditions="WHERE id > 1")[0]["geoPrecision"] == 500
+    assert sqlSelect(table='donation', conditions="WHERE id > 1")[0]["visibilityOnMap"] == 1
+    
+def test_food_postDonationFromScan_with_no_visibility_on_map():
+    querys = [
+        "INSERT INTO `userNogaspi` (`id`, `mail`, `password`, `pseudo`, `profilePicture`, `token`, `token_expiration`, `points`) VALUES (1, 'toto@toto.fr', 'toto', 'toto', NULL, 'token_toto', NOW() + INTERVAL 1 DAY, '0');",
+        "INSERT INTO `fridge` (`id`, `idUser`) VALUES ('1', '1'); ",
+        "INSERT INTO `donation` (`id`, `idUser`, `latitude`, `longitude`, `geoPrecision`, `startingDate`, `endingDate`, `idUserTaker`, `archive`) VALUES ('1', '1', '40', '40', '500', NOW() - INTERVAL 2 DAY, NOW() + INTERVAL 2 DAY, NULL, '0');",
+    ]
+    sqlQuerysWithCommit(querys)
+    
+    funcRtr = postDonationFromScan(FakeRequest({
+        "token": "token_toto",
+        "articles": [
+            {"barcode": "3267110001144", "expirationDate":str(datetime.date.today() - datetime.timedelta(days=14))},
+            {"barcode": "3163937012007", "expirationDate":str(datetime.date.today() + datetime.timedelta(days=5))}
+        ],
+        "latitude": 43.5,
+        "longitude": 1.5,
+        "geoPrecision": 500,
+        'visibilityOnMap' : '0',
+        "endingDate": str(datetime.date.today() + datetime.timedelta(days=14))
+    }))
+    assert funcRtr['isPosted']
+    assert funcRtr['newDonationId'] == sqlSelect(table='donation', conditions="WHERE id > 1")[0]["id"]
+    assert len(sqlSelect(table='donation')) == 2
+    assert len(sqlSelect(table='product')) == 2
+    assert len(sqlSelect(table='article')) == 2
+    assert sqlSelect(
+        table='article',
+        conditions="WHERE idProduct = (SELECT id FROM product WHERE barcode = '3267110001144')"
+    )[0]['idDonation'] == sqlSelect(table='donation', conditions="WHERE id > 1")[0]['id']
+    assert sqlSelect(
+        table='article',
+        conditions="WHERE idProduct = (SELECT id FROM product WHERE barcode = '3163937012007')"
+    )[0]['idDonation'] == sqlSelect(table='donation', conditions="WHERE id > 1")[0]['id']
+    assert sqlSelect(table='donation', conditions="WHERE id > 1")[0]["latitude"] == 43.5
+    assert sqlSelect(table='donation', conditions="WHERE id > 1")[0]["longitude"] == 1.5
+    assert sqlSelect(table='donation', conditions="WHERE id > 1")[0]["geoPrecision"] == 500
+    assert sqlSelect(table='donation', conditions="WHERE id > 1")[0]["visibilityOnMap"] == 0
 
 def test_food_postDonationFromScan_with_barcode_already_present_in_db():
     querys = [
@@ -56,6 +96,7 @@ def test_food_postDonationFromScan_with_barcode_already_present_in_db():
         "latitude": 43.5,
         "longitude": 1.5,
         "geoPrecision": 500,
+        'visibilityOnMap' : '1',
         "endingDate": str(datetime.date.today() + datetime.timedelta(days=14))
     }))
     assert funcRtr['isPosted']
@@ -74,6 +115,7 @@ def test_food_postDonationFromScan_with_barcode_already_present_in_db():
     assert sqlSelect(table='donation')[0]["latitude"] == 43.5
     assert sqlSelect(table='donation')[0]["longitude"] == 1.5
     assert sqlSelect(table='donation')[0]["geoPrecision"] == 500
+    assert sqlSelect(table='donation')[0]["visibilityOnMap"] == 1
 
 def test_food_postDonationFromScan_without_fridge():
     querys = [
@@ -90,6 +132,7 @@ def test_food_postDonationFromScan_without_fridge():
         "latitude": 43.5,
         "longitude": 1.5,
         "geoPrecision": 500,
+        'visibilityOnMap' : '1',
         "endingDate": str(datetime.date.today() + datetime.timedelta(days=14))
     }))
 
@@ -111,6 +154,7 @@ def test_food_postDonationFromScan_without_fridge():
     assert sqlSelect(table='donation')[0]["latitude"] == 43.5
     assert sqlSelect(table='donation')[0]["longitude"] == 1.5
     assert sqlSelect(table='donation')[0]["geoPrecision"] == 500
+    assert sqlSelect(table='donation')[0]["visibilityOnMap"] == 1
 
 def test_food_postDonationFromScan_with_bad_barcode():
     querys = [
@@ -129,6 +173,7 @@ def test_food_postDonationFromScan_with_bad_barcode():
             "latitude": 43.5,
             "longitude": 1.5,
             "geoPrecision": 500,
+            'visibilityOnMap' : '1',
             "endingDate": str(datetime.date.today() + datetime.timedelta(days=14))
         }))
 
@@ -149,6 +194,7 @@ def test_food_postDonationFromScan_with_bad_expiration_date():
             "latitude": 43.5,
             "longitude": 1.5,
             "geoPrecision": 500,
+            'visibilityOnMap' : '1',
             "endingDate": str(datetime.date.today() + datetime.timedelta(days=14))
         }))
 
@@ -169,6 +215,7 @@ def test_food_postDonationFromScan_with_bad_ending_date():
             "latitude": 43.5,
             "longitude": 1.5,
             "geoPrecision": 500,
+            'visibilityOnMap' : '1',
             "endingDate": str(datetime.date.today() - datetime.timedelta(days=1))
         }))
 
@@ -190,5 +237,6 @@ def test_food_postDonationFromScan_if_donation_already_posted_today():
             "latitude": 43.5,
             "longitude": 1.5,
             "geoPrecision": 500,
+            'visibilityOnMap' : '1',
             "endingDate": str(datetime.date.today() + datetime.timedelta(days=14))
         }))
