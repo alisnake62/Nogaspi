@@ -1,4 +1,4 @@
-from nogaspi.views.food.getByBarCode import Product
+from nogaspi.views.food.getProduct import Product
 from nogaspi.views.register.login import User
 from nogaspi.views.food.getAllergens import Allergen
 from test.functionalTest.dbMagement import sqlQuerysWithCommit

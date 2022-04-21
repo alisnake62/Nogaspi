@@ -4,7 +4,7 @@ from facades.apiConfig import getArgs
 from facades.utils.registerUtils import getUserFromToken
 from facades.utils.scanUtils import getProductFromBarcode
 
-def getByBarCode(request):
+def getProduct(request):
 
     token, barcode = getArgs(request, ['token', 'barcode'])
 

@@ -1,4 +1,4 @@
-from .getByBarCode import getByBarCode as food_getByBarCode
+from .getProduct import getProduct as food_getProduct
 from .postDonationFromScan import postDonationFromScan as food_postDonationFromScan
 from .postDonationFromFridge import postDonationFromFridge as food_postDonationFromFridge
 from .deleteMyDonations import deleteMyDonations as food_deleteMyDonations

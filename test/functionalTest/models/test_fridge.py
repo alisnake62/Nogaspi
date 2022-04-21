@@ -1,5 +1,5 @@
 from nogaspi.views.register.login import User
-from nogaspi.views.food.getByBarCode import Product
+from nogaspi.views.food.getProduct import Product
 from nogaspi.views.food.postArticlesInFridge import Article
 from nogaspi.views.food.getDonations import Donation
 from nogaspi.views.food.postArticlesInFridge import Fridge

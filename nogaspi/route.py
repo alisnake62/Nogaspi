@@ -54,7 +54,7 @@ def route(app):
     @app.route('/food/getProduct', methods=['GET'])
     def getProduct_endpoint():
         checkInputAPI(GetProductInputSchema, request)
-        data = food_getByBarCode(request)
+        data = food_getProduct(request)
         return jsonify(apiResponse(request, data))
 
     @app.route('/food/postDonationFromScan', methods=['POST'])

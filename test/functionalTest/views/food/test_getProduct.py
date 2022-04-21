@@ -1,23 +1,23 @@
-from nogaspi.views.food.getByBarCode import getByBarCode
+from nogaspi.views.food.getProduct import getProduct
 from test.functionalTest.dbMagement import sqlQuerysWithCommit, sqlSelect
 from test.functionalTest.flaskManagement import FakeRequest
 import datetime
 
 import pytest
 
-def test_food_getByBarCode():
+def test_food_getProduct():
     querys = [
         "INSERT INTO `userNogaspi` (`id`, `mail`, `password`, `pseudo`, `profilePicture`, `token`, `token_expiration`, `points`) VALUES (1, 'toto@toto.fr', 'toto', 'toto', NULL, 'token_toto', NOW() + INTERVAL 1 DAY, '0');"
     ]
     sqlQuerysWithCommit(querys)
     
-    funcRtr = getByBarCode(FakeRequest({"token":"token_toto", "barcode": "3267110001144"}))
-    assert funcRtr['name'] == "Purée Noix de Cajou"
+    funcRtr = getProduct(FakeRequest({"token":"token_toto", "barcode": "3267110001144"}))
+    assert funcRtr['name'] == "Purée crue Noix de Cajou"
     assert len (sqlSelect(table="product")) == 1
     assert sqlSelect(table="product")[0]["barcode"] == "3267110001144"
-    assert sqlSelect(table="product")[0]["name"] == "Purée Noix de Cajou"
+    assert sqlSelect(table="product")[0]["name"] == "Purée crue Noix de Cajou"
 
-def test_food_getByBarCode_with_barcode_already_in_db():
+def test_food_getProduct_with_barcode_already_in_db():
     lastScanDate = datetime.datetime.now()
 
     querys = [
@@ -27,7 +27,7 @@ def test_food_getByBarCode_with_barcode_already_in_db():
     ]
     sqlQuerysWithCommit(querys)
     
-    funcRtr = getByBarCode(FakeRequest({"token":"token_tata", "barcode": "3267110001144"}))
+    funcRtr = getProduct(FakeRequest({"token":"token_tata", "barcode": "3267110001144"}))
     assert funcRtr['name'] == "nameTest"
     assert len (sqlSelect(table="product")) == 1
     assert sqlSelect(table="product")[0]["barcode"] == "3267110001144"
@@ -37,7 +37,7 @@ def test_food_getByBarCode_with_barcode_already_in_db():
     lastScanDateDb = sqlSelect(table="product")[0]["lastScanDate"]
     assert (lastScanDateDb.year, lastScanDateDb.month, lastScanDateDb.day, lastScanDateDb.hour, lastScanDateDb.minute) == (lastScanDate.year, lastScanDate.month, lastScanDate.day, lastScanDate.hour, lastScanDate.minute)
 
-def test_food_getByBarCode_with_barcode_already_in_db_but_old():
+def test_food_getProduct_with_barcode_already_in_db_but_old():
     lastScanDate = datetime.datetime.now() - datetime.timedelta(days=100)
 
     querys = [
@@ -47,11 +47,11 @@ def test_food_getByBarCode_with_barcode_already_in_db_but_old():
     ]
     sqlQuerysWithCommit(querys)
     
-    funcRtr = getByBarCode(FakeRequest({"token":"token_tata", "barcode": "3267110001144"}))
-    assert funcRtr['name'] == "Purée Noix de Cajou"
+    funcRtr = getProduct(FakeRequest({"token":"token_tata", "barcode": "3267110001144"}))
+    assert funcRtr['name'] == "Purée crue Noix de Cajou"
     assert len (sqlSelect(table="product")) == 1
     assert sqlSelect(table="product")[0]["barcode"] == "3267110001144"
-    assert sqlSelect(table="product")[0]["name"] == "Purée Noix de Cajou"
+    assert sqlSelect(table="product")[0]["name"] == "Purée crue Noix de Cajou"
     assert sqlSelect(table="product")[0]["idLastScanUser"] == 2
 
     lastScanDateDb = sqlSelect(table="product")[0]["lastScanDate"]
@@ -59,12 +59,12 @@ def test_food_getByBarCode_with_barcode_already_in_db_but_old():
 
 
 
-def test_food_getByBarCode_with_bad_barcode():
+def test_food_getProduct_with_bad_barcode():
     querys = [
         "INSERT INTO `userNogaspi` (`id`, `mail`, `password`, `pseudo`, `profilePicture`, `token`, `token_expiration`, `points`) VALUES (1, 'toto@toto.fr', 'toto', 'toto', NULL, 'token_toto', NOW() + INTERVAL 1 DAY, '0');",
     ]
     sqlQuerysWithCommit(querys)
     
     with pytest.raises(Exception):
-        getByBarCode(FakeRequest({"token":"token_toto", "barcode": "010101"}))
+        getProduct(FakeRequest({"token":"token_toto", "barcode": "010101"}))
     assert len (sqlSelect(table="product")) == 0
