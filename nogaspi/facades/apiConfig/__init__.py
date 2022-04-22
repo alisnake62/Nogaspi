@@ -16,4 +16,4 @@ from .exception import (
 )
 from .logging import logging
 
-from .input import (checkInputAPI, getArgs)
+from .input import (checkInputAPI, checkInputFileAPI, getArgs, getFiles)

@@ -4,3 +4,8 @@ docker-compose --env-file ../.env down
 git add -u
 
 test
+
+soutenance : recuperer tout les problème rencontrés pour en parler à la soutenance (discord)
+ - par exemple : version marshmallow DeprecationWarning, The distutils package is deprecated and slated for removal in Python 3.12
+
+ vers une version de test pour l'api openFood

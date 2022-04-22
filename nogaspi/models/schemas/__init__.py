@@ -29,7 +29,8 @@ from .user import (
     GenerateRegularPathInputSchema,
     GetRegularPathInputSchema,
     PostFireBaseTokenInputSchema,
-    GetMyInfosInputSchema
+    GetMyInfosInputSchema,
+    FilePostProfilePicture
 )
 
 from .messaging import (

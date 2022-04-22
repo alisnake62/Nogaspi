@@ -1,7 +1,8 @@
 from flask import jsonify, request
 from models.schemas import *
 from views import *
-from facades.apiConfig import apiResponse, checkInputAPI
+from facades.apiConfig import apiResponse, checkInputAPI, checkInputFileAPI
+from werkzeug.utils import secure_filename
 
 import sys
 import traceback
@@ -182,6 +183,12 @@ def route(app):
     def getMyInfos_endpoint():
         checkInputAPI(GetMyInfosInputSchema, request)
         data = user_getMyInfos(request)
+        return jsonify(apiResponse(request, data))
+
+    @app.route('/uploader', methods = ['POST'])
+    def upload_file():
+        checkInputFileAPI(FilePostProfilePicture, request)
+        data = user_postProfilePicture(request)
         return jsonify(apiResponse(request, data))
 
     @app.route('/messaging/initiateConversation', methods=['POST'])
