@@ -16,6 +16,12 @@ def route(app):
         data = {"toto":  ["tata", "tito"]}
         return jsonify(apiResponse(request, data))
 
+    # à virer
+    @app.route('/testForm', methods=['POST'])
+    def testForm():
+        test = request
+        return f"tu as demandé '{request.form.get('test')}'"
+
     @app.route('/tools/sendFireBaseEvent', methods=['POST'])
     def sendFireBaseEvent_endpoint():
         data = tools_sendFireBaseEvent(request)
