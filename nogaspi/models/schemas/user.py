@@ -1,3 +1,5 @@
+from fileinput import filename
+from unicodedata import name
 from marshmallow import Schema, fields, INCLUDE, ValidationError, validate
 
 class GenerateRegularPathInputSchema(Schema):
@@ -16,4 +18,14 @@ class PostFireBaseTokenInputSchema(Schema):
     fireBaseToken = fields.Str(required=True, validate = validate.Length(equal=163, error='FireBase Token must have 163 characters'))
 
 class GetMyInfosInputSchema(Schema):
+    token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))
+
+class FilePostProfilePicture(Schema):
+    profilePicture = fields.Field(
+        validate=lambda file: file.filename.split(".")[-1].lower() in ('jpg', 'jpeg', 'bnp'),
+        location="files",
+        required=True
+    )
+
+class PostProfilePicture(Schema):
     token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))

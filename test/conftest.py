@@ -3,6 +3,7 @@ from nogaspi.dbEngine import EngineSQLAlchemy
 from test.functionalTest.dbMagement import sqlDeleteAllData
 
 from nogaspi.facades.utils.cypherUtils import encrypt, getEncryptor
+import os
 
 
 

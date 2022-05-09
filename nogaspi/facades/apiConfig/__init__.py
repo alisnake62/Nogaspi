@@ -12,8 +12,9 @@ from .exception import (
     CoordException,
     UserException,
     FridgeException,
-    ConversationException
+    ConversationException,
+    FileException
 )
 from .logging import logging
 
-from .input import (checkInputAPI, getArgs)
+from .input import (checkInputAPI, checkInputFileAPI, getArgs, getFiles)
