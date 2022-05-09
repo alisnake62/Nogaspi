@@ -35,3 +35,6 @@ class FridgeException(APIException):
 
 class ConversationException(APIException):
     pass
+
+class FileException(APIException):
+    pass

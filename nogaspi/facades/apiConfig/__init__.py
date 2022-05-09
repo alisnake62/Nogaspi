@@ -12,7 +12,8 @@ from .exception import (
     CoordException,
     UserException,
     FridgeException,
-    ConversationException
+    ConversationException,
+    FileException
 )
 from .logging import logging
 

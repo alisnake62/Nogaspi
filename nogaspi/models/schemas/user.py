@@ -22,7 +22,10 @@ class GetMyInfosInputSchema(Schema):
 
 class FilePostProfilePicture(Schema):
     profilePicture = fields.Field(
-        validate=lambda file: file.filename.split(".")[-1].lower() in ('jpg', 'bnp'),
+        validate=lambda file: file.filename.split(".")[-1].lower() in ('jpg', 'jpeg', 'bnp'),
         location="files",
         required=True
     )
+
+class PostProfilePicture(Schema):
+    token = fields.Str(required=True, validate = validate.Length(equal=64, error='Token must have 64 characters'))

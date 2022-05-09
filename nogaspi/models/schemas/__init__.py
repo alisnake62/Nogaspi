@@ -30,6 +30,7 @@ from .user import (
     GetRegularPathInputSchema,
     PostFireBaseTokenInputSchema,
     GetMyInfosInputSchema,
+    PostProfilePicture,
     FilePostProfilePicture
 )
 
