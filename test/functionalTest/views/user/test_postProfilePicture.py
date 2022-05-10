@@ -1,6 +1,6 @@
 from nogaspi.views.user.postProfilePicture import postProfilePicture
 from test.functionalTest.dbMagement import sqlQuerysWithCommit, sqlSelect
-from test.functionalTest.flaskManagement import FakeRequest, generateRealFile
+from test.functionalTest.flaskManagement import FakeRequest, generateAndSaveFile
 import pytest
 import os
 
@@ -17,7 +17,7 @@ def test_user_postProfilePicture():
 
 
 def test_user_postProfilePicture_if_file_already_exist():
-    generateRealFile(f"{os.environ['DIRECTORY_ASSET']}images/users/", "toto.png")
+    generateAndSaveFile(f"{os.environ['DIRECTORY_ASSET']}images/users/", "toto.png")
     querys = ["INSERT INTO `userNogaspi` (`id`, `mail`, `password`, `pseudo`, `profilePicture`, `token`, `token_expiration`, `points`, `regularPathLatitudeStart`, `regularPathLongitudeStart`, `regularPathLatitudeEnd`, `regularPathLongitudeEnd`, `regularPathPoints`) VALUES (1, 'toto@toto.fr', 'toto', 'toto', 'toto.png', 'token_toto', NOW() + INTERVAL 1 DAY, '0', NULL, NULL, NULL, NULL, NULL);"]
     sqlQuerysWithCommit(querys)
 
