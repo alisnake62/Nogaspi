@@ -1,11 +1,7 @@
 import pytest
 from nogaspi.dbEngine import EngineSQLAlchemy
 from test.functionalTest.dbMagement import sqlDeleteAllData
-
 from nogaspi.facades.utils.cypherUtils import encrypt, getEncryptor
-import os
-
-
 
 def pytest_sessionstart( ):
     with EngineSQLAlchemy() as session:
