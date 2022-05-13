@@ -43,6 +43,11 @@ class User (Base):
     isConfirmate = Column(BOOLEAN)
     confirmationCode = Column(VARCHAR)
     confirmationCodeExpiration = Column(DATETIME)
+    address = Column(VARCHAR)
+    idAllergen = Column(INTEGER, ForeignKey('allergen.id'))
+    allergen = relationship("Allergen", back_populates="users")
+    favoriteDistanceToSearch = Column(INTEGER)
+    favoriteGeoPrecisionToDonate = Column(INTEGER)
     
     def __init__(self, mail, password, pseudo, profilePicture = None):                    
         self.mail = mail             
@@ -99,7 +104,7 @@ class User (Base):
         else:
             return None
     
-    def toJson(self):
+    def toJson(self, userRequester = None):
         toJson = {
             'id': self.id,
             'mail': self.mail,
@@ -111,4 +116,14 @@ class User (Base):
                 'count': self.ratingCount
             }
         }
+
+        if userRequester == self:
+            addOn = {
+                'address': self.address,
+                'allergen': self.allergen.toJson() if self.allergen is not None else None,
+                'favoriteDistanceToSearch': self.favoriteDistanceToSearch,
+                'favoriteGeoPrecisionToDonate': self.favoriteGeoPrecisionToDonate
+            }
+            toJson = dict(toJson, **addOn)
+
         return toJson

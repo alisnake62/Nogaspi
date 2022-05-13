@@ -2,10 +2,10 @@
 -- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
--- Host: db_nogaspi
--- Generation Time: Apr 06, 2022 at 03:12 PM
--- Server version: 10.7.3-MariaDB-1:10.7.3+maria~focal
--- PHP Version: 8.0.15
+-- Hôte : db_nogaspi
+-- Généré le : ven. 13 mai 2022 à 09:12
+-- Version du serveur : 10.7.3-MariaDB-1:10.7.3+maria~focal
+-- Version de PHP : 8.0.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `nogaspi`
+-- Base de données : `nogaspi`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `allergen`
+-- Structure de la table `allergen`
 --
 
 CREATE TABLE `allergen` (
@@ -36,7 +36,7 @@ CREATE TABLE `allergen` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `article`
+-- Structure de la table `article`
 --
 
 CREATE TABLE `article` (
@@ -50,7 +50,7 @@ CREATE TABLE `article` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `conversation`
+-- Structure de la table `conversation`
 --
 
 CREATE TABLE `conversation` (
@@ -63,7 +63,7 @@ CREATE TABLE `conversation` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `donation`
+-- Structure de la table `donation`
 --
 
 CREATE TABLE `donation` (
@@ -84,7 +84,7 @@ CREATE TABLE `donation` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `donationCode`
+-- Structure de la table `donationCode`
 --
 
 CREATE TABLE `donationCode` (
@@ -96,7 +96,7 @@ CREATE TABLE `donationCode` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `favorite_donation`
+-- Structure de la table `favorite_donation`
 --
 
 CREATE TABLE `favorite_donation` (
@@ -108,7 +108,7 @@ CREATE TABLE `favorite_donation` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `fridge`
+-- Structure de la table `fridge`
 --
 
 CREATE TABLE `fridge` (
@@ -119,7 +119,7 @@ CREATE TABLE `fridge` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `message`
+-- Structure de la table `message`
 --
 
 CREATE TABLE `message` (
@@ -134,17 +134,17 @@ CREATE TABLE `message` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product`
+-- Structure de la table `product`
 --
 
 CREATE TABLE `product` (
   `id` int(11) NOT NULL,
   `opinion` text COLLATE utf8mb3_unicode_ci DEFAULT NULL,
-  `brand` varchar(50) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
-  `name` varchar(50) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
-  `quantity` varchar(50) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `brand` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `quantity` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
   `barcode` varchar(30) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `image_url` varchar(100) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `image_url` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
   `ingredients` text COLLATE utf8mb3_unicode_ci DEFAULT NULL,
   `nutrimentData` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `nutriscoreData` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
@@ -155,7 +155,7 @@ CREATE TABLE `product` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_allergen`
+-- Structure de la table `product_allergen`
 --
 
 CREATE TABLE `product_allergen` (
@@ -167,7 +167,7 @@ CREATE TABLE `product_allergen` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rang`
+-- Structure de la table `rang`
 --
 
 CREATE TABLE `rang` (
@@ -178,7 +178,7 @@ CREATE TABLE `rang` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `test`
+-- Structure de la table `test`
 --
 
 CREATE TABLE `test` (
@@ -189,7 +189,7 @@ CREATE TABLE `test` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `userNogaspi`
+-- Structure de la table `userNogaspi`
 --
 
 CREATE TABLE `userNogaspi` (
@@ -213,21 +213,25 @@ CREATE TABLE `userNogaspi` (
   `ratingCount` int(11) NOT NULL DEFAULT 0,
   `isConfirmate` tinyint(1) NOT NULL DEFAULT 0,
   `confirmationCode` varchar(10) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
-  `confirmationCodeExpiration` datetime DEFAULT NULL
+  `confirmationCodeExpiration` datetime DEFAULT NULL,
+  `address` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `idAllergen` int(11) DEFAULT NULL,
+  `favoriteDistanceToSearch` int(11) DEFAULT NULL,
+  `favoriteGeoPrecisionToDonate` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
--- Indexes for dumped tables
+-- Index pour les tables déchargées
 --
 
 --
--- Indexes for table `allergen`
+-- Index pour la table `allergen`
 --
 ALTER TABLE `allergen`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `article`
+-- Index pour la table `article`
 --
 ALTER TABLE `article`
   ADD PRIMARY KEY (`id`),
@@ -236,7 +240,7 @@ ALTER TABLE `article`
   ADD KEY `fk_article_fridge` (`idFridge`);
 
 --
--- Indexes for table `conversation`
+-- Index pour la table `conversation`
 --
 ALTER TABLE `conversation`
   ADD PRIMARY KEY (`id`),
@@ -245,7 +249,7 @@ ALTER TABLE `conversation`
   ADD KEY `fk_conversation_donation` (`idDonation`);
 
 --
--- Indexes for table `donation`
+-- Index pour la table `donation`
 --
 ALTER TABLE `donation`
   ADD PRIMARY KEY (`id`),
@@ -254,13 +258,13 @@ ALTER TABLE `donation`
   ADD KEY `fk_usertaker_user` (`idUserTaker`);
 
 --
--- Indexes for table `donationCode`
+-- Index pour la table `donationCode`
 --
 ALTER TABLE `donationCode`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `favorite_donation`
+-- Index pour la table `favorite_donation`
 --
 ALTER TABLE `favorite_donation`
   ADD PRIMARY KEY (`id`),
@@ -268,28 +272,28 @@ ALTER TABLE `favorite_donation`
   ADD KEY `idUser` (`idUser`);
 
 --
--- Indexes for table `fridge`
+-- Index pour la table `fridge`
 --
 ALTER TABLE `fridge`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_fridge_user` (`idUser`);
 
 --
--- Indexes for table `message`
+-- Index pour la table `message`
 --
 ALTER TABLE `message`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_message_conversation` (`idConversation`);
 
 --
--- Indexes for table `product`
+-- Index pour la table `product`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_article_user` (`idLastScanUser`);
 
 --
--- Indexes for table `product_allergen`
+-- Index pour la table `product_allergen`
 --
 ALTER TABLE `product_allergen`
   ADD PRIMARY KEY (`id`),
@@ -297,100 +301,101 @@ ALTER TABLE `product_allergen`
   ADD KEY `idAllergen` (`idAllergen`);
 
 --
--- Indexes for table `rang`
+-- Index pour la table `rang`
 --
 ALTER TABLE `rang`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `userNogaspi`
+-- Index pour la table `userNogaspi`
 --
 ALTER TABLE `userNogaspi`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_user_rang` (`idRang`);
+  ADD KEY `fk_user_rang` (`idRang`),
+  ADD KEY `fk_user_allergen` (`idAllergen`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT pour les tables déchargées
 --
 
 --
--- AUTO_INCREMENT for table `allergen`
+-- AUTO_INCREMENT pour la table `allergen`
 --
 ALTER TABLE `allergen`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `article`
+-- AUTO_INCREMENT pour la table `article`
 --
 ALTER TABLE `article`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `conversation`
+-- AUTO_INCREMENT pour la table `conversation`
 --
 ALTER TABLE `conversation`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `donation`
+-- AUTO_INCREMENT pour la table `donation`
 --
 ALTER TABLE `donation`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `donationCode`
+-- AUTO_INCREMENT pour la table `donationCode`
 --
 ALTER TABLE `donationCode`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `favorite_donation`
+-- AUTO_INCREMENT pour la table `favorite_donation`
 --
 ALTER TABLE `favorite_donation`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `fridge`
+-- AUTO_INCREMENT pour la table `fridge`
 --
 ALTER TABLE `fridge`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `message`
+-- AUTO_INCREMENT pour la table `message`
 --
 ALTER TABLE `message`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `product`
+-- AUTO_INCREMENT pour la table `product`
 --
 ALTER TABLE `product`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `product_allergen`
+-- AUTO_INCREMENT pour la table `product_allergen`
 --
 ALTER TABLE `product_allergen`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `rang`
+-- AUTO_INCREMENT pour la table `rang`
 --
 ALTER TABLE `rang`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `userNogaspi`
+-- AUTO_INCREMENT pour la table `userNogaspi`
 --
 ALTER TABLE `userNogaspi`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Constraints for dumped tables
+-- Contraintes pour les tables déchargées
 --
 
 --
--- Constraints for table `article`
+-- Contraintes pour la table `article`
 --
 ALTER TABLE `article`
   ADD CONSTRAINT `fk_article_donation` FOREIGN KEY (`idDonation`) REFERENCES `donation` (`id`),
@@ -398,7 +403,7 @@ ALTER TABLE `article`
   ADD CONSTRAINT `fk_article_product` FOREIGN KEY (`idProduct`) REFERENCES `product` (`id`);
 
 --
--- Constraints for table `conversation`
+-- Contraintes pour la table `conversation`
 --
 ALTER TABLE `conversation`
   ADD CONSTRAINT `fk_conversation_donation` FOREIGN KEY (`idDonation`) REFERENCES `donation` (`id`),
@@ -406,7 +411,7 @@ ALTER TABLE `conversation`
   ADD CONSTRAINT `fk_conversation_userTaker` FOREIGN KEY (`idUserTaker`) REFERENCES `userNogaspi` (`id`);
 
 --
--- Constraints for table `donation`
+-- Contraintes pour la table `donation`
 --
 ALTER TABLE `donation`
   ADD CONSTRAINT `fk_annonce_user` FOREIGN KEY (`idUser`) REFERENCES `userNogaspi` (`id`),
@@ -414,41 +419,42 @@ ALTER TABLE `donation`
   ADD CONSTRAINT `fk_usertaker_user` FOREIGN KEY (`idUserTaker`) REFERENCES `userNogaspi` (`id`);
 
 --
--- Constraints for table `favorite_donation`
+-- Contraintes pour la table `favorite_donation`
 --
 ALTER TABLE `favorite_donation`
   ADD CONSTRAINT `favorite_donation_ibfk_1` FOREIGN KEY (`idDonation`) REFERENCES `donation` (`id`),
   ADD CONSTRAINT `favorite_donation_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `userNogaspi` (`id`);
 
 --
--- Constraints for table `fridge`
+-- Contraintes pour la table `fridge`
 --
 ALTER TABLE `fridge`
   ADD CONSTRAINT `fk_fridge_user` FOREIGN KEY (`idUser`) REFERENCES `userNogaspi` (`id`);
 
 --
--- Constraints for table `message`
+-- Contraintes pour la table `message`
 --
 ALTER TABLE `message`
   ADD CONSTRAINT `fk_message_conversation` FOREIGN KEY (`idConversation`) REFERENCES `conversation` (`id`);
 
 --
--- Constraints for table `product`
+-- Contraintes pour la table `product`
 --
 ALTER TABLE `product`
   ADD CONSTRAINT `fk_article_user` FOREIGN KEY (`idLastScanUser`) REFERENCES `userNogaspi` (`id`);
 
 --
--- Constraints for table `product_allergen`
+-- Contraintes pour la table `product_allergen`
 --
 ALTER TABLE `product_allergen`
   ADD CONSTRAINT `product_allergen_ibfk_1` FOREIGN KEY (`idProduct`) REFERENCES `product` (`id`),
   ADD CONSTRAINT `product_allergen_ibfk_2` FOREIGN KEY (`idAllergen`) REFERENCES `allergen` (`id`);
 
 --
--- Constraints for table `userNogaspi`
+-- Contraintes pour la table `userNogaspi`
 --
 ALTER TABLE `userNogaspi`
+  ADD CONSTRAINT `fk_user_allergen` FOREIGN KEY (`idAllergen`) REFERENCES `allergen` (`id`),
   ADD CONSTRAINT `fk_user_rang` FOREIGN KEY (`idRang`) REFERENCES `rang` (`id`);
 COMMIT;
 
