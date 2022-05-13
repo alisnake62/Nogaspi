@@ -184,12 +184,18 @@ def route(app):
         data = user_getMyInfos(request)
         return jsonify(apiResponse(request, data))
 
+    @app.route('/user/setMyinfos', methods=['POST'])
+    def setMyInfos_endpoint():
+        checkInputAPI(SetMyInfosInputSchema, request)
+        data = user_setMyInfos(request)
+        return jsonify(apiResponse(request, data))
+
     @app.route('/user/postProfilePicture', methods = ['POST'])
     def upload_file():
         checkInputAPI(PostProfilePicture, request)
         checkInputFileAPI(FilePostProfilePicture, request)
         data = user_postProfilePicture(request)
-        return jsonify(apiResponse(request, data))
+
 
     @app.route('/messaging/initiateConversation', methods=['POST'])
     def initiateConversation_endpoint():

@@ -12,6 +12,6 @@ def getMyInfos(request):
         user = getUserFromToken(token, session, request)
         user.majTokenValidity()
        
-        data = user.toJson()
+        data = user.toJson(userRequester=user)
 
     return data

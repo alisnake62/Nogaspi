@@ -10,6 +10,7 @@ class Allergen (Base):
     nameEN = Column(VARCHAR)
     nameFR = Column(VARCHAR)
     products = relationship("Product", secondary='product_allergen', back_populates="allergens")
+    users = relationship("User", back_populates="allergen")
 
     def __init__(self, nameEN, nameFR = None):                    
         self.nameEN = nameEN
