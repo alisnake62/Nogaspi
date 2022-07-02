@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  
+
   backend_nogaspi:
     depends_on:
       - db_nogaspi
@@ -14,13 +14,10 @@ services:
     container_name: backend_nogaspi
     restart: always
     environment:
-      workdir: Nogaspi
       PMA_HOST: db_nogaspi
       MYSQL_ROOT_PASSWORD: ${sqlPassword}
       FIREBASE_SERVICE_ACCOUNT: ${fireBaseServiceAccount}
-      DIRECTORY_ASSET: "/usr/src/app/assets/"
       DIRECTORY_PROJECT: "/usr/src/app/"
-      DIRECTORY_RACINE: "/usr/src/app/Nogaspi/"
       MAIL_SENDER: ${mailSender}
       MAIL_SENDER_PASSWORD: ${mailSenderPassword}
       SERVER_ADDRESS: ${serverAddress}
@@ -85,9 +82,7 @@ services:
       PMA_HOST: db_nogaspi_test
       MYSQL_ROOT_PASSWORD: ${sqlPassword}
       FIREBASE_SERVICE_ACCOUNT: ${fireBaseServiceAccount}
-      DIRECTORY_ASSET: "/usr/src/app/assets/"
       DIRECTORY_PROJECT: "/usr/src/app/"
-      DIRECTORY_RACINE: "/usr/src/app/Nogaspi/"
       MAIL_SENDER: ${mailSender}
       MAIL_SENDER_PASSWORD: ${mailSenderPassword}
       SERVER_ADDRESS: ${serverAddress}
@@ -134,9 +129,7 @@ services:
         - WD=${buildDirectory}
     container_name: build_nogaspi
     environment:
-      DIRECTORY_ASSET: "/usr/src/app/assets/"
       DIRECTORY_PROJECT: "/usr/src/app/"
-      DIRECTORY_RACINE: "/usr/src/app/Nogaspi/"
       SERVER_ADDRESS: ${serverAddress}
     volumes:
       - ${path}:/usr/src/app
