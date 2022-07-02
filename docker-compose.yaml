@@ -19,7 +19,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${sqlPassword}
       FIREBASE_SERVICE_ACCOUNT: ${fireBaseServiceAccount}
       DIRECTORY_ASSET: "/usr/src/app/assets/"
-      DIRECTORY_LOG: "/usr/src/app/"
+      DIRECTORY_PROJECT: "/usr/src/app/"
       DIRECTORY_RACINE: "/usr/src/app/Nogaspi/"
       MAIL_SENDER: ${mailSender}
       MAIL_SENDER_PASSWORD: ${mailSenderPassword}
@@ -86,7 +86,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${sqlPassword}
       FIREBASE_SERVICE_ACCOUNT: ${fireBaseServiceAccount}
       DIRECTORY_ASSET: "/usr/src/app/assets/"
-      DIRECTORY_LOG: "/usr/src/app/"
+      DIRECTORY_PROJECT: "/usr/src/app/"
       DIRECTORY_RACINE: "/usr/src/app/Nogaspi/"
       MAIL_SENDER: ${mailSender}
       MAIL_SENDER_PASSWORD: ${mailSenderPassword}
@@ -135,7 +135,7 @@ services:
     container_name: build_nogaspi
     environment:
       DIRECTORY_ASSET: "/usr/src/app/assets/"
-      DIRECTORY_LOG: "/usr/src/app/"
+      DIRECTORY_PROJECT: "/usr/src/app/"
       DIRECTORY_RACINE: "/usr/src/app/Nogaspi/"
       SERVER_ADDRESS: ${serverAddress}
     volumes:

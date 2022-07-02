@@ -15,7 +15,7 @@ def sendConfirmationCode(mailTo, pseudo, code):
     mail_subject = "NoGaspi - Inscription"
 
     try:
-        templateMailPath = f"{os.environ['DIRECTORY_RACINE']}nogaspi/models/templates/confirmationCode.html"
+        templateMailPath = f"{os.environ['DIRECTORY_PROJECT']}Nogaspi/nogaspi/models/templates/confirmationCode.html"
         with open(templateMailPath, 'r') as templateMailFile:
             templateMail = templateMailFile.read()
 

@@ -4,7 +4,7 @@ import binascii
 import os
 
 def getEncryptor():
-    with open (f"{os.environ['DIRECTORY_ASSET']}rsaKeys/publicKey.pem",'r') as publicKeyFile:
+    with open (f"{os.environ['DIRECTORY_PROJECT']}assets/rsaKeys/publicKey.pem",'r') as publicKeyFile:
         publicKeyPem = publicKeyFile.read()
 
     publicKey = RSA.import_key(publicKeyPem)
@@ -12,7 +12,7 @@ def getEncryptor():
     return PKCS1_OAEP.new(publicKey)
 
 def getDecryptor():
-    with open (f"{os.environ['DIRECTORY_ASSET']}rsaKeys/privateKey.pem",'r') as privateKeyFile:
+    with open (f"{os.environ['DIRECTORY_PROJECT']}assets/rsaKeys/privateKey.pem",'r') as privateKeyFile:
         privateKeyPem = privateKeyFile.read()
 
     privateKey = RSA.import_key(privateKeyPem)
