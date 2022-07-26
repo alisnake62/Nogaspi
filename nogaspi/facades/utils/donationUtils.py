@@ -1,6 +1,6 @@
 from datetime import datetime
 from models.objectDB import User, Donation
-from facades.const import DISTANCE_MAX_TO_SEND_NOTIFICATION_IN_NEW_DONATION, MAX_DONATION_PER_DAY_ON_UNIT_TEST, MAX_DONATION_PER_DAY_ON_PROD
+from facades.const import DISTANCE_MAX_TO_SEND_NOTIFICATION_IN_NEW_DONATION, MAX_DONATION_PER_DAY_ON_UNIT_TEST, MAX_DONATION_PER_DAY_ON_PROD, POINT_PER_DONATED_ARTICLE, POINT_PER_TAKED_ARTICLE
 from facades.utils.coordUtils import isAroundPath
 from facades.firebaseMessages.newNearDonation import newNearDonation
 import os
@@ -12,9 +12,9 @@ def makeDonation(userOwner, userTaker, donation):
     articleCount = len(donation.articles)
     for article in donation.articles:
         article.fridge = None
-    userTaker.points += articleCount
-    userOwner.points += articleCount * 4
-    return articleCount * 4
+    userTaker.points += articleCount * POINT_PER_TAKED_ARTICLE
+    userOwner.points += articleCount * POINT_PER_DONATED_ARTICLE
+    return articleCount * POINT_PER_DONATED_ARTICLE
 
 def updateRatingUser(user, note):
     ratingCount = user.ratingCount
