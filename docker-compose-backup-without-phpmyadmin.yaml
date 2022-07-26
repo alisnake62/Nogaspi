@@ -1,0 +1,121 @@
+version: '3'
+
+services:
+
+  backend_nogaspi:
+    depends_on:
+      - db_nogaspi
+      - images_nogaspi
+    build:
+      context: ${path}/Nogaspi/nogaspi
+      args:
+        - WD=Nogaspi
+    container_name: backend_nogaspi
+    restart: always
+    environment:
+      PMA_HOST: db_nogaspi
+      MYSQL_ROOT_PASSWORD: ${sqlPassword}
+      FIREBASE_SERVICE_ACCOUNT: ${fireBaseServiceAccount}
+      DIRECTORY_PROJECT: "/usr/src/app/"
+      MAIL_SENDER: ${mailSender}
+      MAIL_SENDER_PASSWORD: ${mailSenderPassword}
+      SERVER_ADDRESS: ${serverAddress}
+      LAUNCH_ENV: "prod"
+      OPENROUTESERVICE_KEY: ${openRouteServiceKey}
+    ports:
+      - 5556:5000
+    volumes:
+      - ${path}:/usr/src/app
+    networks:
+      - python-db
+
+  db_nogaspi:
+    image: mariadb:latest
+    container_name: db_nogaspi
+    restart: always
+    volumes:
+      - data:/var/lib/mysql
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: ${sqlPassword}
+      MYSQL_DATABASE: nogaspi
+      MYSQL_USER: ${sqlUser}
+      MYSQL_PASSWORD: ${sqlPassword}
+    ports:
+      - "33307:3306"
+    networks:
+      - python-db
+      - phpmyadmin-db
+
+  images_nogaspi:
+    image: nginx:latest
+    container_name: images_nogaspi
+    ports:
+      - "49080:80"
+    volumes:
+      - ${path}/assets/images:/usr/share/nginx/html
+  
+  pytest_nogaspi:
+    depends_on:
+      - db_nogaspi_test
+    build:
+      context: ${path}/${testDirectory}/test
+      args:
+        - WD=${testDirectory}
+    container_name: pytest_nogaspi
+    environment:
+      PMA_HOST: db_nogaspi_test
+      MYSQL_ROOT_PASSWORD: ${sqlPassword}
+      FIREBASE_SERVICE_ACCOUNT: ${fireBaseServiceAccount}
+      DIRECTORY_PROJECT: "/usr/src/app/"
+      MAIL_SENDER: ${mailSender}
+      MAIL_SENDER_PASSWORD: ${mailSenderPassword}
+      SERVER_ADDRESS: ${serverAddress}
+      LAUNCH_ENV: "test"
+    volumes:
+      - ${path}:/usr/src/app
+    networks:
+      - python-db_test
+
+  db_nogaspi_test:
+    image: mariadb:latest
+    container_name: db_nogaspi_test
+    volumes:
+      - data_test:/var/lib/mysql
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: ${sqlPassword}
+      MYSQL_DATABASE: nogaspi
+      MYSQL_USER: ${sqlUser}
+      MYSQL_PASSWORD: ${sqlPassword}
+    ports:
+      - "34307:3306"
+    networks:
+      - python-db_test
+      - phpmyadmin-db_test
+
+  build_nogaspi:
+    build:
+      context: ${path}/${buildDirectory}/nogaspi
+      args:
+        - WD=${buildDirectory}
+    container_name: build_nogaspi
+    environment:
+      DIRECTORY_PROJECT: "/usr/src/app/"
+      SERVER_ADDRESS: ${serverAddress}
+    volumes:
+      - ${path}:/usr/src/app
+
+volumes:
+  data:
+  data_test:
+
+networks:
+  python-db:
+    driver: bridge
+  phpmyadmin-db:
+    driver: bridge
+  python-db_test:
+    driver: bridge
+  phpmyadmin-db_test:
+    driver: bridge
